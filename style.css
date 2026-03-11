@@ -1,0 +1,84 @@
+:root {
+    --bg-color: #0d1117;
+    --text-color: #c9d1d9;
+    --accent-color: #58a6ff;
+    --accent-hover: #1f6feb;
+    --border-color: #30363d;
+    --warn-color: #f85149;
+    --mbti-color: #3fb950; /* MBTIグラフ用の緑 */
+}
+
+body {
+    font-family: 'Courier New', monospace, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#app {
+    width: 100%;
+    max-width: 600px;
+    background: #161b22;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.1);
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+h1, h2 { color: var(--accent-color); font-weight: normal; }
+h1 i { margin-right: 10px; }
+
+/* アニメーション */
+.fade-in { animation: fadeIn 0.6s ease-in-out; }
+.slide-up { animation: slideUp 0.5s ease-out; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+    background: #0d1117;
+    color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    margin: 8px 0;
+    width: 100%;
+    text-align: left;
+    font-size: 0.95em;
+}
+
+button i { margin-right: 8px; width: 20px; text-align: center; }
+button:hover { border-color: var(--accent-color); background: rgba(88, 166, 255, 0.05); transform: translateX(5px); }
+button.selected { background: var(--accent-color); color: var(--bg-color); font-weight: bold; transform: translateX(5px); }
+
+.sub-btn { color: #8b949e; text-align: center; font-size: 0.85em; }
+#ambiguous-btn:hover { border-color: var(--warn-color); color: var(--warn-color); }
+
+.options-area { margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
+.confidence-box { display: flex; align-items: center; margin-bottom: 15px; font-size: 0.9em; }
+.confidence-box input { flex-grow: 1; margin-left: 10px; cursor: pointer; }
+
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+.nav-buttons button { width: 48%; text-align: center; }
+
+/* SVG画像を置くエリア */
+#media-area svg { width: 100%; max-height: 200px; border-radius: 8px; margin-bottom: 15px; }
+
+.log-box { background: #0d1117; padding: 15px; border-left: 4px solid var(--accent-color); margin-top: 20px; font-size: 0.85em; line-height: 1.6; border-radius: 4px; }
