@@ -82,3 +82,53 @@ button.selected { background: var(--accent-color); color: var(--bg-color); font-
 #media-area svg { width: 100%; max-height: 200px; border-radius: 8px; margin-bottom: 15px; }
 
 .log-box { background: #0d1117; padding: 15px; border-left: 4px solid var(--accent-color); margin-top: 20px; font-size: 0.85em; line-height: 1.6; border-radius: 4px; }
+
+/* ランキングUI用 */
+.ranking-btn {
+    position: relative;
+    padding-left: 40px !important;
+}
+.rank-badge {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--accent-color);
+    color: var(--bg-color);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* カードUI用 */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+}
+.card-btn {
+    width: 48%;
+    height: 120px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px solid transparent;
+}
+.card-btn.black { color: #161b22; }
+.card-btn.red { color: #f85149; }
+.card-btn:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3); }
+.card-btn.selected { border: 3px solid var(--accent-color); background: #f0f6fc; }
+.card-desc { font-size: 0.4em; color: #555; margin-top: 10px; text-align: center; font-weight: normal; }
