@@ -10,7 +10,9 @@ let enneaScore = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
 // A(自己主張) / T(慎重) を判定するためのストレス・神経症傾向スコア
 let nervousnessScore = 0; 
 
-let shuffledQuestions = questionsData.sort(() => Math.random() - 0.5);
+const MAX_QUESTIONS = 15;
+// 全部シャッフルしてから、先頭の15問だけ切り取る！
+let shuffledQuestions = questionsData.sort(() => Math.random() - 0.5).slice(0, MAX_QUESTIONS);
 
 document.getElementById('start-btn').addEventListener('click', () => {
     document.getElementById('start-screen').classList.remove('active');
@@ -43,7 +45,7 @@ function renderQuestion() {
     void inputArea.offsetWidth;
     inputArea.classList.add('slide-up');
 
-    // ★ 抽象画像（SVG）の生成
+    // 抽象画像（SVG）の生成
     if (q.type === 'abstract_image') {
         mediaArea.innerHTML = `
             <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +61,65 @@ function renderQuestion() {
             </svg>
         `;
     }
+    else if (q.type === 'minigame_number') {
+        inputArea.innerHTML = `
+            <div class="minigame-container" style="text-align: center; margin: 30px 0;">
+                <div id="minigame-number" style="font-size: 5em; font-weight: bold; color: var(--accent-color); font-variant-numeric: tabular-nums;">0</div>
+                <button id="minigame-stop-btn" class="danger-btn" style="margin-top: 20px; font-size: 1.5em; width: 80%;">🛑 STOP</button>
+            </div>
+            <div id="minigame-options" class="slide-up" style="display: none; margin-top: 20px;">
+                <p style="color: var(--warn-color); font-weight: bold;">👁️ [System: 行動解析] なるほど、その数字で止めましたか。<br>……なぜ『そのタイミング』で止めたのですか？</p>
+            </div>
+        `;
 
+        let currentNum = 0;
+        const numEl = document.getElementById('minigame-number');
+        const stopBtn = document.getElementById('minigame-stop-btn');
+        const optionsArea = document.getElementById('minigame-options');
+
+        // 超高速で1〜100をカウントアップ！
+        let intervalId = setInterval(() => {
+            currentNum++;
+            if (currentNum > 100) currentNum = 1; // 100を超えたら1に戻る
+            numEl.innerText = currentNum;
+        }, 15); 
+
+        stopBtn.onclick = () => {
+            clearInterval(intervalId); // ストップ！
+            stopBtn.style.display = 'none'; // ボタンを消す
+            optionsArea.style.display = 'block'; // 深掘り選択肢を出す
+
+            // チャッピー提案の認知行動ごとの選択肢！
+            const options =[
+                { text: "待つのが面倒で、直感的にすぐ止めた。", scores: { socio: { Se: 3 }, mbti: { Se: 3 }, ennea: { 7: 2, 8: 1 } } },
+                { text: "キリの良い数字やゾロ目（77等）を、タイミングを計算して狙って止めた。", scores: { socio: { Ti: 3 }, mbti: { Ti: 3 }, ennea: { 5: 2, 1: 2 } } },
+                { text: "ギリギリの90台までどこまでいけるか、限界を試す実験をした。", scores: { socio: { Ne: 3 }, mbti: { Ne: 3 }, ennea: { 7: 2 } } },
+                { text: "じっくり様子を観察し、「この辺りが安全だろう」という自分の予測で止めた。", scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 5: 2, 9: 1 } } },
+                { text: "特に何も考えず、なんとなく適当に止めた。", scores: { socio: { Si: 2 }, mbti: { P: 2 }, ennea: { 9: 2 } } }
+            ].sort(() => Math.random() - 0.5);
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+                btn.onclick = () => {
+                    optionsArea.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('selected');
+                        b.querySelector('i').className = 'far fa-circle';
+                    });
+                    btn.classList.add('selected');
+                    btn.querySelector('i').className = 'fas fa-check-circle';
+                    
+                    // スコアと「止めた数字のログ」を保存！
+                    currentScores = { 
+                        scores: opt.scores,
+                        loggedText: `🎮 ミニゲーム: 「${currentNum}」で停止 → ${opt.text.split('（')[0]}`
+                    };
+                };
+                optionsArea.appendChild(btn);
+            });
+        };
+        currentScores = null; // ストップして理由を選ぶまで次へ行けない
+    }
     if (q.type === 'text_input') {
         inputArea.innerHTML = `
             <div style="margin: 20px 0;">
@@ -67,8 +127,66 @@ function renderQuestion() {
                        style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #0d1117; color: var(--accent-color); font-family: inherit; font-size: 1.1em; text-align: center;">
             </div>
         `;
-        // 次へ進めるようにダミーのスコアオブジェクトを入れておく
         currentScores = { isTextInput: true }; 
+    }
+    // ★ ここがバグ修正版のランキングUI処理！
+    else if (q.type === 'ranking') {
+        let options = q.options.sort(() => Math.random() - 0.5);
+        let selectedOrder =[];
+
+        // 描画専用の関数を作って、クロージャのバグを回避したよ！
+        const updateRankingUI = () => {
+            inputArea.innerHTML = ''; 
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'ranking-btn';
+                
+                const rankIndex = selectedOrder.indexOf(opt);
+                if (rankIndex !== -1) {
+                    btn.innerHTML = `<span class="rank-badge">${rankIndex + 1}</span> ${opt.text}`;
+                    btn.classList.add('selected');
+                } else {
+                    btn.innerText = opt.text;
+                }
+                
+                btn.onclick = () => {
+                    // すでに選ばれていたら解除
+                    if (selectedOrder.includes(opt)) {
+                        selectedOrder = selectedOrder.filter(item => item !== opt);
+                    } else {
+                        selectedOrder.push(opt);
+                    }
+                    
+                    if (selectedOrder.length === options.length) {
+                        currentScores = { isRanking: true, order: selectedOrder };
+                    } else {
+                        currentScores = null; 
+                    }
+                    
+                    updateRankingUI(); // 再描画
+                };
+                inputArea.appendChild(btn);
+            });
+        };
+        
+        updateRankingUI(); // 初回描画
+    }
+    // カードテストの処理
+    else if (q.type === 'cards') {
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'card-container';
+        q.options.forEach(opt => {
+            const btn = document.createElement('div');
+            btn.className = `card-btn ${opt.color}`;
+            btn.innerHTML = `<div>${opt.symbol}</div><div class="card-desc">${opt.text.split('：')[1].replace(')','')}</div>`;
+            btn.onclick = () => {
+                document.querySelectorAll('.card-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                currentScores = { scores: opt.scores }; 
+            };
+            cardWrapper.appendChild(btn);
+        });
+        inputArea.appendChild(cardWrapper);
     }
     else if (q.type === 'checkbox') {
         let options = q.options.sort(() => Math.random() - 0.5);
@@ -141,23 +259,18 @@ document.getElementById('ambiguous-btn').addEventListener('click', () => {
 });
 
 document.getElementById('next-btn').addEventListener('click', () => {
-    // 押すなボタンのトラップ処理
     if (shuffledQuestions[currentQIndex].type === 'button_trap' && !currentScores) {
         currentScores = { scores: { socio: { Ti: 1 }, mbti: { J: 1 }, ennea: { 1: 1, 6: 1 } } };
     }
 
-    // ★ 記述問題の判定ロジック！
     if (currentScores && currentScores.isTextInput) {
         const textVal = document.getElementById('text-answer').value.trim();
-        // 空白、または数字だけ（1とか123）、あるいは「あああ」みたいな適当な文字の場合
         if (textVal === "" || !isNaN(textVal) || textVal.length === 1) {
-            // 適当判定！真面目に答えない＝P型・Se的衝動、または社会通念の拒絶（Ti）
             currentScores = { 
                 scores: { socio: { Se: 1, Ti: 1 }, mbti: { P: 2 }, ennea: { 9: 1 } },
                 loggedText: "※対象者は適当な文字列を入力、または回答を拒絶しました。"
             };
         } else {
-            // ちゃんと単語を入力した＝意味を抽出するNi・Tiの働き
             currentScores = { 
                 scores: { socio: { Ni: 2, Ti: 1 }, mbti: { Ni: 1 }, ennea: { 5: 1 } },
                 loggedText: `「${textVal}」と入力（意味抽出を観測）`
@@ -176,7 +289,6 @@ function goToNext(isAmbiguous) {
     const timeTaken = Date.now() - startTime;
     const confidence = document.getElementById('confidence').value;
 
-    // ★ 記述問題のテキストデータがあれば、ログに含める（裏仕様！）
     let loggedTextData = null;
     if (currentScores && currentScores.loggedText) {
         loggedTextData = currentScores.loggedText;
@@ -186,15 +298,36 @@ function goToNext(isAmbiguous) {
         qId: shuffledQuestions[currentQIndex].id, 
         timeMs: timeTaken, 
         isAmbiguous: isAmbiguous,
-        textData: loggedTextData // ここで保存！
+        textData: loggedTextData 
     });
+    if (currentScores && currentScores.nervousnessDelta) {
+        nervousnessScore += currentScores.nervousnessDelta;
+    }
 
+    if (currentScores && currentScores.isSlider) {
+        nervousnessScore += (currentScores.value - 5);
+    } 
+    // ★ スコアの重複加算バグを修正して綺麗にまとめたよ！
     if (currentScores.isSlider) {
         nervousnessScore += (currentScores.value - 5);
     } 
     else if (currentScores.isCheckbox) {
         currentScores.selectedOptions.forEach(sc => addScores(sc));
     } 
+    else if (currentScores.isRanking) {
+        currentScores.order.forEach((opt, index) => {
+            let multiplier = 0;
+            if (index === 0) multiplier = 3;
+            if (index === 1) multiplier = 2;
+            if (index === 2) multiplier = 1;
+            
+            if (multiplier > 0) {
+                if(opt.scores.socio) for (let key in opt.scores.socio) socioScore[key] += (opt.scores.socio[key] * multiplier);
+                if(opt.scores.mbti) for (let key in opt.scores.mbti) mbtiScore[key] += (opt.scores.mbti[key] * multiplier);
+                if(opt.scores.ennea) for (let key in opt.scores.ennea) enneaScore[key] += (opt.scores.ennea[key] * multiplier);
+            }
+        });
+    }
     else if (currentScores.scores) {
         addScores(currentScores.scores);
     }
@@ -229,8 +362,6 @@ document.getElementById('prev-btn').addEventListener('click', () => {
     }
 });
 
-// ★全判定関数群（省略せずに全部入れたよ！）
-
 function calculateSocioType() {
     const sortedFunctions = Object.keys(socioScore).sort((a, b) => socioScore[b] - socioScore[a]);
     const f1 = sortedFunctions[0];
@@ -259,22 +390,19 @@ function calculateEnneagram() {
     return `${topType}w${wing}`;
 }
 
-// ★ MBTI全タイプ計算ロジック
 function calculateMBTI() {
     let e_i = (mbtiScore.Te + mbtiScore.Fe + mbtiScore.Ne + mbtiScore.Se) > (mbtiScore.Ti + mbtiScore.Fi + mbtiScore.Ni + mbtiScore.Si) ? "E" : "I";
     let s_n = (mbtiScore.Se + mbtiScore.Si) > (mbtiScore.Ne + mbtiScore.Ni) ? "S" : "N";
     let t_f = (mbtiScore.Te + mbtiScore.Ti) > (mbtiScore.Fe + mbtiScore.Fi) ? "T" : "F";
-    // J/Pは外向判断機能(Te/Fe)と外向知覚機能(Se/Ne)の比較
     let j_p = (mbtiScore.Te + mbtiScore.Fe) > (mbtiScore.Se + mbtiScore.Ne) ? "J" : "P";
     return `${e_i}${s_n}${t_f}${j_p}`;
 }
 
-// ★ DCNH計算ロジック（みつきの定義通り！）
 function calculateDCNH() {
-    let d = socioScore.Te + socioScore.Fe; // ドミナント
-    let c = socioScore.Ne + socioScore.Se; // クリエイター
-    let n = socioScore.Ti + socioScore.Fi; // ノーマナイザー
-    let h = socioScore.Ni + socioScore.Si; // ハーモナイザー
+    let d = socioScore.Te + socioScore.Fe; 
+    let c = socioScore.Ne + socioScore.Se; 
+    let n = socioScore.Ti + socioScore.Fi; 
+    let h = socioScore.Ni + socioScore.Si; 
     
     let maxScore = Math.max(d, c, n, h);
     if (maxScore === h) return "H (Harmonizing / ハーモナイザー)";
@@ -284,7 +412,15 @@ function calculateDCNH() {
 }
 
 function calculateAT() {
-    return nervousnessScore >= 0 ? "T (慎重型)" : "A (自己主張型)";
+    if (nervousnessScore >= 2) {
+        return "T (慎重型 / 激しく反芻・葛藤する)";
+    } else if (nervousnessScore >= 0) {
+        return "T (慎重型 / やや警戒心が強い)";
+    } else if (nervousnessScore >= -3) {
+        return "A (自己主張型 / 対策による不安消去)";
+    } else {
+        return "A (自己主張型 / 圧倒的自信・唯我独尊)";
+    }
 }
 
 function showResult() {
@@ -293,11 +429,10 @@ function showResult() {
 
     let resultSocio = calculateSocioType(); 
     let resultEnnea = calculateEnneagram(); 
-    let resultMBTI = calculateMBTI(); // ★MBTI動的計算！
-    let resultDCNH = calculateDCNH(); // ★DCNH動的計算！
+    let resultMBTI = calculateMBTI(); 
+    let resultDCNH = calculateDCNH(); 
     let resultAT = calculateAT(); 
 
-    // サブタイプロジック
     let subtypeFunc = Object.keys(socioScore).reduce((a, b) => socioScore[a] > socioScore[b] ? a : b);
     if (resultSocio === "LII" && socioScore.Ni >= socioScore.Ne && socioScore.Ni >= socioScore.Ti - 1) {
         subtypeFunc = "Ni"; 
@@ -305,8 +440,8 @@ function showResult() {
 
     document.getElementById('socio-type').innerText = resultSocio;
     document.getElementById('socio-sub').innerText = `${resultSocio}-${subtypeFunc}`;
-    document.getElementById('dcnh-type').innerText = resultDCNH; // ★DCNH反映！
-    document.getElementById('mbti-type').innerText = resultMBTI; // ★MBTI反映！
+    document.getElementById('dcnh-type').innerText = resultDCNH; 
+    document.getElementById('mbti-type').innerText = resultMBTI; 
     
     document.getElementById('a-t-type').innerText = `${resultAT} / エニアグラム: ${resultEnnea}`;
     
@@ -326,7 +461,6 @@ function showResult() {
          ⚠️ 「定義が曖昧」使用: ${logs.filter(l=>l.isAmbiguous).length}回
          ${textLogsHTML}`; 
 
-// === レーダーチャートの描画 ===
     const ctxRadar = document.getElementById('function-chart').getContext('2d');
     new Chart(ctxRadar, {
         type: 'radar',
@@ -351,13 +485,9 @@ function showResult() {
                 }
             ]
         },
-        options: { 
-            scale: { ticks: { beginAtZero: true, display: false }, pointLabels: { color: '#c9d1d9' } }, 
-            plugins: { legend: { labels: { color: '#c9d1d9' } } } 
-        }
+        options: { scale: { ticks: { beginAtZero: true, display: false }, pointLabels: { color: '#c9d1d9' } }, plugins: { legend: { labels: { color: '#c9d1d9' } } } }
     });
 
-    // === ★棒グラフ (Bar Chart) の描画 ===
     const ctxBar = document.getElementById('bar-chart').getContext('2d');
     new Chart(ctxBar, {
         type: 'bar',
@@ -381,19 +511,10 @@ function showResult() {
         options: {
             responsive: true,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#30363d' },
-                    ticks: { color: '#c9d1d9' }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { color: '#c9d1d9' }
-                }
+                y: { beginAtZero: true, grid: { color: '#30363d' }, ticks: { color: '#c9d1d9' } },
+                x: { grid: { display: false }, ticks: { color: '#c9d1d9' } }
             },
-            plugins: {
-                legend: { labels: { color: '#c9d1d9' } }
-            }
+            plugins: { legend: { labels: { color: '#c9d1d9' } } }
         }
     });
 }
