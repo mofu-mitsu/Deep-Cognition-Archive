@@ -95,7 +95,7 @@ function renderQuestion() {
                 { text: "キリの良い数字やゾロ目（77等）を、タイミングを計算して狙って止めた。", scores: { socio: { Ti: 3 }, mbti: { Ti: 3 }, ennea: { 5: 2, 1: 2 } } },
                 { text: "ギリギリの90台までどこまでいけるか、限界を試す実験をした。", scores: { socio: { Ne: 3 }, mbti: { Ne: 3 }, ennea: { 7: 2 } } },
                 { text: "じっくり様子を観察し、「この辺りが安全だろう」という自分の予測で止めた。", scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 5: 2, 9: 1 } } },
-                { text: "特に何も考えず、なんとなく適当に止めた。", scores: { socio: { Si: 2 }, mbti: { P: 2 }, ennea: { 9: 2 } } }
+                { text: "特に何も考えず、なんとなく適当に止めた。", scores: { socio: { Si: 2 }, mbti: { Fi: 2 }, ennea: { 9: 2 } } }
             ].sort(() => Math.random() - 0.5);
 
             options.forEach(opt => {
@@ -518,3 +518,4 @@ function showResult() {
         }
     });
 }
+
