@@ -1,15 +1,17 @@
 :root {
-    --bg-color: #0d1117;
-    --text-color: #c9d1d9;
-    --accent-color: #58a6ff;
-    --accent-hover: #1f6feb;
+    /* ★ 不思議の国風の白・赤・黒のテーマに変更！ */
+    --bg-color: #fdfbf7; /* くすんだ白（古い紙のような色） */
+    --text-color: #1a0b1c; /* 深いダークパープル（黒の代わり） */
+    --accent-color: #c91a25; /* トランプの赤（ハート・ダイヤ） */
+    --accent-hover: #9c141c;
     --border-color: #30363d;
     --warn-color: #f85149;
-    --mbti-color: #3fb950; /* MBTIグラフ用の緑 */
+    --mbti-color: #1f6feb; /* MBTIグラフ用の青に変更 */
+    --spade-club-color: #1a0b1c; /* トランプの黒 */
 }
 
 body {
-    font-family: 'Courier New', monospace, sans-serif;
+    font-family: 'Georgia', 'Times New Roman', serif; /* アリス風の明朝体に変更！ */
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -17,118 +19,428 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    /* 背景にうっすらトランプの模様を散らす（メタ演出） */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(201, 26, 37, 0.05) 10px, transparent 11px),
+        radial-gradient(circle at 90% 80%, rgba(26, 11, 28, 0.05) 10px, transparent 11px);
 }
 
 #app {
-    width: 100%;
+    width: 90%; /* ★ スマホ対応：横幅を柔軟に */
     max-width: 600px;
-    background: #161b22;
-    padding: 25px;
-    border: 1px solid var(--border-color);
+    background: #ffffff;
+    padding: 30px;
+    border: 2px solid var(--text-color); /* 黒い縁取りでゴシック感 */
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(88, 166, 255, 0.1);
+    box-shadow: 8px 8px 0px rgba(26, 11, 28, 0.2); /* ポップで少し狂った影 */
+    position: relative;
+    overflow: hidden;
+}
+
+/* ★ トランプ兵の装飾（四隅にマークを配置！） */
+#app::before {
+    content: "♠ ♥";
+    position: absolute;
+    top: 10px; left: 15px;
+    font-size: 1.2em;
+    color: var(--accent-color);
+    letter-spacing: 2px;
+}
+#app::after {
+    content: "♣ ♦";
+    position: absolute;
+    bottom: 10px; right: 15px;
+    font-size: 1.2em;
+    color: var(--spade-club-color);
+    letter-spacing: 2px;
 }
 
 .screen { display: none; }
 .screen.active { display: block; }
 
-h1, h2 { color: var(--accent-color); font-weight: normal; }
-h1 i { margin-right: 10px; }
+h1, h2 { color: var(--text-color); font-weight: bold; border-bottom: 2px dashed var(--accent-color); padding-bottom: 10px; }
+h1 i { margin-right: 10px; color: var(--accent-color); }
 
 /* アニメーション */
 .fade-in { animation: fadeIn 0.6s ease-in-out; }
 .slide-up { animation: slideUp 0.5s ease-out; }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
 button {
-    background: #0d1117;
-    color: var(--accent-color);
-    border: 1px solid var(--border-color);
+    background: #ffffff;
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
     padding: 12px 20px;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
     font-family: inherit;
     transition: all 0.3s ease;
     margin: 8px 0;
     width: 100%;
     text-align: left;
-    font-size: 0.95em;
+    font-size: 1em;
+    font-weight: bold;
 }
 
-button i { margin-right: 8px; width: 20px; text-align: center; }
-button:hover { border-color: var(--accent-color); background: rgba(88, 166, 255, 0.05); transform: translateX(5px); }
-button.selected { background: var(--accent-color); color: var(--bg-color); font-weight: bold; transform: translateX(5px); }
+button i { margin-right: 8px; width: 20px; text-align: center; color: var(--accent-color); }
+button:hover { 
+    border-color: var(--accent-color); 
+    background: rgba(201, 26, 37, 0.05); 
+    transform: translateX(5px); 
+    box-shadow: 2px 2px 0px var(--accent-color);
+}
+button.selected { 
+    background: var(--accent-color); 
+    color: #ffffff; 
+    border-color: var(--accent-color);
+    transform: translateX(5px); 
+    box-shadow: 2px 2px 0px var(--text-color);
+}
+button.selected i { color: #ffffff; }
 
-.sub-btn { color: #8b949e; text-align: center; font-size: 0.85em; }
+.sub-btn { color: #555; text-align: center; font-size: 0.85em; border-color: #ccc; }
 #ambiguous-btn:hover { border-color: var(--warn-color); color: var(--warn-color); }
 
 .options-area { margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 .confidence-box { display: flex; align-items: center; margin-bottom: 15px; font-size: 0.9em; }
 .confidence-box input { flex-grow: 1; margin-left: 10px; cursor: pointer; }
 
-.nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
-.nav-buttons button { width: 48%; text-align: center; }
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+.nav-buttons button { width: 48%; text-align: center; margin: 0; }
 
-/* SVG画像を置くエリア */
-#media-area svg { width: 100%; max-height: 200px; border-radius: 8px; margin-bottom: 15px; }
-
-.log-box { background: #0d1117; padding: 15px; border-left: 4px solid var(--accent-color); margin-top: 20px; font-size: 0.85em; line-height: 1.6; border-radius: 4px; }
+.log-box { 
+    background: #f9f9f9; 
+    padding: 15px; 
+    border-left: 4px solid var(--accent-color); 
+    margin-top: 20px; 
+    font-size: 0.85em; 
+    line-height: 1.6; 
+    border-radius: 4px; 
+    color: #333;
+}
 
 /* ランキングUI用 */
-.ranking-btn {
-    position: relative;
-    padding-left: 40px !important;
-}
+.ranking-btn { position: relative; padding-left: 40px !important; }
 .rank-badge {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--accent-color);
-    color: var(--bg-color);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 0.9em;
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    background: var(--text-color); color: #fff;
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-weight: bold; font-size: 0.9em;
 }
 
 /* カードUI用 */
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
-}
+.card-container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
 .card-btn {
-    width: 48%;
-    height: 120px;
-    background: #fff;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    border: 2px solid transparent;
+    width: 48%; height: 120px; background: #fff; border-radius: 8px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    font-size: 1.5em; font-weight: bold; cursor: pointer; transition: 0.3s; border: 2px solid var(--border-color);
 }
-.card-btn.black { color: #161b22; }
-.card-btn.red { color: #f85149; }
-.card-btn:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3); }
-.card-btn.selected { border: 3px solid var(--accent-color); background: #f0f6fc; }
+.card-btn.black { color: var(--spade-club-color); }
+.card-btn.red { color: var(--accent-color); }
+.card-btn:hover { transform: translateY(-5px); box-shadow: 4px 4px 0px rgba(0,0,0,0.1); }
+.card-btn.selected { border: 3px solid var(--accent-color); background: rgba(201, 26, 37, 0.05); }
 .card-desc { font-size: 0.4em; color: #555; margin-top: 10px; text-align: center; font-weight: normal; }
+
+/* 抽象画像のサイズ調整（スマホ対応） */
+.abstract-svg {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+/* --- メタ演出・カスタムUI用アニメーション --- */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.3); }
+    70% { transform: scale(1); }
+}
+.heart-icon {
+    font-size: 5em; color: var(--accent-color); display: inline-block;
+    animation: heartbeat 1.2s infinite; text-shadow: 0 0 20px rgba(201, 26, 37, 0.4);
+}
+
+@keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); opacity: 1; }
+    95% { transform: scaleY(0.1); opacity: 0.5; }
+}
+.eye-icon {
+    font-size: 4em; display: inline-block; margin: 0 10px;
+    animation: blink 4s infinite; /* ★ 秒数を調整して瞬きを確実に！ */
+}
+
+/* --- 芋虫（完全修正版・絶対にズレない） --- */
+#caterpillar-container {
+    position: fixed;
+    bottom: 20px;
+    right: -150px; /* 画面の完全に外からスタート */
+    font-size: 2em;
+    cursor: pointer;
+    z-index: 1000;
+    user-select: none;
+    display: none;
+}
+/* ★ アニメーションを right プロパティでシンプルに動かす！ */
+#caterpillar-container.crawling { 
+    display: block; 
+    animation: crawlAcross 15s linear forwards; 
+}
+
+@keyframes crawlAcross {
+    0% { right: -150px; transform: translateY(0); }
+    25% { transform: translateY(-10px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-10px); }
+    100% { right: 120vw; transform: translateY(0); } /* 完全に左へ消える */
+}
+
+#caterpillar {
+    display: inline-block;
+    transition: transform 0.2s, filter 0.2s;
+}
+#caterpillar:active { 
+    transform: scale(1.5) rotate(15deg); 
+    filter: hue-rotate(90deg); 
+}
+
+/* --- 芋虫の吹き出し（コンテナの中に入れるからズレない！） --- */
+#caterpillar-speech {
+    position: absolute; 
+    bottom: 45px; 
+    left: 20px; /* 芋虫の頭の少し前に固定 */
+    background: #ffffff; 
+    color: var(--text-color); 
+    border: 2px solid var(--text-color);
+    padding: 8px 12px; 
+    border-radius: 8px; 
+    font-size: 0.5em; 
+    white-space: nowrap; 
+    opacity: 0; 
+    transform: translateY(10px);
+    transition: 0.3s; 
+    pointer-events: none; 
+    font-weight: bold;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
+}
+#caterpillar-speech.show { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+#caterpillar-speech::after {
+    content: ''; 
+    position: absolute; 
+    bottom: -12px; 
+    left: 10px; /* 吹き出しの尻尾 */
+    border-width: 12px 10px 0; 
+    border-style: solid;
+    border-color: var(--text-color) transparent transparent transparent;
+}
+
+/* ★ 新ギミック：逃げるボタン（Catch Me）用 */
+.catch-me-btn {
+    position: relative;
+    transition: transform 0.15s ease-out;
+}
+/* --- 女王の怒りエフェクト --- */
+body.queen-mode {
+    background-color: #3b0a0f; /* どす黒い赤 */
+    transition: background-color 0.5s ease;
+}
+body.queen-mode #app {
+    border-color: #ff3333;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+}
+.rose-icon {
+    font-size: 4em;
+    color: #ff3333;
+    animation: heartbeat 0.8s infinite; /* 激しい鼓動 */
+}
+
+/* --- 白ウサギのエフェクト --- */
+@keyframes rabbitRun {
+    0% { transform: translateX(100vw) scaleX(-1); opacity: 1; }
+    50% { transform: translateX(0) scaleX(-1) translateY(-20px); opacity: 1; }
+    100% { transform: translateX(-100vw) scaleX(-1); opacity: 1; }
+}
+.running-rabbit {
+    position: fixed;
+    bottom: 40px;
+    font-size: 3em;
+    z-index: 100;
+    pointer-events: none;
+    animation: rabbitRun 3s linear forwards;
+}
+
+/* NPCメッセージボックス用 */
+.npc-message-box {
+    background: #ffffff;
+    border: 2px dashed var(--accent-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: var(--text-color);
+    position: relative;
+}
+.npc-name {
+    position: absolute;
+    top: -12px;
+    left: 15px;
+    background: var(--bg-color);
+    padding: 0 10px;
+    color: var(--accent-color);
+    font-size: 0.9em;
+}
+/* --- ダーリンの不思議の国エフェクト --- */
+@keyframes wonderland-distortion {
+    0% { filter: hue-rotate(0deg) blur(0px); transform: skewX(0deg) scale(1); }
+    25% { filter: hue-rotate(45deg) blur(1px); transform: skewX(1deg) scale(1.01); }
+    50% { filter: hue-rotate(90deg) blur(0px) invert(5%); transform: skewX(-1deg) scale(0.99); }
+    75% { filter: hue-rotate(135deg) blur(1px); transform: skewX(1deg) scale(1.01); }
+    100% { filter: hue-rotate(180deg) blur(0px); transform: skewX(0deg) scale(1); }
+}
+
+body.wonderland-mode {
+    animation: wonderland-distortion 4s infinite alternate ease-in-out;
+    background-color: #ffe6e6; /* 赤みがかった白に変色 */
+}
+
+@keyframes spinReverse { 100% { transform: rotate(-360deg); } }
+.reverse-clock { font-size: 4em; display: inline-block; animation: spinReverse 3s linear infinite; color: var(--accent-color); }
+
+.attention-trap-text { font-size: 0.5em; color: #e0e0e0; margin-top: 15px; text-align: center; } /* 白背景に溶け込む薄いグレー */
+/* --- ローディング（スピナー）アニメーション --- */
+.loader {
+    border: 4px solid rgba(88, 166, 255, 0.1); /* 薄い青 */
+    border-top: 4px solid var(--accent-color); /* 濃い赤（または青） */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* --- ダーリンの制限時間プログレスバー --- */
+#darling-timer-container {
+    width: 100%;
+    height: 10px;
+    background: #30363d;
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow: hidden;
+    display: none;
+}
+#darling-timer-bar {
+    width: 100%;
+    height: 100%;
+    background: var(--warn-color);
+    transition: width 0.1s linear;
+}
+.panic-shake {
+    animation: panicShake 0.3s infinite;
+}
+/* --- お茶会ギミック用 --- */
+.tea-cup {
+    font-size: 3em; cursor: pointer; display: inline-block; margin: 10px; transition: 0.2s;
+}
+.tea-cup.shaking {
+    animation: cupShake 0.5s infinite alternate;
+}
+@keyframes cupShake {
+    0% { transform: rotate(-5deg) translateY(0); }
+    100% { transform: rotate(5deg) translateY(-3px); }
+}
+
+/* --- 心拍計測ギミック用 --- */
+.bpm-bar-container {
+    width: 100%; height: 20px; background: #30363d; border-radius: 10px; overflow: hidden; margin: 10px 0;
+}
+.bpm-bar-fill {
+    height: 100%; background: #f85149; width: 0%; transition: width 0.1s;
+}
+
+/* --- 目が合うギミック用 --- */
+@keyframes eyeLook {
+    0%, 100% { transform: scaleX(1) translateX(0); }
+    30% { transform: scaleX(0.8) translateX(-10px); }
+    70% { transform: scaleX(0.8) translateX(10px); }
+    85% { transform: scaleX(1) translateY(5px); } /* こっちを見た！ */
+}
+.eye-looking {
+    font-size: 5em; display: inline-block; animation: eyeLook 2s infinite;
+}
+/* --- 鏡の部屋（Mirror Room）ギミック用 --- */
+.mirror-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+.mirror-icon {
+    font-size: 3.5em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(201, 26, 37, 0.2));
+}
+.mirror-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 15px var(--accent-color));
+}
+.mirror-icon.shattered {
+    animation: shatter 0.5s forwards;
+    pointer-events: none;
+}
+@keyframes shatter {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2) rotate(-15deg); opacity: 0.8; filter: blur(2px); }
+    100% { transform: scale(0.5) translateY(20px); opacity: 0; }
+}
+
+/* --- 嘘つきティーポット（Te/Ti）ギミック用 --- */
+.talking-teapot {
+    font-size: 4em;
+    display: inline-block;
+    animation: floatTea 3s ease-in-out infinite alternate;
+}
+@keyframes floatTea {
+    0% { transform: translateY(0px) rotate(-2deg); }
+    100% { transform: translateY(-10px) rotate(2deg); }
+}
+/* --- キノコギミック用 --- */
+.mushroom {
+    font-size: 3em; cursor: pointer; display: inline-block; margin: 10px; transition: 0.3s;
+}
+.mushroom:hover { transform: scale(1.1); filter: drop-shadow(0 0 5px var(--accent-color)); }
+
+/* --- 好きって言って？ (Feトラップ) 用 --- */
+.love-btn { font-size: 1.5em; padding: 20px; border-color: #f85149; color: #f85149; }
+@keyframes panicShake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+/* ★ スマホ用レスポンシブ調整 */
+@media screen and (max-width: 480px) {
+    #app { padding: 15px; }
+    h1 { font-size: 1.5em; }
+    .card-btn { width: 100%; margin-bottom: 10px; } /* スマホではカードを縦並びに */
+    .nav-buttons button { font-size: 0.85em; padding: 10px; }
+    .eye-icon { font-size: 2.5em; margin: 0 5px; }
+}
