@@ -12,7 +12,7 @@ let nervousnessScore = 0;
 let comboScore = {}; 
 let directPsychoType = ""; 
 
-const MAX_QUESTIONS = 15;
+const MAX_QUESTIONS = 30;
 let selfReportedType = ""; 
 let shuffledQuestions =[]; 
 let subjectID = ""; 
