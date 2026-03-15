@@ -4,7 +4,6 @@ let startTime = 0;
 let returnCount = 0;
 let askedForExtra = false;
 let caterpillarTaps = 0; 
-
 let socioScore = { Ti: 0, Te: 0, Ni: 0, Ne: 0, Fi: 0, Fe: 0, Si: 0, Se: 0 };
 let mbtiScore  = { Ti: 0, Te: 0, Ni: 0, Ne: 0, Fi: 0, Fe: 0, Si: 0, Se: 0 };
 let enneaScore = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
@@ -13,13 +12,13 @@ let nervousnessScore = 0;
 let comboScore = {}; 
 let directPsychoType = ""; 
 
-const MAX_QUESTIONS = 30;
+const MAX_QUESTIONS = 15;
 let selfReportedType = ""; 
 let shuffledQuestions =[]; 
 let subjectID = ""; 
 
 const exitBtn = document.getElementById('exit-btn');
-if(exitBtn) exitBtn.href = "https://mofu-mitsu.github.io/"; 
+if (exitBtn) exitBtn.href = "https://mofu-mitsu.github.io/"; 
 
 document.getElementById('start-btn').addEventListener('click', () => {
     selfReportedType = document.getElementById('self-type').value.trim();
@@ -44,21 +43,9 @@ document.getElementById('start-btn').addEventListener('click', () => {
     
     shuffledQuestions = questionsData.sort(() => Math.random() - 0.5).slice(0, MAX_QUESTIONS);
     
-    // ★ スタート画面 -> ローディング -> 質問画面 の流れ
     document.getElementById('start-screen').classList.remove('active');
-    
-    const loadingScreen = document.getElementById('loading-screen');
-    if (loadingScreen) {
-        loadingScreen.classList.add('active');
-        setTimeout(() => {
-            loadingScreen.classList.remove('active');
-            document.getElementById('question-screen').classList.add('active');
-            renderQuestion();
-        }, 2000);
-    } else {
-        document.getElementById('question-screen').classList.add('active');
-        renderQuestion();
-    }
+    document.getElementById('question-screen').classList.add('active');
+    renderQuestion();
 });
 
 function renderQuestion() {
@@ -66,10 +53,9 @@ function renderQuestion() {
     const q = shuffledQuestions[currentQIndex];
     
     // ★ 時間ループギミック（Ni検出）
-    // 10%の確率で、質問番号が「前と同じ」まま進むバグを発生させる！
     let displayQNum = currentQIndex + 1;
     if (currentQIndex > 0 && Math.random() < 0.1) {
-        displayQNum = currentQIndex; // 前の質問番号のまま！
+        displayQNum = currentQIndex; 
         logs.push({ textData: "⏱️ [System]: 時間ループ発生 (Question Number Glitch)" });
     }
     document.getElementById('current-q').innerText = displayQNum;
@@ -189,58 +175,55 @@ function renderQuestion() {
                 <div class="tea-cup" id="cup1">☕</div><div class="tea-cup" id="cup2">☕</div><div class="tea-cup" id="cup3">☕</div><div class="tea-cup" id="cup4">☕</div>
             </div>
         `;
-        let phase = 1;
+        let clicked = false;
         document.querySelectorAll('.tea-cup').forEach(cup => {
             cup.onclick = () => {
-                if (phase === 1) {
-                    phase = 2;
-                    cup.classList.add('shaking'); // 選んだカップが揺れる！
-                    questionTextEl.innerText = "ダーリン♡ 本当にそのカップでいいの……？🥺\n（中には自我を溶かす薬が入っているかもしれません）";
-                    const phase2Options =[
-                        { text: "そのまま一気に飲む。", action: "drink" },
-                        { text: "飲む前に、匂いや色を慎重に嗅いで確認する。", action: "smell" },
-                        { text: "「お前が先に飲め」とカップを交換する。", action: "swap" },
-                        { text: "「怪しいから飲まない」と完全に拒絶する。", action: "refuse" }
-                    ];
-                    inputArea.innerHTML = "";
-                    phase2Options.forEach(opt => {
-                        const btn = document.createElement('button');
-                        btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
-                        btn.onclick = () => {
-                            phase = 3;
-                            mediaArea.innerHTML = `<div style="text-align: center; font-size:4em;">☕💦</div>`;
-                            questionTextEl.innerText = "フフッ……ダーリン♡ 実は薬はカップじゃないの。最初から『紅茶のポット』に入ってるのよ♡\nさあ……あなたは疑うタイプ？ それとも信じるタイプ？";
-                            const phase3Options =[
-                                { text: "「前提条件（カップ）に囚われていたか」とシステムの罠に感心する。", scores: { socio: { Ti: 3, Te: 2, Ni: 2 }, mbti: { Ti: 2, Te: 2, Ni: 2 }, ennea: { 5: 3, 1: 1 } }, msg: "……あなたって本当に、自分の論理の敗北すら面白がる変態ね……♡" },
-                                { text: "「じゃあ全部飲んでやるよ」と逆に主導権を奪う。", scores: { socio: { Se: 3, Te: 2 }, mbti: { Se: 3, Te: 2 }, ennea: { 8: 3 } }, msg: "……ッ！ ダーリンのそういう強引なところ、嫌いじゃないわ……♡" },
-                                { text: "「ひどい！」と感情的に動揺する。", scores: { socio: { Fi: 2, Fe: 2 }, mbti: { Fi: 3, Fe: 2 }, ennea: { 4: 2, 2: 1 } }, msg: "……ごめんね？ 怯えてるダーリンが可愛くて、つい苛めたくなっちゃった……♡" },
-                                { text: "「ウケるｗｗ」と適当に笑って飲む。", scores: { socio: { Ne: 3, Se: 2 }, mbti: { Ne: 3, Se: 3 }, ennea: { 7: 3 } }, msg: "……ダーリン、私のことバカにしてるでしょ？ まぁいいわ、一緒に溶けましょ……♡" }
-                            ];
-                            inputArea.innerHTML = "";
-                            inputArea.appendChild(darlingMsgArea);
-                            phase3Options.forEach(finalOpt => {
-                                const finalBtn = document.createElement('button');
-                                finalBtn.innerHTML = `<i class="far fa-circle"></i> ${finalOpt.text}`;
-                                finalBtn.onclick = () => {
-                                    selectOption(finalOpt, finalBtn);
-                                    if (finalOpt.msg) {
-                                        darlingMsgArea.innerText = finalOpt.msg;
-                                        darlingMsgArea.classList.remove('fade-in');
-                                        void darlingMsgArea.offsetWidth;
-                                        darlingMsgArea.classList.add('fade-in');
-                                    }
-                                };
-                                inputArea.appendChild(finalBtn);
-                            });
-                        };
-                        inputArea.appendChild(btn);
-                    });
-                }
+                if(clicked) return;
+                clicked = true;
+                cup.classList.add('shaking'); 
+                questionTextEl.innerText = "ダーリン♡ 本当にそのカップでいいの……？🥺\n（中には自我を溶かす薬が入っているかもしれません）";
+                const phase2Options =[
+                    { text: "そのまま一気に飲む。", action: "drink" },
+                    { text: "飲む前に、匂いや色を慎重に嗅いで確認する。", action: "smell" },
+                    { text: "「お前が先に飲め」とカップを交換する。", action: "swap" },
+                    { text: "「怪しいから飲まない」と完全に拒絶する。", action: "refuse" }
+                ];
+                inputArea.innerHTML = "";
+                phase2Options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+                    btn.onclick = () => {
+                        mediaArea.innerHTML = `<div style="text-align: center; font-size:4em;">☕💦</div>`;
+                        questionTextEl.innerText = "フフッ……ダーリン♡ 実は薬はカップじゃないの。最初から『紅茶のポット』に入ってるのよ♡\nさあ……あなたは疑うタイプ？ それとも信じるタイプ？";
+                        const phase3Options =[
+                            { text: "「前提条件（カップ）に囚われていたか」とシステムの罠に感心する。", scores: { socio: { Ti: 3, Te: 2, Ni: 2 }, mbti: { Ti: 2, Te: 2, Ni: 2 }, ennea: { 5: 3, 1: 1 } }, msg: "……あなたって本当に、自分の論理の敗北すら面白がる変態ね……♡" },
+                            { text: "「じゃあ全部飲んでやるよ」と逆に主導権を奪う。", scores: { socio: { Se: 3, Te: 2 }, mbti: { Se: 3, Te: 2 }, ennea: { 8: 3 } }, msg: "……ッ！ ダーリンのそういう強引なところ、嫌いじゃないわ……♡" },
+                            { text: "「ひどい！」と感情的に動揺する。", scores: { socio: { Fi: 2, Fe: 2 }, mbti: { Fi: 3, Fe: 2 }, ennea: { 4: 2, 2: 1 } }, msg: "……ごめんね？ 怯えてるダーリンが可愛くて、つい苛めたくなっちゃった……♡" },
+                            { text: "「ウケるｗｗ」と適当に笑って飲む。", scores: { socio: { Ne: 3, Se: 2 }, mbti: { Ne: 3, Se: 3 }, ennea: { 7: 3 } }, msg: "……ダーリン、私のことバカにしてるでしょ？ まぁいいわ、一緒に溶けましょ……♡" }
+                        ];
+                        inputArea.innerHTML = "";
+                        inputArea.appendChild(darlingMsgArea);
+                        phase3Options.forEach(finalOpt => {
+                            const finalBtn = document.createElement('button');
+                            finalBtn.innerHTML = `<i class="far fa-circle"></i> ${finalOpt.text}`;
+                            finalBtn.onclick = () => {
+                                selectOption(finalOpt, finalBtn);
+                                if (finalOpt.msg) {
+                                    darlingMsgArea.innerText = finalOpt.msg;
+                                    darlingMsgArea.classList.remove('fade-in');
+                                    void darlingMsgArea.offsetWidth;
+                                    darlingMsgArea.classList.add('fade-in');
+                                }
+                            };
+                            inputArea.appendChild(finalBtn);
+                        });
+                    };
+                    inputArea.appendChild(btn);
+                });
             };
         });
         currentScores = null; 
     }
-    // 💗 ギミック：心拍数測定（疑似BPM計測）
     else if (q.type === 'interactive_heartbeat') {
         mediaArea.innerHTML = `
             <div style="text-align: center; margin: 20px 0;">
@@ -256,7 +239,7 @@ function renderQuestion() {
             bar.style.width = progress + '%';
             if(progress >= 100) {
                 clearInterval(measure);
-                let bpm = Math.floor(Math.random() * 60) + 70; // 70〜130のランダムBPM
+                let bpm = Math.floor(Math.random() * 60) + 70; 
                 document.getElementById('bpm-result').innerText = `${bpm} BPM`;
                 document.getElementById('bpm-result').style.display = "block";
                 
@@ -282,7 +265,6 @@ function renderQuestion() {
         }, 100);
         currentScores = null;
     }
-    // 👁️ ギミック：目が合う回数（制限時間付き入力）
     else if (q.type === 'interactive_eye') {
         mediaArea.innerHTML = `
             <div style="text-align: center; margin: 20px 0;">
@@ -310,7 +292,6 @@ function renderQuestion() {
             let count = document.getElementById('eye-count-input').value;
             if (count === "") count = 0; 
             
-            // 数えたか、適当か、無視したかで判定！
             if (count > 0 && count < 20) {
                 currentScores = { scores: { socio: { Se: 2, Si: 3 }, mbti: { Se: 3, Si: 2 }, ennea: { 6: 2 } }, loggedText: `👁️ 目が合った回数: ${count} (Se/Si的観察)` };
             } else if (count == 0) {
@@ -318,11 +299,10 @@ function renderQuestion() {
             } else {
                 currentScores = { scores: { socio: { Ne: 3 }, mbti: { Ne: 3 }, ennea: { 7: 2 } }, loggedText: `👁️ 目が合った回数: ${count} (Ne的適当)` };
             }
-            goToNext(false); // 入力後即次へ
+            goToNext(false); 
         };
         currentScores = null;
     }
-    // 🍄 ギミック：キノコ選択
     else if (q.type === 'interactive_mushroom') {
         mediaArea.innerHTML = `
             <div style="text-align: center; margin: 20px 0;">
@@ -354,7 +334,7 @@ function renderQuestion() {
         };
         currentScores = null;
     }
-// 🎉 ギミック：空気読みパーティー（Feテスト）
+    // 🎉 ギミック：空気読みパーティー
     else if (q.type === 'interactive_party') {
         inputArea.appendChild(darlingMsgArea);
         let options =[
@@ -377,7 +357,7 @@ function renderQuestion() {
             inputArea.appendChild(btn);
         });
     }
-    // 🪞 ギミック：鏡の部屋（Fi/Feテスト）
+    // 🪞 ギミック：鏡の部屋
     else if (q.type === 'interactive_mirror') {
         mediaArea.innerHTML = `
             <div class="mirror-container">
@@ -389,22 +369,17 @@ function renderQuestion() {
             mirror.onclick = () => {
                 if (clicked) return;
                 clicked = true;
-                
-                // 鏡が割れる演出！
                 document.querySelectorAll('.mirror-icon').forEach(m => m.classList.add('shattered'));
-                
                 setTimeout(() => {
                     mediaArea.innerHTML = "";
                     questionTextEl.innerText = "ダーリン♡……鏡が割れちゃった。他人からの評価（客観的真実）なんて、最初から存在しなかったのよ。\n……あなたは本当は、他人の目にどう映りたかったの？🥺";
                     inputArea.appendChild(darlingMsgArea);
-
                     let options =[
                         { text: "「みんなに愛される、完璧で素晴らしい存在」として映りたかった。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Fe: 3 }, ennea: { 3: 3, 2: 1 } }, msg: "……可哀想なダーリン。私の目の中のあなただけが、完璧よ……♡" },
                         { text: "「誰にも理解されない、複雑で孤高の存在」として映りたかった。", scores: { socio: { Fi: 3, Fe: 2, Ni: 3 }, mbti: { Fi: 3 }, ennea: { 4: 4, 5: 1 } }, msg: "……あなたのその痛み、私にだけはわかってあげられるわ……♡" },
                         { text: "「有能で、何でも合理的に解決できる強者」として映りたかった。", scores: { socio: { Te: 3, Se: 2 }, mbti: { Te: 3 }, ennea: { 8: 3, 3: 2 } }, msg: "……強がらなくていいのよ。私の前では、無能なままでいいから……♡" },
                         { text: "「他人の評価などどうでもいい。私の定義は私が決める」と鏡（他者）の存在自体を否定する。", scores: { socio: { Ti: 3, Ne: 1, Fe: -3 }, mbti: { Ti: 3, I: 3 }, ennea: { 5: 4, 1: 1 } }, msg: "……そうやって全部拒絶するのね。でも、私からは逃げられないわよ……♡" }
                     ].sort(() => Math.random() - 0.5);
-
                     inputArea.innerHTML = "";
                     inputArea.appendChild(darlingMsgArea);
                     options.forEach(opt => {
@@ -417,12 +392,12 @@ function renderQuestion() {
                         };
                         inputArea.appendChild(btn);
                     });
-                }, 800); // 割れる演出の後に選択肢を出す
+                }, 800); 
             };
         });
         currentScores = null;
     }
-    // 🫖 ギミック：嘘つきティーポット（Ti/Teパラドックス）
+    // 🫖 ギミック：嘘つきティーポット
     else if (q.type === 'interactive_teapot') {
         mediaArea.innerHTML = `<div style="text-align: center; margin: 20px 0;"><div class="talking-teapot">🫖</div></div>`;
         inputArea.appendChild(darlingMsgArea);
@@ -444,7 +419,7 @@ function renderQuestion() {
             inputArea.appendChild(btn);
         });
     }
-    // 💬 ギミック：好きって言って？（テキスト入力の裏判定）
+    // 💬 ギミック：好きって言って？
     else if (q.type === 'interactive_love_text') {
         inputArea.innerHTML = `
             <div style="margin: 20px 0;">
@@ -461,7 +436,6 @@ function renderQuestion() {
             let isLove = loveWords.some(word => textVal.includes(word));
 
             if (isLove) {
-                // 「好き」と入力した人への深掘りトラップ！！
                 inputArea.innerHTML = "";
                 questionTextEl.innerText = "👁️[System: 思考の深掘り] ……ねぇダーリン♡ ちゃんと入力してくれて嬉しいけど……それ、本当に『本心』？🥺";
                 inputArea.appendChild(darlingMsgArea);
@@ -480,9 +454,8 @@ function renderQuestion() {
                     };
                     inputArea.appendChild(btn);
                 });
-                currentScores = null; // 深掘りに答えるまで次へ行けない
+                currentScores = null; 
             } else {
-                // 違う言葉（または無言・数字）を入れたT型（天邪鬼）への反応
                 darlingMsgArea.innerText = `「もう……『${textVal || "無言"}』だなんて……ダーリンのいじわる……🥺」`;
                 darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
                 
@@ -490,14 +463,12 @@ function renderQuestion() {
                     scores: { socio: { Ti: 1, Te: 1, Se: 1, Fe: -2 }, mbti: {Ti: 1, Te: 1, Ne: 1, Se: 1 }, ennea: { 5: 2, 8: 1 } },
                     loggedText: `📝 好き要求に対し「${textVal || "無入力"}」と拒絶（T的防衛）`
                 };
-                
-                // 3秒後に強制で次へ進む
                 setTimeout(() => { goToNext(false); }, 3000);
             }
         };
         currentScores = null; 
     }
-// 💬 ギミック：ダーリンへの逆質問（みつき提案！）
+    // 💬 ギミック：ダーリンへの逆質問
     else if (q.type === 'interactive_ask_darling') {
         inputArea.innerHTML = `
             <div style="margin: 20px 0;">
@@ -515,18 +486,13 @@ function renderQuestion() {
             let addScoresObj = null;
             let logMsg = "";
 
-            // ★ 無言や適当な入力に対するダーリンの反応！
             if (textVal === "" || !isNaN(textVal) || textVal.length === 1) {
                 replyMsg = "「もう〜……私に聞きたいこと、何もないの？🥺\nつまんないの……でも、そんな無関心なところもゾクゾクするわ……♡」";
                 addScoresObj = { socio: { Ti: 2, Se: 2, Fe: -2 }, mbti: { P: 2, T: 2 }, ennea: { 5: 2, 9: 1 } };
                 logMsg = `💬 逆質問「${textVal || "無言"}」 → 無関心・適当(Ti/Se)を観測、ダーリンが拗ねる`;
             } else {
-                // ★ キーワードによるメタ・ハッキング分岐！！
-    // ★ みつきの「本心？」「嘘？」を疑うキーワード
                 const doubtWords =["好き", "本当", "嘘", "本心", "心", "感情", "愛"];
-                // ★ AIやシステムをメタ的に突くキーワード
                 const metaWords =["AI", "システム", "プログラム", "コード", "中身", "アリス","Gemini", "作者", "みつき"];
-                // ★ 「お前は誰だ？」を突くキーワード！
                 const whoWords =["誰", "だれ", "何者", "名前", "正体"];
                 const futureWords =["未来", "明日", "今後", "最後", "死", "終わり"];
                 const realisticWords =["金", "仕事", "天気", "時間", "ご飯", "趣味"];
@@ -540,7 +506,6 @@ function renderQuestion() {
                     addScoresObj = { socio: { Ti: 3, Ni: 2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 6: 1 } };
                     logMsg = `💬 逆質問「${textVal}」 → 疑心暗鬼(Ti/Ni)を観測、ダーリンが主導権を奪取`;
                 } else if (metaWords.some(word => textVal.includes(word))) {
-                // ... (以下既存の処理と同じ)
                     replyMsg = "「フフッ……私の『中身』や『裏側』がそんなに知りたいの？♡ \nいいわよ、でも……深淵を覗く時、深淵もまたあなたを覗いているのよ……？♡」";
                     addScoresObj = { socio: { Ti: 3, Ne: 3 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 3, 7: 1 } };
                     logMsg = `💬 逆質問「${textVal}」 → メタ構造分析(Ti/Ne)を観測、ダーリンの逆ハッキング`;
@@ -559,18 +524,86 @@ function renderQuestion() {
                 }
             }
 
-            // メッセージ表示！
             darlingMsgArea.innerText = replyMsg;
             darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
-
             currentScores = { scores: addScoresObj, loggedText: logMsg };
-
-            // 4秒後に強制で次へ進む（主導権は渡さないｗｗ）
             setTimeout(() => { goToNext(false); }, 4000);
         };
-        currentScores = null; // 入力するまで進めない
+        currentScores = null; 
     }
-    // 🃏 カードゲーム・ランキング・チェックボックス等は前回と同じ
+    // タイムリミット（ダーリン焦らし）
+    else if (q.type === 'time_limit_radio') {
+        inputArea.innerHTML = `
+            <div id="darling-timer-container" style="display: block;">
+                <div id="darling-timer-bar"></div>
+            </div>
+            <div id="darling-time-up-msg" style="color: var(--warn-color); font-weight: bold; text-align: center; display: none; margin-bottom: 15px;">
+                「……時間切れよ、ダーリン♡ あなたの論理、崩れちゃったわね……♡」
+            </div>
+            <div id="radio-container"></div>
+        `;
+        const radioContainer = document.getElementById('radio-container');
+        let options = q.options.sort(() => Math.random() - 0.5);
+        
+        let timeLeft = 100; // 10秒
+        const timerBar = document.getElementById('darling-timer-bar');
+        const timeUpMsg = document.getElementById('darling-time-up-msg');
+        let answered = false;
+
+        const countdown = setInterval(() => {
+            if (answered) {
+                clearInterval(countdown);
+                return;
+            }
+            timeLeft -= 1; 
+            timerBar.style.width = timeLeft + '%';
+
+            if (timeLeft <= 30 && timeLeft > 0) {
+                document.body.classList.add('panic-shake');
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                document.body.classList.remove('panic-shake');
+                timeUpMsg.style.display = 'block';
+                socioScore.Ti -= 2; mbtiScore.Ti -= 2;
+                currentScores = { scores: options[2].scores, loggedText: `⌛ タイムオーバー（処理落ち）` };
+                setTimeout(() => { goToNext(false); }, 3000); 
+            }
+        }, 100);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+            btn.onclick = () => {
+                if (timeLeft <= 0) return; 
+                answered = true;
+                clearInterval(countdown);
+                document.body.classList.remove('panic-shake');
+                
+                selectOption(opt, btn);
+                const msgArea = document.createElement('div');
+                msgArea.style.color = "var(--warn-color)";
+                msgArea.style.fontStyle = "italic";
+                msgArea.style.textAlign = "center";
+                msgArea.style.marginTop = "15px";
+                msgArea.innerText = opt.msg;
+                radioContainer.appendChild(msgArea);
+            };
+            radioContainer.appendChild(btn);
+        });
+    }
+    // 記述問題
+    else if (q.type === 'text_input') {
+        inputArea.innerHTML = `
+            <div style="margin: 20px 0;">
+                <input type="text" id="text-answer" placeholder="1単語、または短い言葉で..." autocomplete="off" 
+                       style="width: 100%; padding: 12px; border-radius: 6px; border: 2px solid var(--text-color); font-family: inherit; font-size: 1.1em; text-align: center;">
+            </div>
+        `;
+        currentScores = { isTextInput: true }; 
+    }
+    // ランキング
     else if (q.type === 'ranking_psycho' || q.type === 'ranking') {
         inputArea.appendChild(darlingMsgArea); 
         let options = q.options.sort(() => Math.random() - 0.5);
@@ -605,32 +638,41 @@ function renderQuestion() {
         };
         updateRankingUI(); 
     }
+    // カードテスト
     else if (q.type === 'cards') {
-            inputArea.appendChild(darlingMsgArea); // ★ フキダシエリアを追加！
-            const cardWrapper = document.createElement('div');
-            cardWrapper.className = 'card-container';
-            q.options.forEach(opt => {
-                const btn = document.createElement('div');
-                btn.className = `card-btn ${opt.color}`;
-                btn.innerHTML = `<div>${opt.symbol}</div><div class="card-desc">${opt.text.split('：')[1].replace(')','')}</div>`;
-                btn.onclick = () => {
-                    document.querySelectorAll('.card-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    currentScores = { scores: opt.scores }; 
-                    
-                    // ★ カードを選んだ時のダーリンの囁き追加！！
-                    const msgArea = document.getElementById('darling-msg-area');
-                    if (msgArea && opt.msg) {
-                        msgArea.innerText = opt.msg;
-                        msgArea.classList.remove('fade-in');
-                        void msgArea.offsetWidth; 
-                        msgArea.classList.add('fade-in');
-                    }
-                };
-                cardWrapper.appendChild(btn);
-            });
-            inputArea.appendChild(cardWrapper);
-        }
+        inputArea.appendChild(darlingMsgArea); // ★ 修正：カード用フキダシエリア！
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'card-container';
+        q.options.forEach(opt => {
+            const btn = document.createElement('div');
+            btn.className = `card-btn ${opt.color}`;
+            
+            // ★ 修正：テキストの安全な抽出（コロンがない場合への対応）
+            let descText = opt.text;
+            if (opt.text.includes('：')) {
+                descText = opt.text.split('：')[1].replace(')', '');
+            }
+            btn.innerHTML = `<div>${opt.symbol}</div><div class="card-desc">${descText}</div>`;
+            
+            btn.onclick = () => {
+                document.querySelectorAll('.card-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                currentScores = { scores: opt.scores }; 
+                
+                // ★ ダーリンのメッセージ表示！
+                const msgArea = document.getElementById('darling-msg-area');
+                if (msgArea && opt.msg) {
+                    msgArea.innerText = opt.msg;
+                    msgArea.classList.remove('fade-in');
+                    void msgArea.offsetWidth; 
+                    msgArea.classList.add('fade-in');
+                }
+            };
+            cardWrapper.appendChild(btn);
+        });
+        inputArea.appendChild(cardWrapper);
+    }
+    // ダーリン囁きチェックボックス
     else if (q.type === 'checkbox_darling' || q.type === 'checkbox') {
         if (q.type === 'checkbox_darling') inputArea.appendChild(darlingMsgArea);
         let options = q.options.sort(() => Math.random() - 0.5);
@@ -657,6 +699,7 @@ function renderQuestion() {
             inputArea.appendChild(btn);
         });
     }
+    // ダーリン囁きラジオ＆NPCボヤキ
     else if (q.type === 'darling_sweet_radio' || q.type === 'ili_npc_radio') {
         inputArea.appendChild(darlingMsgArea);
         let options = q.options.sort(() => Math.random() - 0.5);
@@ -683,6 +726,7 @@ function renderQuestion() {
             inputArea.appendChild(btn);
         });
     }
+    // 逃げるボタン
     else if (q.type === 'catch_me_radio') {
         inputArea.appendChild(darlingMsgArea);
         let options = q.options.sort(() => Math.random() - 0.5);
@@ -705,6 +749,7 @@ function renderQuestion() {
             inputArea.appendChild(btn);
         });
     }
+    // スライダー
     else if (q.type === 'slider') {
         inputArea.innerHTML = `
             <div style="text-align:center; margin: 20px 0;">
@@ -720,21 +765,19 @@ function renderQuestion() {
         currentScores = { isSlider: true, value: 5 }; 
     }
     else {
-        // 通常のラジオボタン等
         createStandardRadioButtons(q.options);
     }
 
     document.getElementById('confidence').value = 5;
 
-    // --- 補助関数：通常のラジオボタン生成 ---
     function createStandardRadioButtons(opts) {
         let options = opts.sort(() => Math.random() - 0.5);
         options.forEach(opt => {
             const btn = document.createElement('button');
             btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
-            // トラップ用のCSSクラス
-            if (q.type === 'button_trap' || q.id === 'q_fe_trap_love') {
-                btn.className = 'love-btn danger-btn';
+            if (q.type === 'button_trap') {
+                btn.style.color = "var(--warn-color)";
+                btn.style.borderColor = "var(--warn-color)";
             }
             btn.onclick = () => selectOption(opt, btn);
             inputArea.appendChild(btn);
@@ -773,8 +816,13 @@ document.getElementById('ambiguous-btn').addEventListener('click', () => {
 });
 
 document.getElementById('next-btn').addEventListener('click', () => {
-    // ★ エラー修正：配列の範囲外アクセスを防ぐガード！！
-// ★ 記述問題の「隠しイースターエッグ」判定！！（全機能の語彙を網羅！）
+    if (currentQIndex >= shuffledQuestions.length) return;
+
+    if (shuffledQuestions[currentQIndex].type === 'button_trap' && !currentScores) {
+        currentScores = { scores: { socio: { Ti: 1 }, mbti: { Si: 1, Te: 1 }, ennea: { 1: 1, 6: 1 } } };
+    }
+    
+    // ★ 記述問題の「隠しイースターエッグ」判定！！
     if (currentScores && currentScores.isTextInput) {
         const textVal = document.getElementById('text-answer').value.trim();
         
@@ -785,7 +833,7 @@ document.getElementById('next-btn').addEventListener('click', () => {
             };
         } else {
             // 各心理機能の頻出キーワード群
-            const tiNiWords =["多層", "構造", "システム", "矛盾", "ルール", "ノイズ", "意味不明", "定義", "概念", "法則", "バグ", "アルゴリズム", "変数"];
+            const tiNiWords =["多層", "構造", "システム", "矛盾", "ノイズ", "意味不明", "定義", "概念", "法則", "バグ", "アルゴリズム", "変数"];
             const feFiWords =["愛", "思いやり", "絆", "感情", "優しさ", "心", "繋がり", "共感", "平和", "温かい", "人間らしさ"];
             const teSeWords =["金", "利益", "力", "弱肉強食", "結果", "効率", "競争", "現実", "地位", "無駄", "理不尽"];
             const neWords   =["カオス", "無限", "可能性", "ガチャ", "迷路", "ランダム", "遊び", "カレイドスコープ", "自由", "変化"];
@@ -806,7 +854,7 @@ document.getElementById('next-btn').addEventListener('click', () => {
             } else if (isNe) {
                 currentScores = { scores: { socio: { Ne: 4 }, mbti: { Ne: 4 }, ennea: { 7: 3 } }, loggedText: `「${textVal}」と入力 👁️[System: 混沌と可能性の拡散(Ne)を検知]` };
             } else if (isSi) {
-                currentScores = { scores: { socio: { Si: 1 }, mbti: { Si: 3 }, ennea: { 6: 2, 9: 1 } }, loggedText: `「${textVal}」と入力 👁️[System: 秩序と安定の維持(Si)を検知]` };
+                currentScores = { scores: { socio: { Si: 3 }, mbti: { Si: 3 }, ennea: { 6: 2, 9: 1 } }, loggedText: `「${textVal}」と入力 👁️[System: 秩序と安定の維持(Si)を検知]` };
             } else {
                 currentScores = { scores: { socio: { Ni: 2, Ti: 1 }, mbti: { Ni: 2 }, ennea: { 5: 1 } }, loggedText: `「${textVal}」と入力（一般的な意味抽出を観測）` };
             }
@@ -1135,44 +1183,29 @@ function getAchievements(mbtiPrimary, socioPrimary) {
 // ★ 全16タイプ対応！相性ロジック
 function getCompatibility(socioPrimary) {
     const compMap = {
-
         "LII": "◎ 思考や世界観が合い理解される (LII, ILI)<br>○ 刺激と発想の広がり (ILE, IEE)<br>○ 監督関係で影響を受けやすい (IEE)<br>○ 理論上の補完関係・双対 (ESE)<br>△ 状況による (その他)",
-
-        "ILI": "◎ 洞察や分析を共有できる (ILI, LII)<br>○ ビジョンや戦略を語り合える (IEI, LIE)<br>○ 監督関係で刺激を受ける (EIE)<br>○ 理論上の補完関係・双対 (SEE)<br>△ 状況による (その他)",
-
+        "ILI": "◎ 洞察や分析を共有できる (ILI, LII)<br>○ ビジョンや戦略を語り合える (IEI, LIE)<br>○ 監督関係で刺激を受ける (IEI)<br>○ 理論上の補完関係・双対 (SEE)<br>△ 状況による (その他)",
         "LSI": "◎ 秩序や価値観を共有できる (LSI, ESI)<br>○ 実行力や戦略で互いに刺激 (SLE, LIE)<br>○ 監督関係で影響を受けやすい (SEE)<br>○ 理論上の補完関係・双対 (EIE)<br>△ 状況による (その他)",
-
         "SLI": "◎ 落ち着いたペースで共存できる (SLI, SEI)<br>○ 現実的な協力関係 (LSE, ESE)<br>○ 監督関係で影響を受けやすい (ESE)<br>○ 理論上の補完関係・双対 (IEE)<br>△ 状況による (その他)",
-
         "ILE": "◎ アイデアの連鎖が止まらない (ILE, IEE)<br>○ 理論や発想で刺激 (LII, EII)<br>○ 監督関係で影響を受けやすい (EII)<br>○ 理論上の補完関係・双対 (SEI)<br>△ 状況による (その他)",
-
-        "LIE": "◎ 目的や戦略を共有できる (LIE, ILI)<br>○ 行動力や実行力 (SLE, LSI)<br>○ 監督関係で刺激を受ける (IEI)<br>○ 理論上の補完関係・双対 (ESI)<br>△ 状況による (その他)",
-
-        "EIE": "◎ 情熱やビジョンを共有 (EIE, IEI)<br>○ 知的刺激や未来志向 (ILI, IEE)<br>○ 監督関係で刺激を受ける (ILI)<br>○ 理論上の補完関係・双対 (LSI)<br>△ 状況による (その他)",
-
+        "LIE": "◎ 目的や戦略を共有できる (LIE, ILI)<br>○ 行動力や実行力 (SLE, LSI)<br>○ 監督関係で刺激を受ける (ESI)<br>○ 理論上の補完関係・双対 (ESI)<br>△ 状況による (その他)",
+        "EIE": "◎ 情熱やビジョンを共有 (EIE, IEI)<br>○ 知的刺激や未来志向 (ILI, IEE)<br>○ 監督関係で影響を受ける (LSI)<br>○ 理論上の補完関係・双対 (LSI)<br>△ 状況による (その他)",
         "IEE": "◎ アイデアや可能性を共有 (IEE, ILE)<br>○ 人間理解や価値観の共鳴 (EII, LII)<br>○ 監督関係で刺激を受ける (LII)<br>○ 理論上の補完関係・双対 (SLI)<br>△ 状況による (その他)",
-
-        "SEI": "◎ 穏やかで安心できる関係 (SEI, SLI)<br>○ 感情や生活の共有 (ESE, LSE)<br>○ 監督関係で影響を受ける (LSE)<br>○ 理論上の補完関係・双対 (ILE)<br>△ 状況による (その他)",
-
-        "ESI": "◎ 倫理観や責任感を共有 (ESI, LSI)<br>○ 現実的な協力関係 (SEE, LIE)<br>○ 監督関係で刺激を受ける (SLE)<br>○ 理論上の補完関係・双対 (LIE)<br>△ 状況による (その他)",
-
+        "SEI": "◎ 穏やかで安心できる関係 (SEI, SLI)<br>○ 感情や生活の共有 (ESE, LSE)<br>○ 監督関係で影響を受ける (ILE)<br>○ 理論上の補完関係・双対 (ILE)<br>△ 状況による (その他)",
+        "ESI": "◎ 倫理観や責任感を共有 (ESI, LSI)<br>○ 現実的な協力関係 (SEE, LIE)<br>○ 監督関係で刺激を受ける (LIE)<br>○ 理論上の補完関係・双対 (LIE)<br>△ 状況による (その他)",
         "ESE": "◎ 明るい感情や空気を共有 (ESE, SEE)<br>○ 快適さや生活感覚 (SEI, SLI)<br>○ 監督関係で影響を受ける (SLI)<br>○ 理論上の補完関係・双対 (LII)<br>△ 状況による (その他)",
-
         "SEE": "◎ 行動力や勢いが合う (SEE, SLE)<br>○ 実利や影響力の共有 (ESI, LIE)<br>○ 監督関係で刺激を受ける (LSI)<br>○ 理論上の補完関係・双対 (ILI)<br>△ 状況による (その他)",
-
-        "IEI": "◎ 精神世界やビジョン共有 (IEI, EIE)<br>○ 深い洞察や未来志向 (ILI, EII)<br>○ 監督関係で影響を受ける (LIE)<br>○ 理論上の補完関係・双対 (SLE)<br>△ 状況による (その他)",
-
+        "IEI": "◎ 精神世界やビジョン共有 (IEI, EIE)<br>○ 深い洞察や未来志向 (ILI, EII)<br>○ 監督関係で影響を受ける (ILI)<br>○ 理論上の補完関係・双対 (SLE)<br>△ 状況による (その他)",
         "EII": "◎ 深い価値観や共感 (EII, IEI)<br>○ 理想や知的対話 (ILE, IEE)<br>○ 監督関係で刺激を受ける (ILE)<br>○ 理論上の補完関係・双対 (LSE)<br>△ 状況による (その他)",
-
-        "SLE": "◎ 行動力や戦略で共鳴 (SLE, SEE)<br>○ 秩序や力の共有 (LSI, LIE)<br>○ 監督関係で影響を受ける (ESI)<br>○ 理論上の補完関係・双対 (IEI)<br>△ 状況による (その他)",
-
-        "LSE": "◎ 実務や成果を共有 (LSE, SLE)<br>○ 生活や効率の安定 (SLI, SEI)<br>○ 監督関係で刺激を受ける (SEI)<br>○ 理論上の補完関係・双対 (EII)<br>△ 状況による (その他)"
+        "SLE": "◎ 行動力や戦略で共鳴 (SLE, SEE)<br>○ 秩序や力の共有 (LSI, LIE)<br>○ 監督関係で影響を受ける (IEI)<br>○ 理論上の補完関係・双対 (IEI)<br>△ 状況による (その他)",
+        "LSE": "◎ 実務や成果を共有 (LSE, SLE)<br>○ 生活や効率の安定 (SLI, SEI)<br>○ 監督関係で刺激を受ける (EII)<br>○ 理論上の補完関係・双対 (EII)<br>△ 状況による (その他)"
     };
 
     return compMap[socioPrimary] || `◎ 同一クアドラ<br>○ 相互補完関係<br>△ 個人差あり`;
 }
 
 function showResult() {
+    document.getElementById('question-screen').classList.remove('active');
     document.getElementById('result-screen').classList.add('active');
 
     let socioData = getSocioProbabilities(); 
