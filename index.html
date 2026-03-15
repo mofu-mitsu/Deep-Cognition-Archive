@@ -3,22 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Cognition Archive</title>
-    <!-- FontAwesomeの読み込み -->
+    <!-- ★ メタタグ & OGP設定 -->
+    <title>Deep Cognition Archive | 深層認知・ソシオニクス診断</title>
+    <meta name="description" content="あなたの情報代謝と深層認知プロセスを観測し、MBTI・ソシオニクス・エニアグラムを高精度で分離・推定します。">
+    <meta property="og:title" content="Deep Cognition Archive | 深層認知診断">
+    <meta property="og:description" content="迷った時間や行動ログから「態度の裏」を見抜き、あなたの真のタイプを暴くサイコメトリクス・ツール。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mofu-mitsu.github.io/Deep-Cognition-Archive/">
+    <meta property="og:image" content="https://mofu-mitsu.github.io/Deep-Cognition-Archive/ogp-image.png"> <!-- ※後で画像作ってね！ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- ★ favicon設定 -->
+    <link rel="icon" href="favicon.ico"> <!-- ※後でアイコン画像置いてね！ -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div id="app">
+<div id="app">
+        <!-- EXIT ボタン ＆ 被験者ID -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); margin-bottom: 20px;">
+            <!-- ★ ランダム生成される被験者ID -->
+            <div id="subject-id" style="color: var(--accent-color); font-size: 0.8em; font-weight: bold; letter-spacing: 1px;">
+                Subject ID:[ WAIT... ]
+            </div>
+            
+            <a href="#" id="exit-btn" style="color: var(--warn-color); text-decoration: none; font-size: 0.85em; border: 1px dashed var(--warn-color); padding: 5px 10px; border-radius: 4px; transition: 0.3s;">
+                <i class="fas fa-sign-out-alt"></i> [ EXIT : SYSTEM ]
+            </a>
+        </div>
+
+        <!-- ★ 喋る芋虫ギミック用（完全にズレない構造） -->
+        <div id="caterpillar-container">
+            <div id="caterpillar">🐛</div>
+            <div id="caterpillar-speech"></div>
+        </div>
+
+        <!-- スタート画面 -->
         <div id="start-screen" class="screen active fade-in">
             <h1><i class="fas fa-satellite-dish"></i> Deep Cognition Archive</h1>
             <p>対象者の情報代謝・深層認知プロセスを観測します。</p>
-            <p><i class="fas fa-user-secret"></i> <span>※回答内容だけでなく、迷った時間や行動ログも計測されます。</span></p>
+            
+            <div style="margin: 20px 0; text-align: left;">
+                <label for="self-type" style="font-size: 0.85em; color: #8b949e;"><i class="fas fa-database"></i> [任意] 現在の自認タイプ (MBTI/ソシオ等) を教えてください</label>
+                <input type="text" id="self-type" placeholder="例: INTJ, LII, 5w4 (不明な場合は空欄でOK)" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border-color); background: #0d1117; color: var(--accent-color); font-family: inherit; box-sizing: border-box;">
+            </div>
+
+            <!-- ★ チャッピー提案の免責事項＆自動送信の同意 -->
+            <div style="background: rgba(48, 54, 61, 0.5); padding: 15px; border-radius: 6px; font-size: 0.8em; color: #f1f5fa; margin-bottom: 20px; line-height: 1.5;">
+                <strong>【注意事項・利用規約】</strong><br>
+                ※ この診断は研究・娯楽目的のツールです。<br>
+                ※ 結果は参考程度にお楽しみください。<br>
+                ※ 回答内容だけでなく、迷った時間や行動ログも計測されます。<br>
+                ※ 精度向上のため、回答時間などのメタデータを含む「匿名ログ」が観測者（開発者）に自動送信されます。<br>
+                ※ 観測を開始した時点で、上記に同意したものとみなします。
+            </div>
+
             <button id="start-btn"><i class="fas fa-play"></i> 観測を開始する</button>
         </div>
-
+        <!-- ★ 新追加：ローディング画面！ -->
+        <div id="loading-screen" class="screen fade-in" style="text-align: center; padding: 40px 0;">
+            <h2 id="loading-title" style="color: var(--accent-color); margin-bottom: 20px;">
+                <i class="fas fa-satellite-dish fa-spin"></i> System Initializing...
+            </h2>
+            <div class="loader" style="margin: 0 auto;"></div>
+            <p id="loading-text" style="color: #8b949e; margin-top: 20px; font-size: 0.9em; font-family: monospace;">
+                対象者の深層認知モデルを構築中...
+            </p>
+        </div>
+        <!-- 質問画面 -->
         <div id="question-screen" class="screen">
+            <!-- (中略...以前と同じ) -->
             <div class="progress"><i class="fas fa-list"></i> Log: <span id="current-q">1</span> / <span id="total-q"></span></div>
             <h2 id="question-text">質問</h2>
             
@@ -39,26 +94,37 @@
             </div>
         </div>
 
+<!-- 結果画面 -->
         <div id="result-screen" class="screen fade-in">
             <h1><i class="fas fa-poll"></i> 観測完了</h1>
             <div class="result-box">
                 <h2>ソシオニクス: <span id="socio-type"></span></h2>
                 <h3>サブタイプ: <span id="socio-sub"></span> / DCNH: <span id="dcnh-type"></span></h3>
                 <p>推定MBTI: <span id="mbti-type"></span> - <span id="a-t-type"></span></p>
-                <p id="socio-desc" style="font-size: 0.9em; color: #8b949e;"></p>
+                <p>エニアグラム: <span id="ennea-type"></span></p>
+                <!-- ★ サイコソフィア追加！ -->
+                <p style="color: var(--warn-color); font-weight: bold;">サイコソフィア: <span id="psycho-type"></span></p>
+                
+                <p id="socio-desc" style="font-size: 0.9em; color: #8b949e; margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 10px;"></p>
             </div>
+            
             <div class="chart-container">
-                            <!-- レーダーチャート -->
-                            <canvas id="function-chart"></canvas>
-                        </div>
-                        <div class="chart-container" style="margin-top: 20px;">
-                            <!-- ★棒グラフを追加！ -->
-                            <canvas id="bar-chart"></canvas>
-                        </div>
+                <!-- 心理機能レーダーチャート -->
+                <canvas id="function-chart"></canvas>
+            </div>
+            <div class="chart-container" style="margin-top: 20px;">
+                <!-- 心理機能棒グラフ -->
+                <canvas id="bar-chart"></canvas>
+            </div>
+            <!-- ★ エニアグラムのレーダーチャート追加！ -->
+            <div class="chart-container" style="margin-top: 20px;">
+                <h4 style="text-align: center; color: #8b949e; margin-bottom: 5px;">エニアグラム分布</h4>
+                <canvas id="ennea-chart"></canvas>
+            </div>
+            
             <div class="log-box">
                 <h3><i class="fas fa-terminal"></i> [System Log] 認知プロセスの特徴</h3>
                 <p id="behavior-log"></p>
-            </div>
             <button onclick="location.reload()"><i class="fas fa-redo"></i> 再診断</button>
         </div>
     </div>
