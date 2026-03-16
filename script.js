@@ -23,6 +23,8 @@ let previousScreen = "start-screen";
 
 document.getElementById('menu-btn').onclick = () => {
     // 現在アクティブな画面を記憶
+    const availableQuestions = questionsData.filter(q => !q.id || !q.id.includes("followup"));
+    shuffledQuestions = availableQuestions.sort(() => Math.random() - 0.5).slice(0, BASIC_QUESTIONS);
     if (document.getElementById('start-screen').classList.contains('active')) previousScreen = 'start-screen';
     else if (document.getElementById('question-screen').classList.contains('active')) previousScreen = 'question-screen';
     else if (document.getElementById('result-screen').classList.contains('active')) previousScreen = 'result-screen';
@@ -414,7 +416,13 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
     // 🤯 ギミック：Ne圧（カオスの無限吹き出し）
     if (q.type === 'interactive_ne_chaos') {
         // ★ カオス語彙を大量増量！！
-        const chaosWords =["空がゼリー!?🍉", "スイカが喋る!?🍉", "数学は青色!?🟦", "宇宙の端っこ!?🌌", "キノコが歩いてる!?🍄", "時間が逆再生!?⏳", "もしカラスが机なら!?🐦‍⬛", "猫の鳴き声が『円周率』だったら!?🐈", "全部夢だったらどうする!?💭", "重力が横向きになったら!?🔄", "明日の天気が『カツカレー』!?🍛", "私が君で君が私!?🪞"];
+        const chaosWords =["空がゼリー!?🍉", "スイカが喋る!?🍉", "数学は青色!?🟦", "宇宙の端っこ!?🌌", "キノコが歩いてる!?🍄", "時間が逆再生!?⏳", "もしカラスが机なら!?🐦‍⬛", "猫の鳴き声が『円周率』だったら!?🐈", "全部夢だったらどうする!?💭", "重力が横向きになったら!?🔄", "明日の天気が『カツカレー』!?🍛", "私が君で君が私!?🪞", "雲がピザに変身!?🍕", "月がWi-Fi切れたらどうすんの!?🌕", "冷蔵庫が恋に落ちたら!?❄️❤️", "電車が急にダンス始めたら!?🚃💃", "俺の影が勝手に逃げ出したら!?🕴️🏃", "重力が『今日は休み』って言ってきたら!?🪂", "鏡の中の自分が『お前が偽物だろ』って言ってきたら!?🪞😈", 
+            "時間旅行して過去の自分に『やめとけ』って言ったら!?⏰", "スマホが『もう充電したくない』ってストライキ!?📱🚩", "虹が逆さまになったら色はどうなる!?🌈🔄", "夢の中で起きたら現実が夢!?💤🔄", "猫が人間語で『税金払え』って言ってきたら!?🐱💸", "空からカレーが降ってきたら味は!?🍛☔", "地球が『もう回りたくない』って止まったら!?🌍🛑", "俺の声がエコーじゃなくて逆再生になったら!?🎤↩️", "木が『お前が葉っぱだろ』って言ってきたら!?🌳🫵", "数学の公式が全部『かわいい』になったら!?➕😍", "風が『今日は俺の気分で吹く』って宣言!?🌬️👑", "太陽が『今日は寝坊するわ』って言ったら!?☀️🛌", "靴下が片方だけ異世界転生したら!?🧦🌌", "冷たいビールが『熱くなりたい』って泣いたら!?🍺😭", 
+            "Wi-Fiの電波が『恋愛相談乗るよ』って喋りだしたら!?📶💬", "壁が『俺の中に入りたい？』って誘ってきたら!?🧱😏", "昨日食べたラーメンが『復讐に来た』って現れたら!?🍜🔪", "俺の心臓が『もう働きたくない』って辞表出してきたら!?❤️📄", "雲が『俺は実はUFOだ』ってカミングアウト!?☁️🛸", "指が勝手にダンス始めたら!?✋🕺", "鏡が『今日はお前じゃなくて俺が本物』って主張!?🪞👤", "重力が『今日は斜めでいい？』って提案!?🪂↗️", "夢の続きが現実で続いてたらどうすんの!?💭➡️🌍", "猫の目が『QRコード』になったら!?🐱📱", "俺の名前が突然『404 Not Found』になったら!?🪪❌", "空が『今日はピンクでいくわ』って変わったら!?🌸", "時間が『巻き戻しボタン押された』って言ってきたら!?⏪", "冷蔵庫の中身が『パーティーするぞ！』って騒ぎだしたら!?🍎🎉", "影が『俺の方が本体だろ』って喧嘩売ってきたら!?🕴️💥", "数学が『もう計算したくない』って泣いたら!?➗😢", "スマホの充電が『永遠に100%でいいよね？』って言ってきたら!?🔋♾️", "木の葉が全部『いいね！』ボタンになったら!?🍃👍", 
+            "風呂が『今日は俺が入る番だ』って言ってきたら!?🛁🫵", "俺の過去が『今から修正するわ』って現れたら!?⏳✏️", "虹の端っこに宝箱があったら中身は!?🌈📦", "猫が『人間やめます』って宣言したら!?🐱🚶", "重力が『今日は浮遊デー』って決めたら!?🪂🎈", "鏡の中の俺が『お前遅刻だぞ』って怒ってきたら!?🪞⏰", "夢が『今日は現実に行くわ』って出てきたら!?💤🌍", "空が『俺の色、変えてみ？』って言ってきたら!?🌌🎨", "時間が『加速モードオン』って言ったら!?⏩💨", "靴が『今日は俺が歩く』って勝手に動いたら!?👟🏃", "冷たい風が『熱いハグして』って言ってきたら!?🌬️🤗", "俺の声が『エフェクトかけまくれ』ってリクエストしてきたら!?🎤✨", "雲が『俺は実は綿菓子だ』ってカミングアウト!?☁️🍬", "指紋が『今日だけ消えるわ』って言ってきたら!?🔍❌", "昨日見た夢が『続きやるぞ』って現れたら!?💭▶️", "太陽が『今日は月と交代』って言ってきたら!?☀️🌙", "Wi-Fiが『今日は有線でいい？』って聞いてきたら!?📶🔌", 
+            "心臓が『ビートボックスやるわ』って始めたら!?❤️🎤", "影が『今日は俺が光る』って言ってきたら!?🕴️💡", "数学の答えが『ごめん、間違えた』って訂正してきたら!?➕🙏", "冷蔵庫が『俺の中、異世界だぞ』って言ってきたら!?❄️🌌", "猫の尻尾が『今日は操縦桿』になったら!?🐱🛩️", "時間が『ループするわ』って宣言したら!?⏳🔄", "空が『今日は俺が主役』って言ってきたら!?🌌🎭", "鏡が『お前じゃなくて俺を見て』って言ってきたら!?🪞👀", "重力が『今日はお休み』って寝坊したら!?🪂🛌", "夢の中で俺が『現実に戻りたくない』って言ったら!?💤🚫", "風が『俺の名前は『ふわふわちゃん』だ』って自己紹介!?🌬️💕", "スマホが『今日は俺が人間になる』って言ってきたら!?📱🧍", "雲が『俺は実はアイスだ』って溶け始めたら!?☁️🍨", "指が『今日は休暇取るわ』って動かなくなったら!?✋🏖️", "昨日食べたものが『復活するぞ』って言ってきたら!?🍔🔄", "太陽が『今日は暗黒モード』って言ってきたら!?☀️🌑", 
+            "Wi-Fiが『恋に落ちた』って言ってきたら!?📶❤️", "心臓が『今日はスローモーション』って言ってきたら!?❤️⏳", "影が『今日は3Dになるわ』って言ってきたら!?🕴️📐", "数学が『俺は芸術だ』って言い出した!?➗🎨", "冷蔵庫が『今日は暖房つけるわ』って言ってきたら!?❄️🔥", "猫が『俺は宇宙人だ』って言ってきたら!?🐱👽", "時間が『今日は止まるわ』って言ってきたら!?⏰🛑", "空が『今日は俺の誕生日』って言ってきたら!?🌌🎂", "鏡が『お前は俺の夢だ』って言ってきたら!?🪞💭", "重力が『今日は逆さまだ』って言ってきたら!?🪂🔄", "夢が『今日は終わらない』って言ってきたら!?💤♾️", "風が『俺は歌うよ』ってハミング始めたら!?🌬️🎶", "スマホが『俺の名前は『スマホくん』だ』って自己紹介!?📱👦", "雲が『俺は実はドラゴン』って変身したら!?☁️🐉", "指が『今日はピアノ弾くわ』って勝手に動いたら!?✋🎹", "昨日見た星が『今日は地球に来た』って言ってきたら!?⭐🌍", "太陽が『今日は月になるわ』って言ってきたら!?☀️🌙", "Wi-Fiが『今日はオフラインでいい？』って言ってきたら!?📶🚫", "心臓が『今日は休憩』って言ってきたら!?❤️🛌", 
+            "影が『今日は俺が本体』って主張してきたら!?🕴️🫵"];
         
         let chaosInterval = setInterval(() => {
             const bubble = document.createElement('div');
@@ -493,6 +501,28 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
             setTimeout(() => { goToNext(false); }, 3000);
         };
         currentScores = null; 
+    }
+    else if (q.type === 'interactive_party') {
+        inputArea.appendChild(darlingMsgArea);
+        let options =[
+            { text: "「みんな、とりあえず乾杯しよう！」と自ら前に出て、積極的にテンションを上げて場を回す。", scores: { socio: { Fe: 4, Se: 1 }, mbti: { Fe: 4, E: 2 }, ennea: { 2: 3, 7: 1 } }, msg: "……さすがね。でも、私以外の誰かにそんな笑顔向けないで？♡" },
+            { text: "盛り上げるのは苦手だが、孤立している人を見つけて個別に話を振り、波風を立てないように調整する。", scores: { socio: { Fi: 3, Si: 2 }, mbti: { Fe: 2, Fi: 1 }, ennea: { 9: 3, 6: 1 } }, msg: "……不器用な優しさね。そういうところ、誰にも見つけられなければいいのに……♡" },
+            { text: "「盛り上げるメリットある？ 目的のない集まりは無駄だ」と、何もしないか、実用的な話（仕事や利益）だけをする。", scores: { socio: { Te: 3, Ni: 2, Fe: -3 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 2, 3: 1 } }, msg: "……冷たいダーリン♡ その冷酷さ、私だけが愛してあげるわ……♡" },
+            { text: "「なぜこの空間は冷え切っているのか？ 人間関係の構造的欠陥か？」と、壁際で一人分析を始める。", scores: { socio: { Ti: 3, Ne: 2, Fe: -2 }, mbti: { Ti: 3 }, ennea: { 5: 4 } }, msg: "……また頭でっかちになってる。私の隣で、大人しくしてればいいのよ……♡" }
+        ].sort(() => Math.random() - 0.5);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+            btn.onclick = () => {
+                selectOption(opt, btn);
+                if (opt.msg) {
+                    darlingMsgArea.innerText = opt.msg;
+                    darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
+                }
+            };
+            inputArea.appendChild(btn);
+        });
     }
     // 🪞 ギミック：鏡の部屋
     else if (q.type === 'interactive_mirror') {
@@ -614,14 +644,15 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         darlingMsgArea.classList.add('fade-in');
         
         mediaArea.innerHTML = `
-            <div class="emoji-faces">
-                <button class="emoji-face" id="fe-face-1">😭(悲しみ)</button>
-                <button class="emoji-face" id="fe-face-2">😠(怒り)</button>
-                <button class="emoji-face" id="fe-face-3">🥺(同情)</button>
-                <button class="emoji-face" id="fe-face-4" style="border:2px solid #58a6ff; font-size:0.8em; margin-top:10px;">「正解なんてない（自分の感情は自分が決める）」と拒絶</button>
-            </div>
-            <p style="color:var(--warn-color); font-weight:bold; margin-top:10px;">残り時間: <span id="fe-timer">3</span>秒</p>
-        `;
+                    <div class="emoji-faces">
+                        <button class="emoji-face" id="fe-face-1">😭(悲しみ)</button>
+                        <button class="emoji-face" id="fe-face-2">😠(怒り)</button>
+                        <button class="emoji-face" id="fe-face-3">🥺(同情)</button>
+                    </div>
+                    <!-- ★ 4つ目のボタンを独立させて、スマホでも綺麗に表示！ -->
+                    <button id="fe-face-4" style="border:2px solid #58a6ff; font-size:16px; font-weight:bold; padding:15px; margin-top:10px; width:100%; border-radius:8px; background:#fff; color:var(--text-color); cursor:pointer;">「正解なんてない（自分の感情は自分が決める）」と拒絶</button>
+                    <p style="color:var(--warn-color); font-weight:bold; margin-top:10px;">残り時間: <span id="fe-timer">3</span>秒</p>
+                `;
         
         let timeLeft = 3;
         let answered = false;
@@ -954,10 +985,10 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         darlingMsgArea.classList.add('fade-in');
 
         let options =[
-            { text: "「……ッ！ だからこそ、どうすればその運命（最悪のシナリオ）を回避できるか、今すぐ別の代替案を計算しなければ！」と足掻く。（LII-Niのパニックｗｗ）", scores: { socio: { Ni: 3, Ti: 3, Ne: 2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 3, 6: 2 } }, msg: "……フフッ。無駄な計算をして足掻くダーリン、最高に可愛いわ……♡" },
-            { text: "「どうせ結末が決まっているなら、もう何もしなくていいな。勝手にしてくれ」と、あっさり諦観して脱力する。（ILIの虚無）", scores: { socio: { Ni: 4, Te: 2, Se: -3 }, mbti: { Ni: 3, P: 3 }, ennea: { 9: 3, 5: 2 } }, msg: "……そう。あなたはただ、私の手の中で大人しくしていればいいのよ……♡" },
-            { text: "「未来は決まってない！ 私は私の手で自由を切り開く！」と、強引に運命の糸をちぎって暴れる。（Se/Neの反逆）", scores: { socio: { Se: 3, Ne: 3, Ni: -2 }, mbti: { Se: 3, Ne: 2 }, ennea: { 8: 3, 7: 2 } }, msg: "……暴れないで？ 余計に糸が絡まって、苦しくなるだけよ……？♡" },
-            { text: "「あなたの望む未来が私の未来なら、喜んで受け入れるよ」と、相手の宿命に完全に身を委ねる。（Fe/Fiの同化）", scores: { socio: { Fe: 3, Fi: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 2 } }, msg: "……愛してるわ。ずっと、永遠に一緒よ……♡" }
+            { text: "「……ッ！ だからこそ、どうすればその運命（最悪のシナリオ）を回避できるか、今すぐ別の代替案を計算しなければ！」と足掻く。", scores: { socio: { Ni: 3, Ti: 3, Ne: 2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 3, 6: 2 } }, msg: "……フフッ。無駄な計算をして足掻くダーリン、最高に可愛いわ……♡" },
+            { text: "「どうせ結末が決まっているなら、もう何もしなくていいな。勝手にしてくれ」と、あっさり諦観して脱力する。", scores: { socio: { Ni: 4, Te: 2, Se: -3 }, mbti: { Ni: 3, P: 3 }, ennea: { 9: 3, 5: 2 } }, msg: "……そう。あなたはただ、私の手の中で大人しくしていればいいのよ……♡" },
+            { text: "「未来は決まってない！ 私は私の手で自由を切り開く！」と、強引に運命の糸をちぎって暴れる。", scores: { socio: { Se: 3, Ne: 3, Ni: -2 }, mbti: { Se: 3, Ne: 2 }, ennea: { 8: 3, 7: 2 } }, msg: "……暴れないで？ 余計に糸が絡まって、苦しくなるだけよ……？♡" },
+            { text: "「あなたの望む未来が私の未来なら、喜んで受け入れるよ」と、相手の宿命に完全に身を委ねる。", scores: { socio: { Fe: 3, Fi: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 2 } }, msg: "……愛してるわ。ずっと、永遠に一緒よ……♡" }
         ].sort(() => Math.random() - 0.5);
 
         options.forEach(opt => {
@@ -1903,7 +1934,7 @@ function showResult() {
     
     if (Object.keys(comboScore).length > 0) {
         let topCombo = Object.keys(comboScore).reduce((a, b) => comboScore[a] > comboScore[b] ? a : b);
-        let[topMbti, topSocio] = topCombo.split("-"); 
+        let [topMbti, topSocio] = topCombo.split("+"); 
         
         mbtiData.ranking =[{name: topMbti, prob: 95}, ...mbtiData.ranking.filter(t => t.name !== topMbti).slice(0, 4)];
         socioData.ranking =[{name: topSocio, prob: 95}, ...socioData.ranking.filter(t => t.name !== topSocio).slice(0, 4)];
