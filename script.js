@@ -804,6 +804,63 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         });
         currentScores = null;
     }
+// 🎮 ギミック：ミニゲーム（数字高速カウントストップ）
+    else if (q.type === 'minigame_number') {
+        mediaArea.innerHTML = `
+            <div class="minigame-container" style="text-align: center; margin: 30px 0;">
+                <div id="minigame-number" style="font-size: 5em; font-weight: bold; color: var(--accent-color); font-variant-numeric: tabular-nums;">0</div>
+                <button id="minigame-stop-btn" class="danger-btn" style="margin-top: 20px; font-size: 1.5em; width: 80%; padding: 15px;">🛑 STOP</button>
+            </div>
+            <div id="minigame-options" class="slide-up" style="display: none; margin-top: 20px;">
+                <p style="color: var(--warn-color); font-weight: bold; font-size:0.9em;">👁️[System: 行動解析] なるほど、その数字で止めましたか。<br>……なぜ『そのタイミング』で止めたのですか？</p>
+                <div id="minigame-radio-container"></div>
+            </div>
+        `;
+        let currentNum = 0;
+        const numEl = document.getElementById('minigame-number');
+        const stopBtn = document.getElementById('minigame-stop-btn');
+        const optionsArea = document.getElementById('minigame-options');
+        const radioContainer = document.getElementById('minigame-radio-container');
+
+        let intervalId = setInterval(() => {
+            currentNum++;
+            if (currentNum > 100) currentNum = 1;
+            numEl.innerText = currentNum;
+        }, 15); // ★ 超高速で数字が切り替わる！
+
+        stopBtn.onclick = () => {
+            clearInterval(intervalId); // ストップ！
+            stopBtn.style.display = 'none'; 
+            optionsArea.style.display = 'block'; 
+
+            // 止めた理由を選ぶ選択肢
+            const options =[
+                { text: "待つのが面倒で、直感的にすぐ止めた。", scores: { socio: { Se: 3 }, mbti: { Se: 3 }, ennea: { 7: 2, 8: 1 } } },
+                { text: "キリの良い数字やゾロ目を、タイミングを計算して狙って止めた。", scores: { socio: { Ti: 3 }, mbti: { Ti: 3 }, ennea: { 5: 2, 1: 2 } } },
+                { text: "ギリギリの90台までどこまでいけるか、限界を試す実験をした。", scores: { socio: { Ne: 3 }, mbti: { Ne: 3 }, ennea: { 7: 2 } } },
+                { text: "じっくり様子を観察し、「この辺りが安全だろう」という自分の予測で止めた。", scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 5: 2, 9: 1 } } },
+                { text: "特に何も考えず、なんとなく適当に止めた。", scores: { socio: { Si: 2 }, mbti: { Si: 2 }, ennea: { 9: 2 } } }
+            ].sort(() => Math.random() - 0.5);
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+                btn.onclick = () => {
+                    radioContainer.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('selected');
+                        b.querySelector('i').className = 'far fa-circle';
+                    });
+                    btn.classList.add('selected');
+                    btn.querySelector('i').className = 'fas fa-check-circle';
+                    // 止めた数字もログに保存！
+                    currentScores = { scores: opt.scores, loggedText: `🎮 ミニゲーム: 「${currentNum}」で停止 → ${opt.text.split('。')[0]}` };
+                };
+                radioContainer.appendChild(btn);
+            });
+        };
+        currentScores = null; 
+        return; // ミニゲームの時は以下の通常ボタン生成をスキップ！
+    }
     // 🛌 ギミック：Si圧（健康とルーティン強要！）
     else if (q.type === 'interactive_si_pressure') {
         mediaArea.innerHTML = `<div style="font-size: 5em; text-align: center; animation: floating 2s infinite alternate;">🛌💤</div>`;
@@ -1303,7 +1360,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
             inputArea.appendChild(btn);
         });
     }
-    // スライダー
+// スライダー
     else if (q.type === 'slider') {
         inputArea.innerHTML = `
             <div style="text-align:center; margin: 20px 0;">
@@ -1319,16 +1376,26 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         currentScores = { isSlider: true, value: 5 }; 
     }
     else {
-        createStandardRadioButtons(q.options);
+        // ★ ジェミの防波堤！optionsが無い問題が来たらエラーを出して止める
+        if (!q.options) {
+            console.error(`🚨【ジェミからの報告】みつき！問題ID「${q.id}」に options（選択肢）がないよ！データを確認してみて！`);
+            inputArea.innerHTML = `<p style="color: var(--warn-color); font-weight: bold; text-align: center; margin-top: 20px;">※システムエラー：この問題の選択肢データが見つかりません。（ID: ${q.id}）</p>`;
+        } else {
+            createStandardRadioButtons(q.options);
+        }
     }
 
     document.getElementById('confidence').value = 5;
 
 function createStandardRadioButtons(opts) {
+        // ここでも念のためガード！
+        if (!opts) return;
+
         // ★ メッセージ表示用の箱を確実に追加！
         inputArea.appendChild(darlingMsgArea);
         
-        let options = opts.sort(() => Math.random() - 0.5);
+        // ★ ジェミのワンポイント！ [...opts] と書くことで配列をコピーしてからシャッフルできるから、元のデータを破壊しなくて安全だよ！
+        let options = [...opts].sort(() => Math.random() - 0.5);
         options.forEach(opt => {
             const btn = document.createElement('button');
             btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
@@ -1341,9 +1408,8 @@ function createStandardRadioButtons(opts) {
                 // ★ msg があれば、ここで確実に表示させる！！
                 if (opt.msg) {
                     darlingMsgArea.innerText = opt.msg;
-                    darlingMsgArea.style.color = "var(--warn-color)"; // 芋虫の場合は後で上書きされる
+                    darlingMsgArea.style.color = "var(--warn-color)"; 
                     
-                    // 芋虫の特殊メッセージの場合は色を変える（緑色）
                     if (opt.msg.includes("🐛")) {
                         darlingMsgArea.style.color = "#3fb950"; // 緑色
                         darlingMsgArea.style.fontStyle = "normal";
