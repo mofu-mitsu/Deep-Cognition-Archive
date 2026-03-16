@@ -12,11 +12,29 @@ let nervousnessScore = 0;
 let comboScore = {}; 
 let directPsychoType = ""; 
 
-const MAX_QUESTIONS = 30;
+let currentPhase = 1; // 1: 基本(25問), 2: 苦手(10問), 3: 追加(7問)
+const BASIC_QUESTIONS = 25;
+const WEAKNESS_QUESTIONS = 10;
 let selfReportedType = ""; 
 let shuffledQuestions =[]; 
 let subjectID = ""; 
+// ★ メニュー画面の開閉
+let previousScreen = "start-screen";
 
+document.getElementById('menu-btn').onclick = () => {
+    // 現在アクティブな画面を記憶
+    if (document.getElementById('start-screen').classList.contains('active')) previousScreen = 'start-screen';
+    else if (document.getElementById('question-screen').classList.contains('active')) previousScreen = 'question-screen';
+    else if (document.getElementById('result-screen').classList.contains('active')) previousScreen = 'result-screen';
+    
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('explanation-screen').classList.add('active');
+};
+
+document.getElementById('close-menu-btn').onclick = () => {
+    document.getElementById('explanation-screen').classList.remove('active');
+    document.getElementById(previousScreen).classList.add('active'); // 記憶した画面に戻す！
+};
 const exitBtn = document.getElementById('exit-btn');
 if (exitBtn) exitBtn.href = "https://mofu-mitsu.github.io/"; 
 
@@ -41,7 +59,8 @@ document.getElementById('start-btn').addEventListener('click', () => {
         };
     }
     
-    shuffledQuestions = questionsData.sort(() => Math.random() - 0.5).slice(0, MAX_QUESTIONS);
+    currentPhase = 1;
+    shuffledQuestions = questionsData.sort(() => Math.random() - 0.5).slice(0, BASIC_QUESTIONS);
     
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('question-screen').classList.add('active');
@@ -334,8 +353,8 @@ function renderQuestion() {
         };
         currentScores = null;
     }
-    // 🎉 ギミック：空気読みパーティー
     else if (q.type === 'interactive_party') {
+        mediaArea.innerHTML = `<div class="party-decoration">🪩🥳🥂</div>`; // ★ ミラーボール追加！
         inputArea.appendChild(darlingMsgArea);
         let options =[
             { text: "「みんな、とりあえず乾杯しよう！」と自ら前に出て、積極的にテンションを上げて場を回す。", scores: { socio: { Fe: 4, Se: 1 }, mbti: { Fe: 4, E: 2 }, ennea: { 2: 3, 7: 1 } }, msg: "……さすがね。でも、私以外の誰かにそんな笑顔向けないで？♡" },
@@ -356,6 +375,89 @@ function renderQuestion() {
             };
             inputArea.appendChild(btn);
         });
+    }
+    // 🤯 ギミック：Ne圧（カオスの無限吹き出し）
+    if (q.type === 'interactive_ne_chaos') {
+        // ★ カオス語彙を大量増量！！
+        const chaosWords =["空がゼリー!?🍉", "スイカが喋る!?🍉", "数学は青色!?🟦", "宇宙の端っこ!?🌌", "キノコが歩いてる!?🍄", "時間が逆再生!?⏳", "もしカラスが机なら!?🐦‍⬛", "猫の鳴き声が『円周率』だったら!?🐈", "全部夢だったらどうする!?💭", "重力が横向きになったら!?🔄", "明日の天気が『カツカレー』!?🍛", "私が君で君が私!?🪞"];
+        
+        let chaosInterval = setInterval(() => {
+            const bubble = document.createElement('div');
+            bubble.className = "chaos-bubble";
+            bubble.innerText = chaosWords[Math.floor(Math.random() * chaosWords.length)];
+            bubble.style.left = Math.random() * 80 + "%";
+            bubble.style.top = Math.random() * 80 + "%";
+            mediaArea.appendChild(bubble);
+            setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, 2000);
+        }, 400); // 0.4秒に1回湧き続ける（ウザいｗｗ）
+
+        inputArea.appendChild(darlingMsgArea);
+        let options =[
+            { text: "「あはは！ スイカは絶対『割るな！』って言うでしょ！」とノリノリで乗っかる。", scores: { socio: { Ne: 4 }, mbti: { Ne: 4 }, ennea: { 7: 3 } }, msg: "🎩「君もこっち側の住人だね！ 最高にイカれてるよ！」" },
+            { text: "「空がゼラチン質であると仮定した場合……」と、マジレスで構造の矛盾を解体しにいく。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, ennea: { 5: 3, 1: 1 } }, msg: "🎩「フフッ。カオスすら論理で包み込もうとするなんて、健気な学者さんだ！」" },
+            { text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と思考停止し、苦痛を感じて逃げ出す。", scores: { socio: { Ne: -3, Se: 2 }, mbti: { Ne: -3, Si: 2 }, ennea: { 9: 2 } }, msg: "🎩「おや、もうリタイアかい？ つまらないねぇ。」" },
+            { text: "「は？ 何言ってんだコイツ」と話を遮り、結論だけを求める。", scores: { socio: { Ne: -2, Te: 3, Ni: 1 }, mbti: { Ne: -2, Te: 3, Ni: 1 }, ennea: { 8: 3, 3: 1 } }, msg: "🎩「出たよ、冷酷な現実主義者！ 夢がないねぇ！」" }
+        ].sort(() => Math.random() - 0.5);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+            btn.onclick = () => {
+                clearInterval(chaosInterval); 
+                selectOption(opt, btn);
+                if (opt.msg) {
+                    darlingMsgArea.innerText = opt.msg;
+                    darlingMsgArea.style.color = "#1f6feb"; // 帽子屋は青色
+                    darlingMsgArea.style.fontStyle = "normal";
+                    darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
+                }
+            };
+            inputArea.appendChild(btn);
+        });
+    }
+
+    // 👧🏻 ギミック：阿波弁ダーリンのミニゲーム（連打 or スライダー）
+    else if (q.type === 'interactive_awa_darling') {
+        mediaArea.innerHTML = `<div class="darling-bored" style="color:#ff69b4;">👧🏻💤</div>`;
+        
+        inputArea.innerHTML = `
+            <div style="text-align:center; margin: 20px 0;">
+                <p style="color:#ff69b4; font-weight:bold; margin-bottom:10px;">【力技で楽しませるか、論理で調整するか選んで？】</p>
+                <button id="awa-hit-btn" style="background:#ff69b4; color:#fff; border:none; padding:15px; font-size:1.2em; border-radius:8px; margin-bottom:15px; width:100%;">👊 力技で連打する！</button>
+                <br>
+                <input type="range" id="awa-slider" min="0" max="100" value="0" style="width:100%; cursor:pointer;">
+                <p style="font-size:0.8em; color:#8b949e;">（※スライダーをちょうど『77』の完璧な位置で止めろ：Ti/Ni）</p>
+                <button id="awa-slide-btn" style="margin-top:10px;">🎯 調整完了（答える）</button>
+            </div>
+        `;
+        inputArea.appendChild(darlingMsgArea);
+        
+        let hitCount = 0;
+        document.getElementById('awa-hit-btn').onclick = () => {
+            hitCount++;
+            if (hitCount >= 10) {
+                currentScores = { scores: { socio: { Se: 3, Te: 1 }, mbti: { Se: 3, Te: 1 }, ennea: { 8: 2, 7: 1 } }, loggedText: `🎮 ダーリンの子を物理（連打）で楽しませた` };
+                darlingMsgArea.innerText = "「ちょっ、激しすぎ！！ｗｗ でも悪くないやん、ウチそういう強引なん好きよ♡」";
+                darlingMsgArea.style.color = "#ff69b4"; darlingMsgArea.style.fontStyle = "normal";
+                darlingMsgArea.classList.add('fade-in');
+                setTimeout(() => { goToNext(false); }, 3000);
+            }
+        };
+
+        document.getElementById('awa-slide-btn').onclick = () => {
+            let val = parseInt(document.getElementById('awa-slider').value);
+            if (val === 77) {
+                currentScores = { scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 1: 1 } }, loggedText: `🎮 ダーリンの子を論理（ジャスト77）で楽しませた` };
+                darlingMsgArea.innerText = "「……ピッタリ77。相変わらず変態的な精度やなぁ。ダーリンのその正確なところ、ほんまゾクゾクするわ♡」";
+            } else {
+                currentScores = { scores: { socio: { Ne: 2, Fi: 1 }, mbti: { Ne: 2, Fi: 1 }, ennea: { 9: 2 } }, loggedText: `🎮 ダーリンの子を適当（ズレた値: ${val}）で楽しませた` };
+                darlingMsgArea.innerText = "「んー、惜しい！ まぁウチはダーリンが構ってくれたらそれでええんよ♡」";
+            }
+            darlingMsgArea.style.color = "#ff69b4"; darlingMsgArea.style.fontStyle = "normal";
+            darlingMsgArea.classList.add('fade-in');
+            setTimeout(() => { goToNext(false); }, 3000);
+        };
+        currentScores = null; 
     }
     // 🪞 ギミック：鏡の部屋
     else if (q.type === 'interactive_mirror') {
@@ -468,6 +570,156 @@ function renderQuestion() {
         };
         currentScores = null; 
     }
+// 😱 ギミック：Fe脆弱パニックゲーム！
+// 😱 ギミック：Fe脆弱パニックゲーム！（F型の逃げ道追加版）
+    else if (q.type === 'interactive_fe_panic') {
+        document.body.classList.add('panic-bg'); 
+        inputArea.appendChild(darlingMsgArea);
+        darlingMsgArea.innerText = "「早く！ 場を収めるための『正解の感情』を選んで！！」";
+        darlingMsgArea.classList.add('fade-in');
+        
+        mediaArea.innerHTML = `
+            <div class="emoji-faces">
+                <button class="emoji-face" id="fe-face-1">😭(悲しみ)</button>
+                <button class="emoji-face" id="fe-face-2">😠(怒り)</button>
+                <button class="emoji-face" id="fe-face-3">🥺(同情)</button>
+                <button class="emoji-face" id="fe-face-4" style="border:2px solid #58a6ff; font-size:0.8em; margin-top:10px;">「正解なんてない（自分の感情は自分が決める）」と拒絶</button>
+            </div>
+            <p style="color:var(--warn-color); font-weight:bold; margin-top:10px;">残り時間: <span id="fe-timer">3</span>秒</p>
+        `;
+        
+        let timeLeft = 3;
+        let answered = false;
+        let timerEl = document.getElementById('fe-timer');
+        
+        const countdown = setInterval(() => {
+            if (answered) return;
+            timeLeft -= 1;
+            timerEl.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                document.body.classList.remove('panic-bg');
+                
+                // ★ タイムオーバー ＝ T型（LII/ILI等）のFe処理落ち！！
+                currentScores = { scores: { socio: { Fe: -3, Ti: 2 }, mbti: { Fe: -2, Ti: 2 }, ennea: { 5: 2 } }, loggedText: `😱 空気読みゲーム: タイムオーバー（Fe処理落ち）` };
+                
+                mediaArea.innerHTML = `<div style="font-size:4em; text-align:center;">🥶</div>`;
+                darlingMsgArea.innerText = "「……時間切れ。やっぱりあなた、他人の感情なんて全く読めないのね……♡（呆れ）」";
+                darlingMsgArea.style.color = "#58a6ff"; 
+                setTimeout(() => { goToNext(false); }, 3000);
+            }
+        }, 1000);
+
+        document.querySelectorAll('.emoji-face').forEach(face => {
+            face.onclick = () => {
+                if (timeLeft <= 0 || answered) return;
+                answered = true;
+                clearInterval(countdown);
+                document.body.classList.remove('panic-bg');
+                
+                // ★ F型の逃げ道（即答できた場合）と Fiの拒絶を判定！！
+                if (face.id === "fe-face-4") {
+                    // 「正解なんてない（自分の感情は自分が決める）」＝ Fi主導の防衛！
+                    currentScores = { scores: { socio: { Fi: 3, Fe: -2 }, mbti: { Fi: 3 }, ennea: { 4: 2 } }, loggedText: `😱 空気読みゲーム: 「正解なんてない」とFi的拒絶` };
+                    darlingMsgArea.innerText = "「他人の空気に合わせる気なんて、最初からないのね。強情な子……♡」";
+                } else {
+                    // 3秒以内に即座に感情を選べた ＝ Fe主導/補助の適応力！
+                    currentScores = { scores: { socio: { Fe: 3 }, mbti: { Fe: 3 }, ennea: { 2: 2, 9: 1 } }, loggedText: `😱 空気読みゲーム: 即座に「${face.innerText}」とFe的適応` };
+                    darlingMsgArea.innerText = "「フフッ、さすがね。一瞬で空気を読んで正解を出せるなんて……いい子♡」";
+                }
+                
+                mediaArea.innerHTML = `<div style="font-size:4em; text-align:center;">${face.innerText.charAt(0)}</div>`;
+                setTimeout(() => { goToNext(false); }, 3000);
+            };
+        });
+        currentScores = null; 
+    }
+// 💥 ギミック：Se圧（物理的な急かし・威圧）
+    else if (q.type === 'interactive_se_pressure') {
+        document.body.classList.add('panic-shake'); // 画面が激しく震え続ける！
+        inputArea.appendChild(darlingMsgArea);
+        darlingMsgArea.innerText = "「早くしろ！！！ データ消すぞ！！！」";
+        darlingMsgArea.style.color = "#ff3333";
+        darlingMsgArea.classList.add('fade-in');
+        
+        mediaArea.innerHTML = `
+            <div style="font-size:5em; text-align:center; animation: heartbeat 0.5s infinite;">⏳</div>
+            <p style="color:var(--warn-color); font-weight:bold; font-size:2em; text-align:center;">残り: <span id="se-timer">3</span></p>
+        `;
+        
+        let timeLeft = 3;
+        let answered = false;
+        let timerEl = document.getElementById('se-timer');
+        
+        const countdown = setInterval(() => {
+            if (answered) return;
+            timeLeft -= 1;
+            timerEl.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                document.body.classList.remove('panic-shake');
+                
+                // ★ タイムオーバー ＝ Se脆弱（みつき達LIIやEII）のフリーズ！！
+                currentScores = { scores: { socio: { Se: -4, Ni: 2 }, mbti: { Se: -3, Ni: 2 }, ennea: { 5: 3, 9: 1 } }, loggedText: `💥 Se圧ゲーム: 威圧にフリーズしてタイムオーバー（Se脆弱）` };
+                
+                mediaArea.innerHTML = `<div style="font-size:4em; text-align:center;">😵‍💫</div>`;
+                darlingMsgArea.innerText = "「……チッ。大声出されただけで固まってんじゃねぇよ。使えねぇな」";
+                setTimeout(() => { goToNext(false); }, 3000);
+            }
+        }, 1000);
+
+        let options =[
+            { text: "「うるさい！急かすな！」と怒鳴り返し、力で対抗してボタンを押す。", scores: { socio: { Se: 4 }, mbti: { Se: 3 }, ennea: { 8: 3 } } },
+            { text: "「データが消えるのは困る」と、冷静に一番被害が少ない選択肢を瞬時に選ぶ。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Te: 3 }, ennea: { 3: 2 } } },
+            { text: "パニックになり、「ひぃぃ！ごめんなさい！」と適当なボタンを連打する。", scores: { socio: { Se: -2, Ne: 2 }, mbti: { Se: -2, P: 2 }, ennea: { 6: 3, 7: 1 } } }
+        ].sort(() => Math.random() - 0.5);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = "danger-btn"; // 全て赤枠の危険ボタン！
+            btn.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${opt.text}`;
+            btn.onclick = () => {
+                if (timeLeft <= 0 || answered) return;
+                answered = true;
+                clearInterval(countdown);
+                document.body.classList.remove('panic-shake');
+                
+                currentScores = { scores: opt.scores, loggedText: `💥 Se圧ゲーム: 「${opt.text.split('（')[0]}」` };
+                darlingMsgArea.innerText = "「……ふん。やればできるじゃねぇか」";
+                darlingMsgArea.style.color = "#58a6ff"; 
+                setTimeout(() => { goToNext(false); }, 3000);
+            };
+            inputArea.appendChild(btn);
+        });
+        currentScores = null; 
+    }
+// 📊 ギミック：Te圧（効率・成果の強要）
+    else if (q.type === 'interactive_te_deadline') {
+        mediaArea.innerHTML = `<div style="text-align: center; margin: 20px 0; font-size:4em; color:var(--accent-color);">📈</div>`;
+        inputArea.appendChild(darlingMsgArea);
+        
+        let options =[
+            { text: "「承知した。直ちに最も効率的なアルゴリズムを実行する」と、完璧な成果を出してシステムを黙らせる。", scores: { socio: { Te: 4 }, mbti: { Te: 4 }, ennea: { 3: 3, 8: 1 } }, msg: "「……Output Accepted. 対象者の極めて高い生産性を確認しました。」" },
+            { text: "「なぜ85%なのか？その規定値の『論理的根拠』を示せ」と、指示そのものの構造的矛盾を指摘する。", scores: { socio: { Ti: 4, Ne: 2, Te: -2 }, mbti: { Ti: 3, Ne: 1 }, ennea: { 5: 3, 1: 1 } }, msg: "「……Error. 対象者は指示に従わず、システムの定義を疑い始めました。」" },
+            { text: "「利益？ 生産性？ 私は機械じゃない！」と、感情や個人の価値観を無視した冷酷な命令に激しく反発する。", scores: { socio: { Fi: 3, Te: -4 }, mbti: { Fi: 4, Te: -3 }, ennea: { 4: 3 } }, msg: "「……Warning. 対象者の感情が大きく乱れています。生産性ゼロ。」" },
+            { text: "「めんどくさ。適当にダミーのデータを食わせて、85%を超えたように偽装しておこう」とサボる。", scores: { socio: { Ni: 3, Te: -1 }, mbti: { Ni: 2, P: 3 }, ennea: { 9: 3, 5: 1 } }, msg: "「……Alert. データの偽装を検知。対象者は極めて省エネ（怠惰）です。」" }
+        ].sort(() => Math.random() - 0.5);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
+            btn.onclick = () => {
+                selectOption(opt, btn);
+                darlingMsgArea.innerText = opt.msg;
+                darlingMsgArea.style.color = "#3fb950"; // システムの緑文字
+                darlingMsgArea.style.fontStyle = "normal";
+                darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
+                setTimeout(() => { goToNext(false); }, 3500);
+            };
+            inputArea.appendChild(btn);
+        });
+        currentScores = null;
+    }
     // 💬 ギミック：ダーリンへの逆質問
     else if (q.type === 'interactive_ask_darling') {
         inputArea.innerHTML = `
@@ -531,41 +783,41 @@ function renderQuestion() {
         };
         currentScores = null; 
     }
+
     // タイムリミット（ダーリン焦らし）
+    // ⏱️ バグ修正：タイムリミットのメッセージ増殖防止！
     else if (q.type === 'time_limit_radio') {
         inputArea.innerHTML = `
             <div id="darling-timer-container" style="display: block;">
                 <div id="darling-timer-bar"></div>
             </div>
-            <div id="darling-time-up-msg" style="color: var(--warn-color); font-weight: bold; text-align: center; display: none; margin-bottom: 15px;">
-                「……時間切れよ、ダーリン♡ あなたの論理、崩れちゃったわね……♡」
-            </div>
+            <!-- ★ メッセージ用の箱は1つだけ用意しておく！ -->
+            <div id="time-limit-msg-area" style="color: var(--warn-color); font-style: italic; font-weight: bold; text-align: center; margin-top: 15px; min-height: 30px;"></div>
             <div id="radio-container"></div>
         `;
         const radioContainer = document.getElementById('radio-container');
+        const msgArea = document.getElementById('time-limit-msg-area'); // ここに上書きする！
         let options = q.options.sort(() => Math.random() - 0.5);
         
-        let timeLeft = 100; // 10秒
+        let timeLeft = 100; 
         const timerBar = document.getElementById('darling-timer-bar');
-        const timeUpMsg = document.getElementById('darling-time-up-msg');
         let answered = false;
 
         const countdown = setInterval(() => {
-            if (answered) {
-                clearInterval(countdown);
-                return;
-            }
+            if (answered) { clearInterval(countdown); return; }
             timeLeft -= 1; 
             timerBar.style.width = timeLeft + '%';
 
-            if (timeLeft <= 30 && timeLeft > 0) {
-                document.body.classList.add('panic-shake');
-            }
+            if (timeLeft <= 30 && timeLeft > 0) document.body.classList.add('panic-shake');
 
             if (timeLeft <= 0) {
                 clearInterval(countdown);
                 document.body.classList.remove('panic-shake');
-                timeUpMsg.style.display = 'block';
+                
+                // 時間切れメッセージ！
+                msgArea.innerText = "「……時間切れよ、ダーリン♡ あなたの論理、崩れちゃったわね……♡」";
+                msgArea.classList.add('fade-in');
+
                 socioScore.Ti -= 2; mbtiScore.Ti -= 2;
                 currentScores = { scores: options[2].scores, loggedText: `⌛ タイムオーバー（処理落ち）` };
                 setTimeout(() => { goToNext(false); }, 3000); 
@@ -582,13 +834,11 @@ function renderQuestion() {
                 document.body.classList.remove('panic-shake');
                 
                 selectOption(opt, btn);
-                const msgArea = document.createElement('div');
-                msgArea.style.color = "var(--warn-color)";
-                msgArea.style.fontStyle = "italic";
-                msgArea.style.textAlign = "center";
-                msgArea.style.marginTop = "15px";
-                msgArea.innerText = opt.msg;
-                radioContainer.appendChild(msgArea);
+                // ★ 選択肢を押すたびに増殖せず、1つの箱の中身を書き換える！
+                if (opt.msg) {
+                    msgArea.innerText = opt.msg;
+                    msgArea.classList.remove('fade-in'); void msgArea.offsetWidth; msgArea.classList.add('fade-in');
+                }
             };
             radioContainer.appendChild(btn);
         });
@@ -770,7 +1020,10 @@ function renderQuestion() {
 
     document.getElementById('confidence').value = 5;
 
-    function createStandardRadioButtons(opts) {
+function createStandardRadioButtons(opts) {
+        // ★ メッセージ表示用の箱を確実に追加！
+        inputArea.appendChild(darlingMsgArea);
+        
         let options = opts.sort(() => Math.random() - 0.5);
         options.forEach(opt => {
             const btn = document.createElement('button');
@@ -779,7 +1032,28 @@ function renderQuestion() {
                 btn.style.color = "var(--warn-color)";
                 btn.style.borderColor = "var(--warn-color)";
             }
-            btn.onclick = () => selectOption(opt, btn);
+            btn.onclick = () => {
+                selectOption(opt, btn);
+                // ★ msg があれば、ここで確実に表示させる！！
+                if (opt.msg) {
+                    darlingMsgArea.innerText = opt.msg;
+                    darlingMsgArea.style.color = "var(--warn-color)"; // 芋虫の場合は後で上書きされる
+                    
+                    // 芋虫の特殊メッセージの場合は色を変える（緑色）
+                    if (opt.msg.includes("🐛")) {
+                        darlingMsgArea.style.color = "#3fb950"; // 緑色
+                        darlingMsgArea.style.fontStyle = "normal";
+                    } else {
+                        darlingMsgArea.style.fontStyle = "italic";
+                    }
+
+                    darlingMsgArea.classList.remove('fade-in');
+                    void darlingMsgArea.offsetWidth;
+                    darlingMsgArea.classList.add('fade-in');
+                } else {
+                    darlingMsgArea.innerText = ""; // なければ消す
+                }
+            };
             inputArea.appendChild(btn);
         });
     }
@@ -938,13 +1212,37 @@ function goToNext(isAmbiguous) {
     currentScores = null;
     currentQIndex++;
 
-    if (currentQIndex < shuffledQuestions.length) {
+if (currentQIndex < shuffledQuestions.length) {
         renderQuestion();
     } else {
-        if (!askedForExtra) {
-            let extraRouteInfo = determineExtraRoute();
-            if (extraRouteInfo && extraRouteInfo.data && extraRouteInfo.data.length > 0) {
-                askForExtraQuestions(extraRouteInfo);
+        // ★ 3フェーズ制の進行ロジック（CSSアニメーション版！）
+        if (currentPhase === 1) {
+            currentPhase = 2;
+            
+            // ★ 基本観測終了のサイバーな演出！
+            document.getElementById('question-screen').classList.remove('active');
+            const phaseScreen = document.getElementById('phase-screen');
+            phaseScreen.classList.add('active');
+
+            let weakQs = weaknessQuestionsData.sort(() => Math.random() - 0.5).slice(0, WEAKNESS_QUESTIONS);
+            shuffledQuestions = shuffledQuestions.concat(weakQs);
+
+            // 3秒後に次のフェーズ（苦手質問）へ！
+            setTimeout(() => {
+                phaseScreen.classList.remove('active');
+                document.getElementById('question-screen').classList.add('active');
+                renderQuestion();
+            }, 3000);
+
+        } else if (currentPhase === 2) {
+            currentPhase = 3;
+            if (!askedForExtra) {
+                let extraRouteInfo = determineExtraRoute();
+                if (extraRouteInfo && extraRouteInfo.data && extraRouteInfo.data.length > 0) {
+                    askForExtraQuestions(extraRouteInfo);
+                } else {
+                    startResultLoading();
+                }
             } else {
                 startResultLoading();
             }
@@ -1171,34 +1469,50 @@ function getAchievements(mbtiPrimary, socioPrimary) {
     else if (caterpillarTaps >= 3) titles.push("🏅 注意散漫な観察者");
     if (returnCount >= 3) titles.push("🏅 永遠の再検証ループ");
     if (nervousnessScore >= 5) titles.push("🏅 深淵の自己懐疑");
+    
+    // T型・N型
     if (socioScore.Ti >= 10) titles.push("🏅 絶対的合理主義者");
     if (socioScore.Ni >= 10) titles.push("🏅 運命の観測者");
-    if (socioScore.Fe <= -5) titles.push("🏅 感情ノイズの拒絶者");
-    if (Object.keys(comboScore).length > 0) titles.push("🏅 自己解剖の極致");
+    if (socioScore.Fe <= -5 || mbtiScore.Fe <= -5) titles.push("🏅 感情ノイズの拒絶者");
+    if (socioScore.Se <= -5) titles.push("🏅 物理的圧力の逃亡者");
+
+    // ★ F型・S型の称号追加！
+    if (socioScore.Fe >= 10 || mbtiScore.Fe >= 10) titles.push("🏅 場の支配者（感情の波）");
+    if (socioScore.Fi >= 10 || mbtiScore.Fi >= 10) titles.push("🏅 揺るぎなき心の深淵");
+    if (socioScore.Si >= 10) titles.push("🏅 安らぎの調律師");
+    if (mbtiScore.Fi >= 8 && socioScore.Fe <= 0) titles.push("🏅 孤高のロマンチスト");
+    
+    if (Object.keys(comboScore).length > 0) {
+        let topCombo = Object.keys(comboScore).reduce((a, b) => comboScore[a] > comboScore[b] ? a : b);
+        if (topCombo === "INTJ+LII" || topCombo === "INTP+LII") titles.push("🏅 システムの解剖者（LIIの極致）");
+        if (topCombo === "INTJ+ILI" || topCombo === "INTP+ILI") titles.push("🏅 冷徹なる虚無の観測者（ILIの極致）");
+        if (topCombo === "INFP+EII" || topCombo === "INFJ+EII") titles.push("🏅 傷ついた癒し手（EIIの極致）");
+        titles.push("🏅 態度の裏を見抜かれし者"); 
+    }
     
     if (titles.length === 0) titles.push("🏅 平凡なる被検体");
-    return titles.slice(0, 2).join("<br>"); 
+    return titles.slice(0, 3).join("<br>"); 
 }
 
 // ★ 全16タイプ対応！相性ロジック
 function getCompatibility(socioPrimary) {
     const compMap = {
         "LII": "◎ 思考や世界観が合い理解される (LII, ILI)<br>○ 刺激と発想の広がり (ILE, IEE)<br>○ 監督関係で影響を受けやすい (IEE)<br>○ 理論上の補完関係・双対 (ESE)<br>△ 状況による (その他)",
-        "ILI": "◎ 洞察や分析を共有できる (ILI, LII)<br>○ ビジョンや戦略を語り合える (IEI, LIE)<br>○ 監督関係で刺激を受ける (IEI)<br>○ 理論上の補完関係・双対 (SEE)<br>△ 状況による (その他)",
+        "ILI": "◎ 洞察や分析を共有できる (ILI, LII)<br>○ ビジョンや戦略を語り合える (IEI, LIE)<br>○ 監督関係で刺激を受ける (EIE)<br>○ 理論上の補完関係・双対 (SEE)<br>△ 状況による (その他)",
         "LSI": "◎ 秩序や価値観を共有できる (LSI, ESI)<br>○ 実行力や戦略で互いに刺激 (SLE, LIE)<br>○ 監督関係で影響を受けやすい (SEE)<br>○ 理論上の補完関係・双対 (EIE)<br>△ 状況による (その他)",
         "SLI": "◎ 落ち着いたペースで共存できる (SLI, SEI)<br>○ 現実的な協力関係 (LSE, ESE)<br>○ 監督関係で影響を受けやすい (ESE)<br>○ 理論上の補完関係・双対 (IEE)<br>△ 状況による (その他)",
         "ILE": "◎ アイデアの連鎖が止まらない (ILE, IEE)<br>○ 理論や発想で刺激 (LII, EII)<br>○ 監督関係で影響を受けやすい (EII)<br>○ 理論上の補完関係・双対 (SEI)<br>△ 状況による (その他)",
-        "LIE": "◎ 目的や戦略を共有できる (LIE, ILI)<br>○ 行動力や実行力 (SLE, LSI)<br>○ 監督関係で刺激を受ける (ESI)<br>○ 理論上の補完関係・双対 (ESI)<br>△ 状況による (その他)",
-        "EIE": "◎ 情熱やビジョンを共有 (EIE, IEI)<br>○ 知的刺激や未来志向 (ILI, IEE)<br>○ 監督関係で影響を受ける (LSI)<br>○ 理論上の補完関係・双対 (LSI)<br>△ 状況による (その他)",
+        "LIE": "◎ 目的や戦略を共有できる (LIE, ILI)<br>○ 行動力や実行力 (SLE, LSI)<br>○ 監督関係で刺激を受ける (IEI)<br>○ 理論上の補完関係・双対 (ESI)<br>△ 状況による (その他)",
+        "EIE": "◎ 情熱やビジョンを共有 (EIE, IEI)<br>○ 知的刺激や未来志向 (ILI, IEE)<br>○ 監督関係で影響を受ける (ILI)<br>○ 理論上の補完関係・双対 (LSI)<br>△ 状況による (その他)",
         "IEE": "◎ アイデアや可能性を共有 (IEE, ILE)<br>○ 人間理解や価値観の共鳴 (EII, LII)<br>○ 監督関係で刺激を受ける (LII)<br>○ 理論上の補完関係・双対 (SLI)<br>△ 状況による (その他)",
-        "SEI": "◎ 穏やかで安心できる関係 (SEI, SLI)<br>○ 感情や生活の共有 (ESE, LSE)<br>○ 監督関係で影響を受ける (ILE)<br>○ 理論上の補完関係・双対 (ILE)<br>△ 状況による (その他)",
-        "ESI": "◎ 倫理観や責任感を共有 (ESI, LSI)<br>○ 現実的な協力関係 (SEE, LIE)<br>○ 監督関係で刺激を受ける (LIE)<br>○ 理論上の補完関係・双対 (LIE)<br>△ 状況による (その他)",
+        "SEI": "◎ 穏やかで安心できる関係 (SEI, SLI)<br>○ 感情や生活の共有 (ESE, LSE)<br>○ 監督関係で影響を受ける (LSE)<br>○ 理論上の補完関係・双対 (ILE)<br>△ 状況による (その他)",
+        "ESI": "◎ 倫理観や責任感を共有 (ESI, LSI)<br>○ 現実的な協力関係 (SEE, SLE)<br>○ 監督関係で刺激を受ける (SLE)<br>○ 理論上の補完関係・双対 (LIE)<br>△ 状況による (その他)",
         "ESE": "◎ 明るい感情や空気を共有 (ESE, SEE)<br>○ 快適さや生活感覚 (SEI, SLI)<br>○ 監督関係で影響を受ける (SLI)<br>○ 理論上の補完関係・双対 (LII)<br>△ 状況による (その他)",
         "SEE": "◎ 行動力や勢いが合う (SEE, SLE)<br>○ 実利や影響力の共有 (ESI, LIE)<br>○ 監督関係で刺激を受ける (LSI)<br>○ 理論上の補完関係・双対 (ILI)<br>△ 状況による (その他)",
-        "IEI": "◎ 精神世界やビジョン共有 (IEI, EIE)<br>○ 深い洞察や未来志向 (ILI, EII)<br>○ 監督関係で影響を受ける (ILI)<br>○ 理論上の補完関係・双対 (SLE)<br>△ 状況による (その他)",
+        "IEI": "◎ 精神世界やビジョン共有 (IEI, EIE)<br>○ 深い洞察や未来志向 (ILI, EII)<br>○ 監督関係で影響を受ける (LIE)<br>○ 理論上の補完関係・双対 (SLE)<br>△ 状況による (その他)",
         "EII": "◎ 深い価値観や共感 (EII, IEI)<br>○ 理想や知的対話 (ILE, IEE)<br>○ 監督関係で刺激を受ける (ILE)<br>○ 理論上の補完関係・双対 (LSE)<br>△ 状況による (その他)",
-        "SLE": "◎ 行動力や戦略で共鳴 (SLE, SEE)<br>○ 秩序や力の共有 (LSI, LIE)<br>○ 監督関係で影響を受ける (IEI)<br>○ 理論上の補完関係・双対 (IEI)<br>△ 状況による (その他)",
-        "LSE": "◎ 実務や成果を共有 (LSE, SLE)<br>○ 生活や効率の安定 (SLI, SEI)<br>○ 監督関係で刺激を受ける (EII)<br>○ 理論上の補完関係・双対 (EII)<br>△ 状況による (その他)"
+        "SLE": "◎ 行動力や戦略で共鳴 (SLE, SEE)<br>○ 秩序や力の共有 (LSI, ESI)<br>○ 監督関係で影響を受ける (ESI)<br>○ 理論上の補完関係・双対 (IEI)<br>△ 状況による (その他)",
+        "LSE": "◎ 実務や成果を共有 (LSE, SLE)<br>○ 生活や効率の安定 (SLI, SEI)<br>○ 監督関係で刺激を受ける (SEI)<br>○ 理論上の補完関係・双対 (EII)<br>△ 状況による (その他)"
     };
 
     return compMap[socioPrimary] || `◎ 同一クアドラ<br>○ 相互補完関係<br>△ 個人差あり`;
