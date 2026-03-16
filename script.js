@@ -23,8 +23,7 @@ let previousScreen = "start-screen";
 
 document.getElementById('menu-btn').onclick = () => {
     // 現在アクティブな画面を記憶
-    const availableQuestions = questionsData.filter(q => !q.id || !q.id.includes("followup"));
-    shuffledQuestions = availableQuestions.sort(() => Math.random() - 0.5).slice(0, BASIC_QUESTIONS);
+
     if (document.getElementById('start-screen').classList.contains('active')) previousScreen = 'start-screen';
     else if (document.getElementById('question-screen').classList.contains('active')) previousScreen = 'question-screen';
     else if (document.getElementById('result-screen').classList.contains('active')) previousScreen = 'result-screen';
@@ -62,8 +61,8 @@ document.getElementById('start-btn').addEventListener('click', () => {
     }
     
     currentPhase = 1;
-    shuffledQuestions = questionsData.sort(() => Math.random() - 0.5).slice(0, BASIC_QUESTIONS);
-    
+    const availableQuestions = questionsData.filter(q => !q.id || !q.id.includes("followup"));
+    shuffledQuestions = availableQuestions.sort(() => Math.random() - 0.5).slice(0, BASIC_QUESTIONS);
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('question-screen').classList.add('active');
     renderQuestion();
@@ -414,7 +413,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         });
     }
     // 🤯 ギミック：Ne圧（カオスの無限吹き出し）
-    if (q.type === 'interactive_ne_chaos') {
+    else if (q.type === 'interactive_ne_chaos') {
         // ★ カオス語彙を大量増量！！
         const chaosWords =["空がゼリー!?🍉", "スイカが喋る!?🍉", "数学は青色!?🟦", "宇宙の端っこ!?🌌", "キノコが歩いてる!?🍄", "時間が逆再生!?⏳", "もしカラスが机なら!?🐦‍⬛", "猫の鳴き声が『円周率』だったら!?🐈", "全部夢だったらどうする!?💭", "重力が横向きになったら!?🔄", "明日の天気が『カツカレー』!?🍛", "私が君で君が私!?🪞", "雲がピザに変身!?🍕", "月がWi-Fi切れたらどうすんの!?🌕", "冷蔵庫が恋に落ちたら!?❄️❤️", "電車が急にダンス始めたら!?🚃💃", "俺の影が勝手に逃げ出したら!?🕴️🏃", "重力が『今日は休み』って言ってきたら!?🪂", "鏡の中の自分が『お前が偽物だろ』って言ってきたら!?🪞😈", 
             "時間旅行して過去の自分に『やめとけ』って言ったら!?⏰", "スマホが『もう充電したくない』ってストライキ!?📱🚩", "虹が逆さまになったら色はどうなる!?🌈🔄", "夢の中で起きたら現実が夢!?💤🔄", "猫が人間語で『税金払え』って言ってきたら!?🐱💸", "空からカレーが降ってきたら味は!?🍛☔", "地球が『もう回りたくない』って止まったら!?🌍🛑", "俺の声がエコーじゃなくて逆再生になったら!?🎤↩️", "木が『お前が葉っぱだろ』って言ってきたら!?🌳🫵", "数学の公式が全部『かわいい』になったら!?➕😍", "風が『今日は俺の気分で吹く』って宣言!?🌬️👑", "太陽が『今日は寝坊するわ』って言ったら!?☀️🛌", "靴下が片方だけ異世界転生したら!?🧦🌌", "冷たいビールが『熱くなりたい』って泣いたら!?🍺😭", 
@@ -956,10 +955,10 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         darlingMsgArea.classList.add('fade-in');
 
         let options =[
-            { text: "「私が全員を救う義理はない。自分の責任の範囲内で合理的に行動した結果だ」と、道徳的非難を冷たく跳ね返す。（T型の防衛 / Fi脆弱）", scores: { socio: { Fi: -4, Ti: 3, Te: 2 }, mbti: { F: -3, T: 3 }, ennea: { 5: 3, 8: 1 } }, msg: "⚖️「……血も涙もない機械のような論理。あなたは人として欠落しています。」" },
-            { text: "「……うっ。確かに、もっと優しくできたかもしれない」と、急に罪悪感に苛まれて反省する。（F型の自責）", scores: { socio: { Fi: 4, Fe: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 2 } }, msg: "⚖️「……その痛みが、あなたの心の証明です。贖罪なさい。」" },
-            { text: "「『正しい人間』の定義とは何か？ そもそも万人が納得する善など存在しない」と、道徳の定義自体を解体しにいく。（Ti/Neの回避ｗｗ）", scores: { socio: { Ti: 3, Ne: 3, Fi: -2 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 2, 7: 1 } }, msg: "⚖️「……屁理屈で逃げるのですね。あなたの魂は空虚だ。」" },
-            { text: "「私がルールだ。私が切り捨てた者は弱かっただけ。文句があるなら力で示せ」と圧倒する。（Se/Teの覇王）", scores: { socio: { Se: 4, Te: 2, Fi: -3 }, mbti: { Se: 3, Te: 3 }, ennea: { 8: 4, 3: 1 } }, msg: "⚖️「……野蛮な暴君。いつかその傲慢さが身を滅ぼしますよ。」" }
+            { text: "「私が全員を救う義理はない。自分の責任の範囲内で合理的に行動した結果だ」と、道徳的非難を冷たく跳ね返す。", scores: { socio: { Fi: -4, Ti: 3, Te: 2 }, mbti: { F: -3, T: 3 }, ennea: { 5: 3, 8: 1 } }, msg: "⚖️「……血も涙もない機械のような論理。あなたは人として欠落しています。」" },
+            { text: "「……うっ。確かに、もっと優しくできたかもしれない」と、急に罪悪感に苛まれて反省する。", scores: { socio: { Fi: 4, Fe: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 2 } }, msg: "⚖️「……その痛みが、あなたの心の証明です。贖罪なさい。」" },
+            { text: "「『正しい人間』の定義とは何か？ そもそも万人が納得する善など存在しない」と、道徳の定義自体を解体しにいく。", scores: { socio: { Ti: 3, Ne: 3, Fi: -2 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 2, 7: 1 } }, msg: "⚖️「……屁理屈で逃げるのですね。あなたの魂は空虚だ。」" },
+            { text: "「私がルールだ。私が切り捨てた者は弱かっただけ。文句があるなら力で示せ」と圧倒する。", scores: { socio: { Se: 4, Te: 2, Fi: -3 }, mbti: { Se: 3, Te: 3 }, ennea: { 8: 4, 3: 1 } }, msg: "⚖️「……野蛮な暴君。いつかその傲慢さが身を滅ぼしますよ。」" }
         ].sort(() => Math.random() - 0.5);
 
         options.forEach(opt => {
@@ -1407,14 +1406,20 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         currentScores = { isSlider: true, value: 5 }; 
     }
     else {
-        // ★ ジェミの防波堤！optionsが無い問題が来たらエラーを出して止める
-        if (!q.options) {
-            console.error(`🚨【ジェミからの報告】みつき！問題ID「${q.id}」に options（選択肢）がないよ！データを確認してみて！`);
-            inputArea.innerHTML = `<p style="color: var(--warn-color); font-weight: bold; text-align: center; margin-top: 20px;">※システムエラー：この問題の選択肢データが見つかりません。（ID: ${q.id}）</p>`;
-        } else {
-            createStandardRadioButtons(q.options);
+            // ★ ジェミの防波堤・改！エラーの時はスキップできるようにする！
+            if (!q.options) {
+                console.error(`🚨【ジェミからの報告】みつき！問題ID「${q.id}」に options（選択肢）がないよ！データを確認してみて！`);
+                inputArea.innerHTML = `
+                    <p style="color: var(--warn-color); font-weight: bold; text-align: center; margin-top: 20px;">
+                        ※システムエラー：この問題の選択肢データが見つかりません。（ID: ${q.id}）<br>
+                        <span style="font-size: 0.8em; color: #8b949e;">（※そのまま「次へ」を押せばスキップできます）</span>
+                    </p>`;
+                // ★ ダミーデータを入れておいて、進行不能バグを防ぐ！
+                currentScores = { scores: { socio: {}, mbti: {}, ennea: {} }, loggedText: `⚠️ エラーのためスキップ (ID: ${q.id})` };
+            } else {
+                createStandardRadioButtons(q.options);
+            }
         }
-    }
 
     document.getElementById('confidence').value = 5;
 
