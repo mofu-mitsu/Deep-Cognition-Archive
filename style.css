@@ -534,3 +534,13 @@ body.wonderland-mode {
     .nav-buttons button { font-size: 0.85em; padding: 10px; }
     .eye-icon { font-size: 2.5em; margin: 0 5px; }
 }
+/* ★ テキスト入力欄のはみ出し防止（魔法のコード） */
+input[type="text"], input[type="number"] {
+    box-sizing: border-box;
+}
+
+/* ★ Feパニックゲーム用のスマホサイズ調整 */
+@media screen and (max-width: 480px) {
+    .emoji-faces { gap: 10px; flex-wrap: wrap; }
+    .emoji-face { font-size: 3em; width: 45%; } /* 絵文字ボタンを少し小さくして並べる */
+}
