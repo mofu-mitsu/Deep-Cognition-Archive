@@ -7,7 +7,7 @@
     <title>Deep Cognition Archive | 深層認知・ソシオニクス診断</title>
     <meta name="description" content="あなたの情報代謝と深層認知プロセスを観測し、MBTI・ソシオニクス・エニアグラムを高精度で分離・推定します。">
     <meta property="og:title" content="Deep Cognition Archive | 深層認知診断">
-    <meta property="og:description" content="迷った時間や行動ログから「裏」を見抜き、あなたの真のタイプを暴くサイコメトリクス・ツール。">
+    <meta property="og:description" content="迷った時間や行動ログから「思考の裏」を見抜き、あなたの真のタイプを暴くサイコメトリクス・ツール。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mofu-mitsu.github.io/Deep-Cognition-Archive/">
     <meta property="og:image" content="https://mofu-mitsu.github.io/Deep-Cognition-Archive/ogp-image.png"> <!-- ※後で画像作ってね！ -->
@@ -21,17 +21,128 @@
 </head>
 <body>
 <div id="app">
-        <!-- EXIT ボタン ＆ 被験者ID -->
+        <!-- ★ EXIT ボタン ＆ メニュー（解説）ボタン -->
         <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); margin-bottom: 20px;">
-            <!-- ★ ランダム生成される被験者ID -->
             <div id="subject-id" style="color: var(--accent-color); font-size: 0.8em; font-weight: bold; letter-spacing: 1px;">
                 Subject ID:[ WAIT... ]
             </div>
-            
-            <a href="#" id="exit-btn" style="color: var(--warn-color); text-decoration: none; font-size: 0.85em; border: 1px dashed var(--warn-color); padding: 5px 10px; border-radius: 4px; transition: 0.3s;">
-                <i class="fas fa-sign-out-alt"></i> [ EXIT : SYSTEM ]
-            </a>
+            <div>
+                <a href="#" id="exit-btn" style="color: var(--warn-color); text-decoration: none; font-size: 0.85em; border: 1px dashed var(--warn-color); padding: 5px 10px; border-radius: 4px; transition: 0.3s;">
+                    <i class="fas fa-sign-out-alt"></i> [ EXIT ]
+                </a>
+                <button id="menu-btn" style="background: transparent; color: #8b949e; border: none; font-size: 0.85em; cursor: pointer; padding: 0 10px;">
+                    <i class="fas fa-question-circle"></i> 類型解説
+                </button>
+            </div>
         </div>
+
+        <!-- ★ 類型解説（メニュー）画面 -->
+        <div id="explanation-screen" class="screen fade-in" style="font-size: 0.9em; line-height: 1.7;">
+
+        <h2 style="text-align:center;">📖 心理類型システム解説</h2>
+
+        <div style="background: rgba(201,26,37,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <strong style="color: var(--accent-color);">⚙️ ソシオニクス (Socionics)</strong><br><br>
+
+        人間が世界をどのように「情報」として認識し、処理するかを説明する理論。  
+        特に<strong>人間関係の相性（デュアリティなど）</strong>を重視する点が特徴です。<br><br>
+
+        ソシオニクスでは情報を8種類に分類します。
+
+        <ul>
+        <li><strong>Ti（構造論理）</strong>：物事の仕組み・分類・体系を理解する力</li>
+        <li><strong>Te（実用論理）</strong>：効率・結果・実用性・データを重視する思考</li>
+        <li><strong>Fi（関係倫理）</strong>：人と人の距離感、信頼関係、好き嫌いの判断</li>
+        <li><strong>Fe（感情倫理）</strong>：感情の表現、場の雰囲気、感情の共有</li>
+        <li><strong>Ni（時間直観）</strong>：未来予測、物事の流れ、運命的な因果</li>
+        <li><strong>Ne（可能性直観）</strong>：潜在的な可能性、新しいアイデア</li>
+        <li><strong>Se（意志感覚）</strong>：力・支配・圧力・行動力</li>
+        <li><strong>Si（感覚快適）</strong>：身体感覚、快適さ、環境調整</li>
+        </ul>
+
+        ソシオニクスではこれらの機能が<strong>強さ・役割</strong>によって配置され、16タイプを構成します。
+        </div>
+
+
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <strong style="color: var(--mbti-color);">🧠 MBTI（16タイプ）</strong><br><br>
+
+        MBTIは心理学者カール・ユングの理論を元に作られた性格分類システムです。  
+        人が<strong>どのように情報を集め、どのように判断するか</strong>という認知スタイルを16タイプに分類します。<br><br>
+
+        MBTIの心理機能は以下の8つです。
+
+        <ul>
+        <li><strong>Ti（内向的思考）</strong>：理論的整合性、論理の一貫性を重視</li>
+        <li><strong>Te（外向的思考）</strong>：効率、成果、合理的判断</li>
+        <li><strong>Fi（内向的感情）</strong>：個人の価値観、信念</li>
+        <li><strong>Fe（外向的感情）</strong>：他人の感情、社会的調和</li>
+        <li><strong>Ni（内向的直観）</strong>：深い洞察、未来のビジョン</li>
+        <li><strong>Ne（外向的直観）</strong>：可能性、アイデア発想</li>
+        <li><strong>Si（内向的感覚）</strong>：記憶、経験、安定性</li>
+        <li><strong>Se（外向的感覚）</strong>：現実世界、行動、五感</li>
+        </ul>
+
+        MBTIとソシオニクスは似ていますが、  
+        <strong>同じ名前でも意味が完全に一致するわけではありません。</strong>
+        </div>
+
+
+        <div style="background: rgba(248,81,73,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <strong style="color: var(--warn-color);">🕸️ エニアグラム (Enneagram)</strong><br><br>
+
+        エニアグラムは「人が何を恐れ、何を求めるか」という<strong>深層動機</strong>を説明する理論です。<br><br>
+
+        9つのタイプがあります。
+
+        <ul>
+        <li><strong>タイプ1</strong>：正しさ・理想・倫理（完璧主義者）</li>
+        <li><strong>タイプ2</strong>：愛されたい・人の役に立ちたい</li>
+        <li><strong>タイプ3</strong>：成功・評価・成果</li>
+        <li><strong>タイプ4</strong>：個性・感情・自己表現</li>
+        <li><strong>タイプ5</strong>：知識・理解・観察</li>
+        <li><strong>タイプ6</strong>：安全・忠誠・不安対策</li>
+        <li><strong>タイプ7</strong>：楽しさ・刺激・自由</li>
+        <li><strong>タイプ8</strong>：力・支配・自己防衛</li>
+        <li><strong>タイプ9</strong>：平和・安定・調和</li>
+        </ul>
+        </div>
+
+
+        <div style="background: rgba(255,215,0,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <strong style="color: #ffd700;">🧩 サイコソフィア (Psychosophy)</strong><br><br>
+
+        サイコソフィアはロシアの心理類型理論で、  
+        人が<strong>どの領域に自信を持ち、どの領域に不安を持つか</strong>を4つの要素で説明します。<br><br>
+
+        4つの要素：
+
+        <ul>
+        <li><strong>L（Logic）</strong>：論理、思考、理論</li>
+        <li><strong>V（Volition）</strong>：意志、自己主張、決断</li>
+        <li><strong>E（Emotion）</strong>：感情表現、人との情緒</li>
+        <li><strong>F（Physics）</strong>：身体、物質、現実</li>
+        </ul>
+
+        これらは<strong>1位〜4位</strong>で並びます。<br><br>
+
+        例：<strong>LVFE</strong>
+
+        <ul>
+        <li>L1：論理に最も自信がある</li>
+        <li>V2：意志は安定</li>
+        <li>F3：物質面はやや不安</li>
+        <li>E4：感情表現は苦手</li>
+        </ul>
+
+        このように心理的な優先順位を表します。
+        </div>
+
+        <button id="close-menu-btn" style="border-color: #8b949e; color: #8b949e;">閉じる</button>
+
+        </div>
+
+        <!-- スタート画面 -->
 
         <!-- ★ 喋る芋虫ギミック用（完全にズレない構造） -->
         <div id="caterpillar-container">
@@ -69,6 +180,16 @@
             <div class="loader" style="margin: 0 auto;"></div>
             <p id="loading-text" style="color: #8b949e; margin-top: 20px; font-size: 0.9em; font-family: monospace;">
                 対象者の深層認知モデルを構築中...
+            </p>
+        </div>
+<!-- ★ 追加：フェーズ移行用の中間画面 -->
+        <div id="phase-screen" class="screen fade-in" style="text-align: center; padding: 40px 0;">
+            <h2 id="phase-title" style="color: var(--warn-color); margin-bottom: 20px; font-size: 2em; letter-spacing: 2px;">
+                <i class="fas fa-exclamation-triangle"></i> Phase 1 Complete
+            </h2>
+            <div class="loader" style="margin: 0 auto; border-top-color: var(--warn-color);"></div>
+            <p id="phase-text" style="color: #c9d1d9; margin-top: 20px; font-size: 1.1em; font-weight: bold;">
+                基本観測を終了。<br><br>これより対象者の『脆弱機能（ストレス・バグ）』を特定する深層観測へ移行します……。
             </p>
         </div>
         <!-- 質問画面 -->
