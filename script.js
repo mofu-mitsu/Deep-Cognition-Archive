@@ -1368,25 +1368,37 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         });
     }
     // 逃げるボタン
+// 逃げるボタン
     else if (q.type === 'catch_me_radio') {
         inputArea.appendChild(darlingMsgArea);
-        let options = q.options.sort(() => Math.random() - 0.5);
+        let options = [...q.options].sort(() => Math.random() - 0.5);
+        
         options.forEach(opt => {
             const btn = document.createElement('button');
             btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
             btn.className = 'catch-me-btn'; 
             
-            btn.onmouseover = () => {
+            // ★ 逃げる動きを関数にまとめる！
+            const runAway = (e) => {
                 if (Math.random() < 0.7) { 
                     const x = (Math.random() - 0.5) * 150; 
                     const y = (Math.random() - 0.5) * 100; 
                     btn.style.transform = `translate(${x}px, ${y}px)`;
+                    // スマホで触れた瞬間にタップ判定されるのを防ぐ（逃げるのを優先）
+                    if (e.type === 'touchstart') e.preventDefault(); 
                 }
             };
+
+            // ★ パソコン（マウス）用と、スマホ（タッチ）用の両方に逃げる処理をつける！
+            btn.addEventListener('mouseover', runAway);
+            btn.addEventListener('touchstart', runAway, { passive: false });
+
+            // 運良く捕まえた（0.3の確率で逃げなかった）時の処理
             btn.onclick = () => {
                 btn.style.transform = 'translate(0, 0)'; 
                 selectOption(opt, btn);
             };
+            
             inputArea.appendChild(btn);
         });
     }
