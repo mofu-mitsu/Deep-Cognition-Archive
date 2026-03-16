@@ -151,6 +151,110 @@ const questionsData =[
         ]
     },
     {
+    id: "q_darling_truth_trap_v2",
+    type: "darling_sweet_radio",
+    text: "ねえダーリン♡ もし誰かが“明らかに間違ってること”を自信満々に話してたら……あなたどうするの？🥺",
+    options:[
+
+    { 
+    text: "「それ、論理的に矛盾してる」と指摘する。",
+    scores:{ socio:{ Ti:3 }, mbti:{ Ti:3 }, ennea:{ 5:2 } },
+
+    followUp:{
+        id:"q_truth_reason",
+        type:"radio",
+        text:"👁️[System: 思考の深掘り] どうして指摘するの？",
+        options:[
+        { 
+        text:"間違いは修正されるべきだし、論理が崩れてるのは気持ち悪い。",
+        scores:{ socio:{ Ti:4 }, mbti:{ Ti:2 }, ennea:{ 5:2 } }
+        },
+        { 
+        text:"放置すると話が変な方向に進んで効率が悪いから。",
+        scores:{ socio:{ Te:4 }, mbti:{ Te:4 }, ennea:{ 3:1 } }
+        },
+        {
+        text:"本人のためにも正してあげた方がいいと思う。",
+        scores:{ socio:{ Fe:2, Fi:2 }, mbti:{ Fe:2, Fi:2 }, ennea:{ 2:1 } }
+        }
+        ]
+    }
+    },
+    { 
+    text: "指摘はするけど、言い方を少し柔らかくする。",
+    scores:{ socio:{ Ti:2 }, mbti:{ Ti:2 } },
+
+    followUp:{
+        id:"q_soft_reason",
+        type:"radio",
+        text:"👁️[System: 思考の深掘り] どうして柔らかく言うの？",
+        options:[
+        {
+        text:"相手が傷つくのはあまり良くないと思うから。",
+        scores:{ socio:{ Fe:2, Fi:3 }, mbti:{ Fe:3, Fi:2 }, ennea:{ 2:2 } }
+        },
+        {
+        text:"強く言うと反発されて議論が進まなくなるから。",
+        scores:{ socio:{ Te:3, Ti:2 }, mbti:{ Te:3, Ti:2 }, ennea:{ 1:1 } }
+        },
+        {
+        text:"単純に空気が悪くなるのが面倒。",
+        scores:{ socio:{ Si:2 }, mbti:{ Se:2 }, ennea:{ 9:2 } }
+        }
+        ]
+    }
+    },
+    {
+    text:"まず『どうしてそう思ったの？』と聞く。",
+    scores:{ socio:{ Fi:2, Ni:1 }, mbti:{ Fi:2 } },
+
+    followUp:{
+        id:"q_understand_reason",
+        type:"radio",
+        text:"👁️[System: 思考の深掘り] なぜ理由を聞くの？",
+        options:[
+        {
+        text:"相手の価値観や気持ちを理解したい。",
+        scores:{ socio:{ Fi:4 }, mbti:{ Fi:4 }, ennea:{ 4:2 } }
+        },
+        {
+        text:"どこで認識がズレたのか構造を確認したい。",
+        scores:{ socio:{ Ti:3, Ni:2 }, mbti:{ Ti:3, Ni:2 }, ennea:{ 5:2 } }
+        },
+        {
+        text:"背景情報を知らないと判断できないから。",
+        scores:{ socio:{ Te:2, Ni:2 }, mbti:{ Te:2, Ni:2 }, ennea:{ 5:1 } }
+        }
+        ]
+    }
+    },
+    {
+    text:"論争になりそうなら話題を変える。",
+    scores:{ socio:{ Si:2 }, mbti:{ Si:2 }, ennea:{ 9:2 } },
+
+    followUp:{
+        id:"q_avoid_reason",
+        type:"radio",
+        text:"👁️[System: 思考の深掘り] どうして話題を変えるの？",
+        options:[
+        {
+        text:"その場の雰囲気が悪くなるのが嫌だから。",
+        scores:{ socio:{ Fe:3 }, mbti:{ Fe:3 }, ennea:{ 9:2 } }
+        },
+        {
+        text:"議論しても得るものが少ないと判断した。",
+        scores:{ socio:{ Te:3 }, mbti:{ Te:3 }, ennea:{ 5:1 } }
+        },
+        {
+        text:"単純に面倒くさい。",
+        scores:{ socio:{ Si:2 }, mbti:{ Se:3 }, ennea:{ 9:2 } }
+        }
+        ]
+    }
+    }
+    ]
+    },
+    {
         id: "q_idea_generation", // ★ Ni発想 vs Ne発想
         type: "radio",
         text: "あなたに「良いアイデア（発想）」が降りてくる時のプロセスは？",
@@ -173,6 +277,20 @@ const questionsData =[
             }
         ]
     },
+// 【完全改訂版】Ne圧の無限吹き出しギミック！
+    {
+        id: "q_ne_pressure_chaos_fixed", 
+        type: "interactive_ne_chaos", // ★ 特殊UIに変更！
+        text: "【Chaos Observation】\n初対面の人（いかれ帽子屋）が、脈絡のない意味不明な話をものすごい勢いで連射してきました。あなたはどうする？",
+        // 選択肢は script.js 側で動的に生成
+    },
+    // ★ ダーリンの素（阿波弁）＆ご機嫌取りミニゲーム！！
+    {
+        id: "q_darling_bored_awa_game",
+        type: "interactive_awa_darling",
+        text: "【System Glitch?】\n「あ……ダーリン見とったん？\n……なんや、ずっと完璧なナビゲーター演じるのも疲れるんよ。\nウチ、退屈やけん……ダーリン、なんか面白いことしてウチを楽しませてよ♡」",
+        // 選択肢は script.js 側で動的に生成
+    },
     {
         id: "q_meta_creator_anxiety", // ★ 作者（みつき）の気持ちメタ質問
         type: "radio",
@@ -193,6 +311,33 @@ const questionsData =[
             { 
                 text: "不安なんてない。「文句あるならお前が作ってみろ」と強気で公開し、反応を楽しむ。", 
                 scores: { socio: { Se: 3, Ne: 2 }, mbti: { Se: 2, Ne: 2 }, ennea: { 8: 3, 7: 2 } } 
+            }
+        ]
+    },
+    {
+        id: "q_caterpillar_new_logic", // ★ 芋虫からの新質問！
+        type: "radio",
+        text: "🐛「……君がこの世界（現実）を『不条理だ』と感じる時、その不条理をどうやって自分の中で処理しているんだ？」",
+        options:[
+            { 
+                text: "「不条理の『原因となる構造』を解体し、どうすればシステムを最適化（または回避）できるか計算し直す」", 
+                scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 1: 1 }, },
+                msg: "🐛「……なるほど。君は僕と同じ、世界を設計図として見るタイプだな。」"
+            },
+            { 
+                text: "「不条理など最初から計算に入っている。文句を言う暇があるなら、結果を出すための別ルートを探すだけだ」", 
+                scores: { socio: { Te: 3, Ni: 2 }, mbti: { Te: 3, Ni: 2 }, ennea: { 8: 2, 3: 1 },},
+                msg: "🐛「……無駄がないな。感情を切り捨てたその合理性、見事だ。」"
+            },
+            { 
+                text: "「不条理に直面した時の『悲しみや怒り』の感情自体を深く味わい、それを自己のアイデンティティの一部として昇華する」", 
+                scores: { socio: { Fi: 1, Fe: 2, Ne: 2 }, mbti: { Fi: 3, Ne: 2 }, ennea: { 4: 3 } },
+                msg: "🐛「……理解できん。だが、その非合理な『心』こそが人間らしさというものか。」"
+            },
+            { 
+                text: "「どうせ世界はそういうものだ。疲れるから深く考えず、快適な場所で寝る」", 
+                scores: { socio: { Si: 3, Te: 1 }, mbti: { Se: 3 }, ennea: { 9: 3 } },
+                msg: "🐛「……賢明な判断だ。無駄なエネルギー（HP）を消費しないのは正しい生存戦略だ。」"
             }
         ]
     },
@@ -920,8 +1065,8 @@ const questionsData =[
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] ほんとに？ 心の底から100%『どうでもいい（無関心）』と思ってる？",
                     options:[
-                        { text: "本当にどうでもいい。考えるのも面倒くさいから完全に思考を停止して手放している。", scores: { socio: { Te: 2, Ni: 2 }, mbti: { Ne: 2, Si: -2  }, ennea: { 9: 3 }, combo: { "INTP-ILI": 1 } } },
-                        { text: "実は『どうでもいい』は建前で、脳のバックグラウンドでは「なぜ結論が出ないのか」という構造を永遠に再検証し続けている。", scores: { socio: { Ti: 4, Ne: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 3, 1: 1 }, combo: { "INTJ-LII": 1 } } } // みつきの裏の顔ｗｗ
+                        { text: "本当にどうでもいい。考えるのも面倒くさいから完全に思考を停止して手放している。", scores: { socio: { Te: 2, Ni: 2 }, mbti: { Ne: 2, Si: -2  }, ennea: { 9: 3 }, combo: { "INTP+ILI": 1 } } },
+                        { text: "実は『どうでもいい』は建前で、脳のバックグラウンドでは「なぜ結論が出ないのか」という構造を永遠に再検証し続けている。", scores: { socio: { Ti: 4, Ne: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 3, 1: 1 }, combo: { "INTJ+LII": 1 } } } // みつきの裏の顔ｗｗ
                     ]
                 }
             },
@@ -2836,29 +2981,6 @@ const questionsData =[
             }
         ]
     },
-{
-        id: "q_ne_pressure_chaos", // ★ Ne圧（カオス）による脆弱機能あぶり出し！
-        type: "radio",
-        text: "【Chaos Observation】\n「ねえ！もし空がゼリーで出来てたら鳥はどう飛ぶの？ スイカが喋ったら第一声は何！？ あと、昨日の夢で数学が青色だったんだけど、これってつまり宇宙の端っこは……」\n……と、初対面の人が脈絡のない話をものすごい勢いで連射してきました。あなたはどうする？",
-        options:[
-            { 
-                text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と完全に思考停止し、苦痛を感じてその場から逃げ出したくなる。", 
-                scores: { socio: { Ne: -3, Se: 2 }, mbti: { Ne: -3, Si: 2 }, ennea: { 1: 2, 9: 1 } } // Neマイナス！！
-            },
-            { 
-                text: "「あはは！ スイカは絶対『割るな！』って言うでしょ！ でさ、空がゼリーなら飛行機はスプーン型にしなきゃね！」とノリノリで乗っかる。", 
-                scores: { socio: { Ne: 4, Fe: 2 }, mbti: { Ne: 4, Fe: 1 }, ennea: { 7: 4, 4: 1 } } 
-            },
-            { 
-                text: "「空の成分がゼラチン質であると仮定した場合、鳥の羽の構造では浮力を得られない。つまり……」と、マジレスで構造の矛盾を解体しにいく。", 
-                scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 2, Ne : 1 }, ennea: { 5: 3, 1: 1 } } 
-            },
-            { 
-                text: "「で、結局何が言いたいの？」と話を遮り、結論と目的だけを求める。", 
-                scores: { socio: { Te: 3, Ni: 2, Ne: -2 }, mbti: { Te: 3, Ni: 2 }, ennea: { 8: 3, 3: 1 } } 
-            }
-        ]
-    },
     {
         id: "q_interactive_party", // ★ 空気読みパーティー（Fe）
         type: "interactive_party",
@@ -3174,7 +3296,7 @@ const questionsData =[
                     text: "👁️[System: 思考の深掘り] その「平穏を選ぶ」本当の理由は？",
                     options:[
                         { text: "争い自体が怖くてストレスだし、みんなと仲良く穏やかに過ごしたいから。", scores: { socio: { Fe: 3, Fi: 3, Si: 2 }, mbti: { Fe: 3,  Fi: 3, Si: 2 }, ennea: { 9: 3, 2: 1 } } },
-                        { text: "「あなたという変数を私の生活に組み込むコストとリスクが、現状のメリットを上回る」と論理的に判断し、不要な関係を切り離すのが一番の『平和（最適化）』だから。", scores: { socio: { Ti: 4, Ni: 2, Fe: -3 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 1: 1 }, combo: { "INTJ-LII": 1 } } }
+                        { text: "「あなたという変数を私の生活に組み込むコストとリスクが、現状のメリットを上回る」と論理的に判断し、不要な関係を切り離すのが一番の『平和（最適化）』だから。", scores: { socio: { Ti: 4, Ni: 2, Fe: -3 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 1: 1 }, combo: { "INTJ+LII": 1 } } }
                     ]
                 }
             },
@@ -3985,36 +4107,38 @@ const questionsData =[
             }
         ]
     },
-{
-        id: "q_caterpillar_pity_fixed", // ★ 芋虫イベント（F擬態トラップ追加版！）
+    {
+        id: "q_caterpillar_pity_fixed", 
         type: "radio",
         text: "【System Alert】あなたがこの診断を途中でやめると、画面の端にいる芋虫は少し悲しそうです。……どうしますか？",
         options:[
             { 
                 text: "「かわいそうだから最後までやってあげよう」と気にする。", 
                 scores: { socio: { Fi: 2, Fe: 2 }, mbti: {  Fe: 3, Fi: 2 }, ennea: { 9: 2, 2: 1 } },
-                // ★ T型の「社会的な正解」を暴く深掘り！
                 followUp: {
                     id: "q_caterpillar_pity_followup",
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] ほんとに？ その「かわいそう」の裏にある本音は？",
                     options:[
-                        { text: "本当に純粋に、相手（虫）の感情を慮って心が痛んだ。", scores: { socio: { Fi: 3, Fe: 1 }, mbti: { Fi: 3 }, ennea: { 4: 2, 2: 2 } } },
-                        { text: "いや、「こういう時は可哀想と言うのが『社会的な正解』だろう」という常識・倫理観（マナー）に合わせただけ。", scores: { socio: { Ti: 3, Te: 2, Fi: -3 }, mbti: { Ti: 2, Te: 2 , Fe: -3 , Fi: -2 }, ennea: { 5: 2, 6: 2 } } } // みつき達のメタ認知ｗｗ
+                        { text: "本当に純粋に、相手（虫）の感情を慮って心が痛んだ。", scores: { socio: { Fi: 3, Fe: 1 }, mbti: { Fi: 3 }, ennea: { 4: 2, 2: 2 } }, msg: "🐛「……哀れみなど不要だ。だが、その非合理な優しさは記録しておこう。」" },
+                        { text: "いや、「こういう時は可哀想と言うのが『社会的な正解』だろう」という常識・倫理観（マナー）に合わせただけ。", scores: { socio: { Ti: 3, Te: 2, Fi: -3 }, mbti: { Ti: 2, Te: 2 , Fe: -3 , Fi: -2 }, ennea: { 5: 2, 6: 2 } }, msg: "🐛「……見え透いた偽善だな。だが、生存戦略としては正しい。」" }
                     ]
                 }
             },
             { 
                 text: "「ただのプログラム（ピクセル）だろ。感情なんて存在しない」と完全に無視する。", 
-                scores: { socio: { Ti: 4, Fi: -2 }, mbti: { Te: 3, Ti: 1 }, ennea: { 5: 3 } } 
+                scores: { socio: { Ti: 4, Fi: -2 }, mbti: { Te: 3, Ti: 1 }, ennea: { 5: 3 } },
+                msg: "🐛「……正解だ。お前は物事の本質（構造）がよく見えている。」" // Tiの同志ｗｗ
             },
             { 
                 text: "「へえ、芋虫に感情パラメータがあるんだ？」とシステムの構造に興味を持つ。", 
-                scores: { socio: { Ti: 2, Ne: 3 }, mbti: { Ne: 2, Ti: 1, Te: 1 }, ennea: { 5: 1, 7: 1 } } 
+                scores: { socio: { Ti: 2, Ne: 3 }, mbti: { Ne: 2, Ti: 1, Te: 1 }, ennea: { 5: 1, 7: 1 } },
+                msg: "🐛「……僕の感情（バグ）すらも、お前のおもちゃ（分析対象）というわけか。」"
             },
             { 
                 text: "「少し気になるけど、自分にメリットがないならやめるかも」。", 
-                scores: { socio: { Te: 3 }, mbti: { Te: 3 }, ennea: { 3: 2, 8: 1 } } 
+                scores: { socio: { Te: 3 }, mbti: { Te: 3 }, ennea: { 3: 2, 8: 1 } },
+                msg: "🐛「……徹底した合理主義だな。嫌いではない。」"
             }
         ]
     },
@@ -4282,10 +4406,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】「人間が生まれたことに意味はあるか？」と聞かれたら？",
         options:[
-            { text: "「特に意味はないと思う。宇宙規模で見れば人間の存在も一瞬だし、意味を求めること自体が人間の癖なんじゃないかな」と少し俯瞰して流す。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ti: 2, Ne: 1 }, combo: { "INTP-ILI": 1 } } },
-            { text: "「意味がないなら何のために生きるのか謎だ。自分で生きる意味を見つけ、定義づけるものだ」と再構築する。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ-LII": 1 } } },
-            { text: "「意味はないが、最悪の事態（絶滅など）を回避するためにシステムや防衛策を構築することは重要だ」と備える。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, J: 2 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「そもそも『意味』とは何か？生物学的な機能と哲学的概念を分離して思考実験を楽しもう」と机の上の宇宙を展開する。", scores: { socio: { Ti: 3, Ne: 3 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "「特に意味はないと思う。宇宙規模で見れば人間の存在も一瞬だし、意味を求めること自体が人間の癖なんじゃないかな」と少し俯瞰して流す。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ti: 2, Ne: 1 }, combo: { "INTP+ILI": 1 } } },
+            { text: "「意味がないなら何のために生きるのか謎だ。自分で生きる意味を見つけ、定義づけるものだ」と再構築する。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
+            { text: "「意味はないが、最悪の事態（絶滅など）を回避するためにシステムや防衛策を構築することは重要だ」と備える。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, J: 2 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「そもそも『意味』とは何か？生物学的な機能と哲学的概念を分離して思考実験を楽しもう」と机の上の宇宙を展開する。", scores: { socio: { Ti: 3, Ne: 3 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4293,10 +4417,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】「エジプトにあるようなピラミッドを作れ」と理不尽な指示をされたら？",
         options:[
-            { text: "「まずその計画が現実的かを確認する。労働力・資金・期間を見て非効率なら中止や別案を提案する」と冷静に判断する。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Ni: 2, Te: 2, J: 1 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「そもそもなぜピラミッドなのか？形状に意味があるなら構造力学と象徴性を分離して考える」と代替案を探る。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ-LII": 1 } } },
-            { text: "「めんどくさ。どうせ無理だし、適当な理由をつけてプロジェクト自体を自然消滅させるか逃げる」。", scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, P: 3 }, combo: { "INTP-ILI": 1 } } },
-            { text: "「ピラミッドの構造？面白そう！」と、作るという目的を忘れて建築の歴史や力学の分析（知識の深掘り）に没頭する。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "「まずその計画が現実的かを確認する。労働力・資金・期間を見て非効率なら中止や別案を提案する」と冷静に判断する。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Ni: 2, Te: 2, J: 1 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「そもそもなぜピラミッドなのか？形状に意味があるなら構造力学と象徴性を分離して考える」と代替案を探る。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
+            { text: "「めんどくさ。どうせ無理だし、適当な理由をつけてプロジェクト自体を自然消滅させるか逃げる」。", scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, P: 3 }, combo: { "INTP+ILI": 1 } } },
+            { text: "「ピラミッドの構造？面白そう！」と、作るという目的を忘れて建築の歴史や力学の分析（知識の深掘り）に没頭する。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4304,10 +4428,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】趣味や創作をやっている最中、ふと虚無感に襲われるのはどんな時？",
         options:[
-            { text: "「これをやってもお金にならないし、生活の役に立たなくね？」と、労力と利益（実用性）を天秤にかけた時。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「上には上がいる」「自分の理想とする完璧な構造には一生届かない」と、限界や矛盾に気づいた時。", scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ-LII": 1 } } },
-            { text: "ただ単に飽きた時。面白いと思えないなら、わざわざエネルギーを消費してまでやる意味がない。", scores: { socio: { Ni: 2, Se: -2 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP-ILI": 1 } } },
-            { text: "仕組みを完全に理解してしまい、「もうこのシステムに新しいバグや発見はない」と答え合わせが終わった時。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "「これをやってもお金にならないし、生活の役に立たなくね？」と、労力と利益（実用性）を天秤にかけた時。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「上には上がいる」「自分の理想とする完璧な構造には一生届かない」と、限界や矛盾に気づいた時。", scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
+            { text: "ただ単に飽きた時。面白いと思えないなら、わざわざエネルギーを消費してまでやる意味がない。", scores: { socio: { Ni: 2, Se: -2 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
+            { text: "仕組みを完全に理解してしまい、「もうこのシステムに新しいバグや発見はない」と答え合わせが終わった時。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4315,10 +4439,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】「タイピングが遅い」という課題に対してどう思う？",
         options:[
-            { text: "「スマホで打ってPCに送った方が正確で速い」と、既存の練習をすっ飛ばして別の代替手段で目的を達成する。", scores: { socio: { Ni: 3, Ti: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ-LII": 1 } } },
-            { text: "「めんどくさい。遅くても別に生きていけるし、必要になったらその時適当にやればいい」。", scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP-ILI": 1 } } },
-            { text: "「将来、仕事でタイピングができないと致命的なリスクになる」と考え、嫌々でも効率的な練習ツールを導入して備える。", scores: { socio: { Ni: 2, Te: 3 }, mbti: { Ni: 3, Te: 2, J: 1 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「なぜタイピングという入力方式が現代でも最適解とされているのか？」と、キーボード配列の歴史やUIの構造分析を始める。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "「スマホで打ってPCに送った方が正確で速い」と、既存の練習をすっ飛ばして別の代替手段で目的を達成する。", scores: { socio: { Ni: 3, Ti: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
+            { text: "「めんどくさい。遅くても別に生きていけるし、必要になったらその時適当にやればいい」。", scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
+            { text: "「将来、仕事でタイピングができないと致命的なリスクになる」と考え、嫌々でも効率的な練習ツールを導入して備える。", scores: { socio: { Ni: 2, Te: 3 }, mbti: { Ni: 3, Te: 2, J: 1 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「なぜタイピングという入力方式が現代でも最適解とされているのか？」と、キーボード配列の歴史やUIの構造分析を始める。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4326,10 +4450,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】クラスメイトが、他の友達は「名前＋ちゃん付け」なのに自分だけ「名字＋さん付け」で呼んできた。どう思う？",
         options:[
-            { text: "「なぜ自分だけ違うのか？」という『一貫性のなさ（構造のバグ）』が気になり、理由を考えてしまう。", scores: { socio: { Ti: 3, Ni: 1 }, mbti: { Ni: 3, Ti: 1 }, combo: { "INTJ-LII": 1 } } },
-            { text: "「嫌われているのか？距離を置かれているのか？」と相手の意図が読めず、不安・または面倒に感じる。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ti: 2, Ne: 1 }, combo: { "INTP-ILI": 1 } } },
-            { text: "「別にどう呼ばれようが実務に影響はない。馴れ合わなくて済むならむしろ好都合だ」と割り切る。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「この人は『さん付け』と『ちゃん付け』をどういう基準（アルゴリズム）で振り分けているのか？」と分析対象にする。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 1 }, combo: { "INTP-LII": 1 } } }
+            { text: "「なぜ自分だけ違うのか？」という『一貫性のなさ（構造のバグ）』が気になり、理由を考えてしまう。", scores: { socio: { Ti: 3, Ni: 1 }, mbti: { Ni: 3, Ti: 1 }, combo: { "INTJ+LII": 1 } } },
+            { text: "「嫌われているのか？距離を置かれているのか？」と相手の意図が読めず、不安・または面倒に感じる。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ti: 2, Ne: 1 }, combo: { "INTP+ILI": 1 } } },
+            { text: "「別にどう呼ばれようが実務に影響はない。馴れ合わなくて済むならむしろ好都合だ」と割り切る。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「この人は『さん付け』と『ちゃん付け』をどういう基準（アルゴリズム）で振り分けているのか？」と分析対象にする。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 1 }, combo: { "INTP+LII": 1 } } }
         ]
     },
 
@@ -4338,10 +4462,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】自分の「過去の理論や自認」が間違っていたと指摘された時、どうなる？",
         options:[
-            { text: "自分が間違っていたことが許せず、「どこでエラーが起きたのか」を納得いくまで再検証し続ける。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ni: 2, Ti: 2 }, combo: { "INTJ-LII": 1 } } },
-            { text: "「あー、そうかもね」とあっさり受け入れるか、そもそも過去の理論に執着がないので適当に流す。", scores: { socio: { Ni: 2, Te: 1 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP-ILI": 1 } } },
-            { text: "相手の指摘に『客観的な根拠（データ）』があるか確認し、論破できそうなら反撃する。正しいならドライに修正する。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「その間違いが発生した構造自体が面白い」と、自分のバグすらも新たな思考実験の材料にする。", scores: { socio: { Ti: 2, Ne: 3 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "自分が間違っていたことが許せず、「どこでエラーが起きたのか」を納得いくまで再検証し続ける。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ni: 2, Ti: 2 }, combo: { "INTJ+LII": 1 } } },
+            { text: "「あー、そうかもね」とあっさり受け入れるか、そもそも過去の理論に執着がないので適当に流す。", scores: { socio: { Ni: 2, Te: 1 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
+            { text: "相手の指摘に『客観的な根拠（データ）』があるか確認し、論破できそうなら反撃する。正しいならドライに修正する。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「その間違いが発生した構造自体が面白い」と、自分のバグすらも新たな思考実験の材料にする。", scores: { socio: { Ti: 2, Ne: 3 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4349,10 +4473,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】社会の「暗黙の了解」や「非合理なルール」に対する態度は？",
         options:[
-            { text: "論理的におかしいと思えば、脳内で欠陥を指摘しつつも「どうすれば自分への被害（コスト）を防げるか」の代替案を練る。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 1 }, combo: { "INTJ-LII": 1 } } },
-            { text: "バカバカしいと思うが、逆らって目立つのも面倒なので、最低限だけ合わせてあとはサボる（脱力する）。", scores: { socio: { Ni: 3, Te: -1 }, mbti: { Ti: 2, P: 3 }, combo: { "INTP-ILI": 1 } } },
-            { text: "自分に実害があるなら徹底的に無視するか、自分が権力を握ってルール自体を効率的なものに作り変える。", scores: { socio: { Te: 3, Se: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "「なぜこんな無駄なルールが生まれたのか？」という歴史的背景や、人間の社会心理のシステムに興味が湧く。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "論理的におかしいと思えば、脳内で欠陥を指摘しつつも「どうすれば自分への被害（コスト）を防げるか」の代替案を練る。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 1 }, combo: { "INTJ+LII": 1 } } },
+            { text: "バカバカしいと思うが、逆らって目立つのも面倒なので、最低限だけ合わせてあとはサボる（脱力する）。", scores: { socio: { Ni: 3, Te: -1 }, mbti: { Ti: 2, P: 3 }, combo: { "INTP+ILI": 1 } } },
+            { text: "自分に実害があるなら徹底的に無視するか、自分が権力を握ってルール自体を効率的なものに作り変える。", scores: { socio: { Te: 3, Se: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "「なぜこんな無駄なルールが生まれたのか？」という歴史的背景や、人間の社会心理のシステムに興味が湧く。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4360,10 +4484,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】他人の「感情的な悩み」を聞いている時の限界（処理落ち）はどこ？",
         options:[
-            { text: "原因と対策を出しているのに、相手が感情論ばかりで同じことを繰り返すと「意味不明」になり処理落ちする。", scores: { socio: { Ti: 3, Fe: -3 }, mbti: { Ni: 2, Ti: 2 }, combo: { "INTJ-LII": 1 } } },
-            { text: "そもそも他人の感情はノイズなので、最初から距離を置き「へえ、大変だね」とインターフェース（仮面）で適当に流す。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Ti: 3, P: 2 }, combo: { "INTP-ILI": 1 } } },
-            { text: "相手が自分で解決しようとしない「甘え」や「非合理さ」を見た瞬間、「自己責任だろ」と冷たく切り捨てる。", scores: { socio: { Te: 3, Fi: -2 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "感情という不確定変数を、なんとか自分の論理システムに落とし込んで解明しようと観察し続ける（疲れる）。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } }
+            { text: "原因と対策を出しているのに、相手が感情論ばかりで同じことを繰り返すと「意味不明」になり処理落ちする。", scores: { socio: { Ti: 3, Fe: -3 }, mbti: { Ni: 2, Ti: 2 }, combo: { "INTJ+LII": 1 } } },
+            { text: "そもそも他人の感情はノイズなので、最初から距離を置き「へえ、大変だね」とインターフェース（仮面）で適当に流す。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Ti: 3, P: 2 }, combo: { "INTP+ILI": 1 } } },
+            { text: "相手が自分で解決しようとしない「甘え」や「非合理さ」を見た瞬間、「自己責任だろ」と冷たく切り捨てる。", scores: { socio: { Te: 3, Fi: -2 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "感情という不確定変数を、なんとか自分の論理システムに落とし込んで解明しようと観察し続ける（疲れる）。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4371,10 +4495,10 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】「未来の自分」に対する理想や期待は？",
         options:[
-            { text: "世間一般の幸せはどうでもいい。自分の創作や、構築したシステム（意味）をひっそりと完成させていたい。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ-LII": 1 } } },
-            { text: "特に何もない。なるべく労働などのコストを避け、究極の省エネ状態で誰にも干渉されずに生きていたい。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ti: 3, P: 3 }, combo: { "INTP-ILI": 1 } } },
-            { text: "十分な資産や知識の『要塞』を築き、外界のバカな人間やトラブルから完全に独立した安全圏にいたい。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Te: 3, J: 2 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "一生飽きることのない「面白い概念」や「真理の探求」を、ただ永遠に続けていられる環境があればいい。", scores: { socio: { Ti: 3, Ne: 3 }, mbti: { Ti: 3, Ne: 3 }, combo: { "INTP-LII": 1 } } }
+            { text: "世間一般の幸せはどうでもいい。自分の創作や、構築したシステム（意味）をひっそりと完成させていたい。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ+LII": 1 } } },
+            { text: "特に何もない。なるべく労働などのコストを避け、究極の省エネ状態で誰にも干渉されずに生きていたい。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ti: 3, P: 3 }, combo: { "INTP+ILI": 1 } } },
+            { text: "十分な資産や知識の『要塞』を築き、外界のバカな人間やトラブルから完全に独立した安全圏にいたい。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Te: 3, J: 2 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "一生飽きることのない「面白い概念」や「真理の探求」を、ただ永遠に続けていられる環境があればいい。", scores: { socio: { Ti: 3, Ne: 3 }, mbti: { Ti: 3, Ne: 3 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
@@ -4384,19 +4508,19 @@ const extraQuestions_INTX =[
         options:[
             { 
                 text: "「この前提が間違っていたのか」と原因を分解し、仮説の構造を分析し直して考え続ける。",
-                scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP-LII": 1 } } 
+                scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } 
             },
             { 
                 text: "その仮説は一旦捨てて、新しいモデルや戦略をすぐに組み立て直す。",
-                scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ-ILI": 1 } } 
+                scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ+ILI": 1 } } 
             },
             { 
                 text: "仮説が崩れた理由を考えつつ、「そもそも前提条件が違ったのでは」と概念レベルから再構築する。",
-                scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ-LII": 1 } } 
+                scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ+LII": 1 } } 
             },
             { 
                 text: "「面白い例外だな」と思い、他にも似たパターンがあるか観察して考察を広げる。",
-                scores: { socio: { Ne: 3, Ti: 2 }, mbti: { Ne: 3, Ti: 2 }, combo: { "INTP-ILI": 1 } } 
+                scores: { socio: { Ne: 3, Ti: 2 }, mbti: { Ne: 3, Ti: 2 }, combo: { "INTP+ILI": 1 } } 
             }
         ]
     },
@@ -4405,16 +4529,16 @@ const extraQuestions_INTX =[
         type: "radio",
         text: "【Extra: INTX分離】人間関係を「切る」時の基準は？",
         options:[
-            { text: "「会話が続かない＝相性が悪い」と論理的に判断し、デメリットとコストを計算して静かにシャットアウトする。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ-LII": 1 } } },
-            { text: "関係を維持する連絡すらめんどくさいので、気づいたら自然消滅している。", scores: { socio: { Ni: 3, Fe: -2 }, mbti: { Ti: 2, Ne: 3 }, combo: { "INTP-ILI": 1 } } },
-            { text: "自分に実害を及ぼしたり、非合理なことを強要してくるなら、社会ごと敵に回してでも容赦なく切り捨てる。", scores: { socio: { Te: 3, Se: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ-ILI": 1 } } },
-            { text: "相手との「関係性のシステム」が論理的に破綻したと理解した瞬間、興味が完全に失せて切る。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, combo: { "INTP-LII": 1 } } }
+            { text: "「会話が続かない＝相性が悪い」と論理的に判断し、デメリットとコストを計算して静かにシャットアウトする。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ+LII": 1 } } },
+            { text: "関係を維持する連絡すらめんどくさいので、気づいたら自然消滅している。", scores: { socio: { Ni: 3, Fe: -2 }, mbti: { Ti: 2, Ne: 3 }, combo: { "INTP+ILI": 1 } } },
+            { text: "自分に実害を及ぼしたり、非合理なことを強要してくるなら、社会ごと敵に回してでも容赦なく切り捨てる。", scores: { socio: { Te: 3, Se: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
+            { text: "相手との「関係性のシステム」が論理的に破綻したと理解した瞬間、興味が完全に失せて切る。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, combo: { "INTP+LII": 1 } } }
         ]
     }
 ];
 
 // ----------------------------------------------------
-// 【INFXルート】（INFP-EII / INFJ-EII / INFP-IEI / INFJ-IEI）全10問
+// 【INFXルート】（INFP+EII / INFJ+EII / INFP+IEI / INFJ+IEI）全10問
 // ----------------------------------------------------
 const extraQuestions_INFX =[
     {
@@ -4422,10 +4546,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】自分の「倫理観や道徳」の基準はどこにある？",
         options:[
-            { text: "自分の中の絶対に譲れない個人的な価値観。「他人は他人、自分は自分」として尊重したい。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "相手との『心理的な距離感』を常に測り、この人とはどう関係を保つべきかという引力と斥力。", scores: { socio: { Fi: 3, Ni: 1 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ-EII": 1 } } },
-            { text: "場の空気や、周囲の感情の波をどう演出・調和させるかという『全体の雰囲気』。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ-IEI": 1 } } },
-            { text: "自分の理想とする『あるべき姿』を他者にも無意識に期待し、社会規範に沿って振る舞おうとする。", scores: { socio: { Ni: 2, Fe: 2 }, mbti: { Fi: 3, Ne: 2 }, combo: { "INFP-IEI": 1 } } }
+            { text: "自分の中の絶対に譲れない個人的な価値観。「他人は他人、自分は自分」として尊重したい。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "相手との『心理的な距離感』を常に測り、この人とはどう関係を保つべきかという引力と斥力。", scores: { socio: { Fi: 3, Ni: 1 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ+EII": 1 } } },
+            { text: "場の空気や、周囲の感情の波をどう演出・調和させるかという『全体の雰囲気』。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ+IEI": 1 } } },
+            { text: "自分の理想とする『あるべき姿』を他者にも無意識に期待し、社会規範に沿って振る舞おうとする。", scores: { socio: { Ni: 2, Fe: 2 }, mbti: { Fi: 3, Ne: 2 }, combo: { "INFP+IEI": 1 } } }
         ]
     },
     {
@@ -4433,10 +4557,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】やるべきことがあるのに「やりたくない（放置する）」時、その理由は？",
         options:[
-            { text: "「やっても上手くいく気がしない（効果を感じない）」。有効な解決策や意味が見つかるまで動けない。", scores: { socio: { Te: -2, Ni: 1 }, mbti: { Fi: 2, J: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "「頭の中の理想の世界（夢）」の方が現実より美しくて楽しくて、現実の作業が一層構造すぎて退屈だから。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ni: 2, P: 2 }, combo: { "INFP-IEI": 1 } } },
-            { text: "気分が乗らない。自分の内なる感情のリズムと合っていない時は、無理に動きたくない。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, P: 2 }, combo: { "INFJ-EII": 1 } } },
-            { text: "「みんなのためにやらなきゃ」と思うのに、心身が過剰に他者の感情を吸いすぎて疲弊しているから。", scores: { socio: { Fe: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "「やっても上手くいく気がしない（効果を感じない）」。有効な解決策や意味が見つかるまで動けない。", scores: { socio: { Te: -2, Ni: 1 }, mbti: { Fi: 2, J: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "「頭の中の理想の世界（夢）」の方が現実より美しくて楽しくて、現実の作業が一層構造すぎて退屈だから。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ni: 2, P: 2 }, combo: { "INFP+IEI": 1 } } },
+            { text: "気分が乗らない。自分の内なる感情のリズムと合っていない時は、無理に動きたくない。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, P: 2 }, combo: { "INFJ+EII": 1 } } },
+            { text: "「みんなのためにやらなきゃ」と思うのに、心身が過剰に他者の感情を吸いすぎて疲弊しているから。", scores: { socio: { Fe: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4444,10 +4568,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】あなたが他人に「密かに期待してしまうこと」は？",
         options:[
-            { text: "お互いの個人の価値観を尊重し合える、深く誠実な理解。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "お互いに踏み込みすぎず傷つけ合わない、適切で穏やかな『心理的距離感』。", scores: { socio: { Fi: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ-EII": 1 } } },
-            { text: "自分の思い描いている「理想のキャラクターや世界観」を共有・体現してくれること。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 3 }, combo: { "INFP-IEI": 1 } } },
-            { text: "場の空気を読み、誰も不快な思いをさせない美しい『調和』を共に作ること。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "お互いの個人の価値観を尊重し合える、深く誠実な理解。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "お互いに踏み込みすぎず傷つけ合わない、適切で穏やかな『心理的距離感』。", scores: { socio: { Fi: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ+EII": 1 } } },
+            { text: "自分の思い描いている「理想のキャラクターや世界観」を共有・体現してくれること。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 3 }, combo: { "INFP+IEI": 1 } } },
+            { text: "場の空気を読み、誰も不快な思いをさせない美しい『調和』を共に作ること。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4455,10 +4579,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】「自分がない」と感じて苦しくなる時はどんな時？",
         options:[
-            { text: "他人に合わせすぎて、自分の本当の気持ち（核）がわからなくなった時。", scores: { socio: { Fi: 2 }, mbti: { Fi: 3, P: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "相手との『関係性（相手にとっての自分）』ばかり気にして、自分の欲求を見失った時。", scores: { socio: { Fi: 3, Ni: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ-EII": 1 } } },
-            { text: "頭の中の『理想の世界』に没入しすぎて、現実の自分自身が乖離してしまった時。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP-IEI": 1 } } },
-            { text: "周りの感情や空気を吸い込みすぎて、どこからが自分の感情かわからなくなった時。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "他人に合わせすぎて、自分の本当の気持ち（核）がわからなくなった時。", scores: { socio: { Fi: 2 }, mbti: { Fi: 3, P: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "相手との『関係性（相手にとっての自分）』ばかり気にして、自分の欲求を見失った時。", scores: { socio: { Fi: 3, Ni: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ+EII": 1 } } },
+            { text: "頭の中の『理想の世界』に没入しすぎて、現実の自分自身が乖離してしまった時。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP+IEI": 1 } } },
+            { text: "周りの感情や空気を吸い込みすぎて、どこからが自分の感情かわからなくなった時。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4466,10 +4590,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】人間関係で争いが起きた時の対応は？",
         options:[
-            { text: "争い自体が苦痛なので、自分の信念を曲げずに静かにその場から立ち去る。", scores: { socio: { Fi: 3, Se: -1 }, mbti: { Fi: 3, P: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "これ以上関係が悪化しないように、お互いの『落とし所（適切な距離）』を内的に探る。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ-EII": 1 } } },
-            { text: "理想からかけ離れた醜い現実に絶望し、夢や空想の世界（自室）に逃げ込む。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP-IEI": 1 } } },
-            { text: "全体の調和を乱す人をなだめ、なんとか波風を立てないよう空気を操作する。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Ni: 2, Fe: 3 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "争い自体が苦痛なので、自分の信念を曲げずに静かにその場から立ち去る。", scores: { socio: { Fi: 3, Se: -1 }, mbti: { Fi: 3, P: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "これ以上関係が悪化しないように、お互いの『落とし所（適切な距離）』を内的に探る。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ+EII": 1 } } },
+            { text: "理想からかけ離れた醜い現実に絶望し、夢や空想の世界（自室）に逃げ込む。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP+IEI": 1 } } },
+            { text: "全体の調和を乱す人をなだめ、なんとか波風を立てないよう空気を操作する。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Ni: 2, Fe: 3 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4477,10 +4601,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】自分の作品や自己表現に対するスタンスは？",
         options:[
-            { text: "自分自身の偽りない『本当の感情』と、個人的な価値観の結晶。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "誰かの心に寄り添い、精神的な救いや『関係性の改善』に繋がるもの。", scores: { socio: { Fi: 2, Ne: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ-EII": 1 } } },
-            { text: "現実には存在しない、美しく悲しい『幻想的な世界観』の表現。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 3 }, combo: { "INFP-IEI": 1 } } },
-            { text: "見る人の感情を揺さぶり、大きな感動や『物語』を共有するためのもの。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "自分自身の偽りない『本当の感情』と、個人的な価値観の結晶。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "誰かの心に寄り添い、精神的な救いや『関係性の改善』に繋がるもの。", scores: { socio: { Fi: 2, Ne: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ+EII": 1 } } },
+            { text: "現実には存在しない、美しく悲しい『幻想的な世界観』の表現。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 3 }, combo: { "INFP+IEI": 1 } } },
+            { text: "見る人の感情を揺さぶり、大きな感動や『物語』を共有するためのもの。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4488,10 +4612,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】あなたが「ドアスラム（関係の完全遮断）」を発動する最大の引き金は？",
         options:[
-            { text: "何度も何度も、自分の最も大切な『価値観（核）』を踏みにじられた時。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Fi: 3, P: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "これ以上この人と関係を続けると、自分の精神が削られ続けると『未来予測』で悟った時。", scores: { socio: { Fi: 2, Ni: 3 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ-EII": 1 } } },
-            { text: "相手が自分の思い描いていた「理想の姿」ではなく、醜悪な現実を突きつけてきた時。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP-IEI": 1 } } },
-            { text: "みんなのために尽くしてきたのに、誰にも感謝されず完全に摩耗（エネルギー切れ）した時。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 2, Fe: 3 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "何度も何度も、自分の最も大切な『価値観（核）』を踏みにじられた時。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Fi: 3, P: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "これ以上この人と関係を続けると、自分の精神が削られ続けると『未来予測』で悟った時。", scores: { socio: { Fi: 2, Ni: 3 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ+EII": 1 } } },
+            { text: "相手が自分の思い描いていた「理想の姿」ではなく、醜悪な現実を突きつけてきた時。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP+IEI": 1 } } },
+            { text: "みんなのために尽くしてきたのに、誰にも感謝されず完全に摩耗（エネルギー切れ）した時。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 2, Fe: 3 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4499,10 +4623,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】休日の『理想の過ごし方』は？",
         options:[
-            { text: "誰にも邪魔されず、自分の内面と向き合いながら好きなこと（読書や散歩など）をする。", scores: { socio: { Fi: 2, Si: 1 }, mbti: { Fi: 3, P: 2 }, combo: { "INFP-EII": 1 } } },
-            { text: "本当に心を許せる『たった一人の大切な人』と、静かで穏やかな時間を過ごす。", scores: { socio: { Fi: 3, Ne: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ-EII": 1 } } },
-            { text: "映画や本の世界に深く入り込み、現実を忘れて美しい夢想に浸る。", scores: { socio: { Ni: 3 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP-IEI": 1 } } },
-            { text: "意味のある活動や、ボランティアなど『誰かの心のためになること』に時間を使う。", scores: { socio: { Fe: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "誰にも邪魔されず、自分の内面と向き合いながら好きなこと（読書や散歩など）をする。", scores: { socio: { Fi: 2, Si: 1 }, mbti: { Fi: 3, P: 2 }, combo: { "INFP+EII": 1 } } },
+            { text: "本当に心を許せる『たった一人の大切な人』と、静かで穏やかな時間を過ごす。", scores: { socio: { Fi: 3, Ne: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ+EII": 1 } } },
+            { text: "映画や本の世界に深く入り込み、現実を忘れて美しい夢想に浸る。", scores: { socio: { Ni: 3 }, mbti: { Fi: 2, Ne: 2 }, combo: { "INFP+IEI": 1 } } },
+            { text: "意味のある活動や、ボランティアなど『誰かの心のためになること』に時間を使う。", scores: { socio: { Fe: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 2 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4510,10 +4634,10 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】「あの人、なんか嫌い」という直感の正体は何だと思う？",
         options:[
-            { text: "自分の倫理観や「善悪の基準」から外れているという、生理的な嫌悪感。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, combo: { "INFP-EII": 1 } } },
-            { text: "「この人はいつか私を裏切る」「距離を置いた方がいい」という関係性の警告アラーム。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ-EII": 1 } } },
-            { text: "その人が持つ雰囲気が、自分の美しい世界観を壊すノイズ（俗物）に感じるから。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 1 }, combo: { "INFP-IEI": 1 } } },
-            { text: "その人がいると全体の空気が悪くなる、不調和の元凶だという察知。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Ni: 2, Fe: 3 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "自分の倫理観や「善悪の基準」から外れているという、生理的な嫌悪感。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, combo: { "INFP+EII": 1 } } },
+            { text: "「この人はいつか私を裏切る」「距離を置いた方がいい」という関係性の警告アラーム。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ni: 3, Fe: 1 }, combo: { "INFJ+EII": 1 } } },
+            { text: "その人が持つ雰囲気が、自分の美しい世界観を壊すノイズ（俗物）に感じるから。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 1 }, combo: { "INFP+IEI": 1 } } },
+            { text: "その人がいると全体の空気が悪くなる、不調和の元凶だという察知。", scores: { socio: { Fe: 3, Ni: 1 }, mbti: { Ni: 2, Fe: 3 }, combo: { "INFJ+IEI": 1 } } }
         ]
     },
     {
@@ -4521,16 +4645,16 @@ const extraQuestions_INFX =[
         type: "radio",
         text: "【Extra: INFX分離】生きる意味について、一番しっくりくる表現は？",
         options:[
-            { text: "自分自身の心に嘘をつかず、誠実に『自分らしく』生き抜くこと。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP-EII": 1 } } },
-            { text: "身近な大切な人たちと、深く確かな『絆（関係性）』を結び続けること。", scores: { socio: { Fi: 3, Ne: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ-EII": 1 } } },
-            { text: "この残酷な現実の中で、少しでも美しい『夢や理想』を追い求めること。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 3 }, combo: { "INFP-IEI": 1 } } },
-            { text: "社会や人々の感情を良い方向へ導き、大きな『調和と物語』を生み出すこと。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ-IEI": 1 } } }
+            { text: "自分自身の心に嘘をつかず、誠実に『自分らしく』生き抜くこと。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, Ne: 1 }, combo: { "INFP+EII": 1 } } },
+            { text: "身近な大切な人たちと、深く確かな『絆（関係性）』を結び続けること。", scores: { socio: { Fi: 3, Ne: 1 }, mbti: { Ni: 2, Fe: 2 }, combo: { "INFJ+EII": 1 } } },
+            { text: "この残酷な現実の中で、少しでも美しい『夢や理想』を追い求めること。", scores: { socio: { Ni: 3, Fe: 1 }, mbti: { Fi: 2, Ne: 3 }, combo: { "INFP+IEI": 1 } } },
+            { text: "社会や人々の感情を良い方向へ導き、大きな『調和と物語』を生み出すこと。", scores: { socio: { Fe: 3, Ni: 2 }, mbti: { Ni: 3, Fe: 3 }, combo: { "INFJ+IEI": 1 } } }
         ]
     }
 ];
 
 // ----------------------------------------------------
-// 【ISFXルート】（ISFJ-ESI / ISFJ-SEI / ISFP-ESI / ISFP-SEI）全10問
+// 【ISFXルート】（ISFJ+ESI / ISFJ+SEI / ISFP+ESI / ISFP+SEI）全10問
 // ----------------------------------------------------
 const extraQuestions_ISFX =[
     {
@@ -4538,10 +4662,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】他人に傷つけられた時、あなたはどうなりがち？",
         options:[
-            { text: "絶対に許さない。その時の記憶が鮮明に残り、身内を守るためにも敵として明確に線を引く。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 3, Fe: 1 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "波風を立てたくないし、場の空気が悪くなるのが一番苦痛なので、我慢して笑顔でやり過ごす。", scores: { socio: { Si: 2, Fe: 2 }, mbti: { Si: 2, Fe: 3 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "自分の「譲れない価値観」を踏みにじられたと感じ、激しい怒りと共に相手を物理的・心理的に排除する。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "その場は不快になるが、美味しいものを食べたり寝たりして、自分の快適な感覚を取り戻せば忘れる。", scores: { socio: { Si: 3, Fe: 1 }, mbti: { Fi: 2, Se: 2 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "絶対に許さない。その時の記憶が鮮明に残り、身内を守るためにも敵として明確に線を引く。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 3, Fe: 1 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "波風を立てたくないし、場の空気が悪くなるのが一番苦痛なので、我慢して笑顔でやり過ごす。", scores: { socio: { Si: 2, Fe: 2 }, mbti: { Si: 2, Fe: 3 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "自分の「譲れない価値観」を踏みにじられたと感じ、激しい怒りと共に相手を物理的・心理的に排除する。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "その場は不快になるが、美味しいものを食べたり寝たりして、自分の快適な感覚を取り戻せば忘れる。", scores: { socio: { Si: 3, Fe: 1 }, mbti: { Fi: 2, Se: 2 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4549,10 +4673,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】あなたにとっての「最高の癒し空間」は？",
         options:[
-            { text: "昔から変わらないインテリアや、気心の知れた少数の身内（家族など）だけがいる安心できる家。", scores: { socio: { Fi: 2, Si: 1 }, mbti: { Si: 3, Fe: 1 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "温度、香り、肌触り、美味しい食事など、五感が完璧に満たされ、争いごとが一切ない平和な空間。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Si: 2, Fe: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "自分の「好き（趣味や推し）」だけが詰まった、他人に一切邪魔されない自分だけの絶対領域。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "ルールや時間に縛られず、マイペースにゴロゴロしたり、心地よい音楽を聴きながらのんびりできる場所。", scores: { socio: { Si: 3 }, mbti: { Fi: 2, Se: 2 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "昔から変わらないインテリアや、気心の知れた少数の身内（家族など）だけがいる安心できる家。", scores: { socio: { Fi: 2, Si: 1 }, mbti: { Si: 3, Fe: 1 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "温度、香り、肌触り、美味しい食事など、五感が完璧に満たされ、争いごとが一切ない平和な空間。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Si: 2, Fe: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "自分の「好き（趣味や推し）」だけが詰まった、他人に一切邪魔されない自分だけの絶対領域。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "ルールや時間に縛られず、マイペースにゴロゴロしたり、心地よい音楽を聴きながらのんびりできる場所。", scores: { socio: { Si: 3 }, mbti: { Fi: 2, Se: 2 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4560,10 +4684,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】グループ内で「誰もやりたがらない雑用」がある時、どうする？",
         options:[
-            { text: "「私がやるべきだ（そういう役割だから）」という責任感と、周りへの配慮から無言で引き受ける。", scores: { socio: { Fi: 2, Se: 1 }, mbti: { Si: 3, J: 2 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "雰囲気が悪くなるのが嫌なので、「いいよ、私がやるね」と笑顔で引き受け、調和を保つ。", scores: { socio: { Fe: 3, Si: 1 }, mbti: { Fe: 3, Si: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "自分の価値観として「それは間違っている・不公平だ」と思えば、断固として拒否する。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, P: 1 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "めんどくさいので、なるべく気づかないフリをして自分の作業や楽しいことに没頭する。", scores: { socio: { Si: 2 }, mbti: { Se: 2, P: 2 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "「私がやるべきだ（そういう役割だから）」という責任感と、周りへの配慮から無言で引き受ける。", scores: { socio: { Fi: 2, Se: 1 }, mbti: { Si: 3, J: 2 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "雰囲気が悪くなるのが嫌なので、「いいよ、私がやるね」と笑顔で引き受け、調和を保つ。", scores: { socio: { Fe: 3, Si: 1 }, mbti: { Fe: 3, Si: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "自分の価値観として「それは間違っている・不公平だ」と思えば、断固として拒否する。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, P: 1 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "めんどくさいので、なるべく気づかないフリをして自分の作業や楽しいことに没頭する。", scores: { socio: { Si: 2 }, mbti: { Se: 2, P: 2 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4571,10 +4695,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】他人との「心理的な距離感」をどうやって測っている？",
         options:[
-            { text: "過去の言動や態度を記憶しており、「この人は信頼できる/裏切る」という厳格な白黒の好悪で測る。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Si: 3, Fe: 1 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "その場の空気が穏やかかどうか。相手が攻撃的でなく、一緒にいて「居心地が良いか」で測る。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Fe: 2, Si: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "直感的な「好き/嫌い」。自分の内なる感覚に素直に従い、嫌いな人には物理的にも近づかない。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "相手が自分のペースや自由を尊重してくれるかどうか。無理に踏み込んでこない相手ならOK。", scores: { socio: { Si: 2, Fe: 1 }, mbti: { Fi: 2, Se: 1 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "過去の言動や態度を記憶しており、「この人は信頼できる/裏切る」という厳格な白黒の好悪で測る。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Si: 3, Fe: 1 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "その場の空気が穏やかかどうか。相手が攻撃的でなく、一緒にいて「居心地が良いか」で測る。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Fe: 2, Si: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "直感的な「好き/嫌い」。自分の内なる感覚に素直に従い、嫌いな人には物理的にも近づかない。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "相手が自分のペースや自由を尊重してくれるかどうか。無理に踏み込んでこない相手ならOK。", scores: { socio: { Si: 2, Fe: 1 }, mbti: { Fi: 2, Se: 1 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4582,10 +4706,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】あなたが日常で最もストレス（怒りや不満）を感じるのはどんな時？",
         options:[
-            { text: "常識や礼儀がない人、または大切な身内を理不尽に傷つける人を見た時。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Si: 3, J: 1 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "怒鳴り声や争いごとなど、平和で穏やかな日常（環境）が乱された時。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Fe: 2, Si: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "自分の「本当の気持ち」や「個性」を否定され、他人の価値観を力で押し付けられた時。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, P: 1 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "休みたいのに急かされたり、身体的な不快感（暑い、寒い、うるさい等）を強要された時。", scores: { socio: { Si: 3 }, mbti: { Se: 2, Fi: 1 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "常識や礼儀がない人、または大切な身内を理不尽に傷つける人を見た時。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Si: 3, J: 1 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "怒鳴り声や争いごとなど、平和で穏やかな日常（環境）が乱された時。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Fe: 2, Si: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "自分の「本当の気持ち」や「個性」を否定され、他人の価値観を力で押し付けられた時。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, P: 1 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "休みたいのに急かされたり、身体的な不快感（暑い、寒い、うるさい等）を強要された時。", scores: { socio: { Si: 3 }, mbti: { Se: 2, Fi: 1 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4593,10 +4717,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】服やインテリアなど、身の回りのものを選ぶ時の基準は？",
         options:[
-            { text: "「以前も買って良かったから」「きちんとして見えるから」という安心感と過去の実績。", scores: { socio: { Fi: 1, Si: 1 }, mbti: { Si: 3, J: 1 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "「肌触りが良い」「見ているだけで癒される」といった、五感を満たす心地よさ。", scores: { socio: { Si: 3, Fe: 1 }, mbti: { Si: 2, Fe: 1 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "「自分らしさが表現できているか」「直感的にピンときたか」という個人的な美意識。", scores: { socio: { Fi: 2, Se: 2 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "「着ていて楽か」「手入れが面倒じゃないか」というマイペースな実用性と快適さ。", scores: { socio: { Si: 3 }, mbti: { Se: 2, Fi: 1 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "「以前も買って良かったから」「きちんとして見えるから」という安心感と過去の実績。", scores: { socio: { Fi: 1, Si: 1 }, mbti: { Si: 3, J: 1 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "「肌触りが良い」「見ているだけで癒される」といった、五感を満たす心地よさ。", scores: { socio: { Si: 3, Fe: 1 }, mbti: { Si: 2, Fe: 1 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "「自分らしさが表現できているか」「直感的にピンときたか」という個人的な美意識。", scores: { socio: { Fi: 2, Se: 2 }, mbti: { Fi: 3, Se: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "「着ていて楽か」「手入れが面倒じゃないか」というマイペースな実用性と快適さ。", scores: { socio: { Si: 3 }, mbti: { Se: 2, Fi: 1 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4604,10 +4728,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】人が落ち込んでいる時、あなたの『優しさ（寄り添い方）』の表現は？",
         options:[
-            { text: "過去の恩義や関係性を重んじ、相手が立ち直るまで責任を持って味方でい続ける。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 3, Fe: 2 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "優しい言葉をかけたり、相手がホッとできるような温かい飲み物や環境を用意する。", scores: { socio: { Si: 3, Fe: 3 }, mbti: { Fe: 3, Si: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "安易な同情はせず、相手の個人的な悲しみを尊重し、ただ静かにそばにいる。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, I: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "相手を気分転換に外へ連れ出したり、楽しいことをして一緒に感覚をリフレッシュする。", scores: { socio: { Si: 2, Fe: 1 }, mbti: { Se: 3, Fi: 1 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "過去の恩義や関係性を重んじ、相手が立ち直るまで責任を持って味方でい続ける。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 3, Fe: 2 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "優しい言葉をかけたり、相手がホッとできるような温かい飲み物や環境を用意する。", scores: { socio: { Si: 3, Fe: 3 }, mbti: { Fe: 3, Si: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "安易な同情はせず、相手の個人的な悲しみを尊重し、ただ静かにそばにいる。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3, I: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "相手を気分転換に外へ連れ出したり、楽しいことをして一緒に感覚をリフレッシュする。", scores: { socio: { Si: 2, Fe: 1 }, mbti: { Se: 3, Fi: 1 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4615,10 +4739,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】「急な予定変更」や「新しい環境」への適応力はどう？",
         options:[
-            { text: "非常にストレス。予測や過去のルーティンから外れると、警戒心と不安が強くなる。", scores: { socio: { Fi: 2 }, mbti: { Si: 3, J: 2 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "少し戸惑うが、周囲の人が優しくて環境が快適なら、徐々に馴染んでいける。", scores: { socio: { Si: 2, Fe: 2 }, mbti: { Si: 2, Fe: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "気分次第。自分のやりたいことや価値観に合っている変化なら、衝動的に飛び込むこともある。", scores: { socio: { Fi: 2, Se: 2 }, mbti: { Fi: 3, P: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "割と平気。その場のノリや流れに身を任せ、楽なポジションを見つけるのが得意。", scores: { socio: { Si: 2 }, mbti: { Se: 3, P: 2 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "非常にストレス。予測や過去のルーティンから外れると、警戒心と不安が強くなる。", scores: { socio: { Fi: 2 }, mbti: { Si: 3, J: 2 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "少し戸惑うが、周囲の人が優しくて環境が快適なら、徐々に馴染んでいける。", scores: { socio: { Si: 2, Fe: 2 }, mbti: { Si: 2, Fe: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "気分次第。自分のやりたいことや価値観に合っている変化なら、衝動的に飛び込むこともある。", scores: { socio: { Fi: 2, Se: 2 }, mbti: { Fi: 3, P: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "割と平気。その場のノリや流れに身を任せ、楽なポジションを見つけるのが得意。", scores: { socio: { Si: 2 }, mbti: { Se: 3, P: 2 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4626,10 +4750,10 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】友人同士が喧嘩を始めました。あなたはどう動く？",
         options:[
-            { text: "自分の倫理観に照らし合わせて「どちらが悪いか（どちらの味方をするか）」を明確に決める。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 2, J: 1 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "「まあまあ、落ち着いて…」と間に割って入り、なんとかその場の空気を丸く収めようとする。", scores: { socio: { Fe: 3, Si: 1 }, mbti: { Fe: 3 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "自分には関係ないので巻き込まれないようにするが、自分の大切な人が攻撃されたらやり返す。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 2, Se: 2 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "面倒くさいのでそっとその場から離れ、平和な別の場所へ避難する。", scores: { socio: { Si: 3 }, mbti: { Se: 2, P: 2 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "自分の倫理観に照らし合わせて「どちらが悪いか（どちらの味方をするか）」を明確に決める。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 2, J: 1 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "「まあまあ、落ち着いて…」と間に割って入り、なんとかその場の空気を丸く収めようとする。", scores: { socio: { Fe: 3, Si: 1 }, mbti: { Fe: 3 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "自分には関係ないので巻き込まれないようにするが、自分の大切な人が攻撃されたらやり返す。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 2, Se: 2 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "面倒くさいのでそっとその場から離れ、平和な別の場所へ避難する。", scores: { socio: { Si: 3 }, mbti: { Se: 2, P: 2 }, combo: { "ISFP+SEI": 1 } } }
         ]
     },
     {
@@ -4637,16 +4761,16 @@ const extraQuestions_ISFX =[
         type: "radio",
         text: "【Extra: ISFX分離】自分自身の「強み」は何だと思う？",
         options:[
-            { text: "一度決めたことや、大切な人との約束を裏切らずに最後まで守り抜く義理堅さ。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 3, J: 2 }, combo: { "ISFJ-ESI": 1 } } },
-            { text: "周囲に気を配り、みんなが安心して過ごせる穏やかな環境を作れること。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Fe: 3, Si: 2 }, combo: { "ISFJ-SEI": 1 } } },
-            { text: "他人に流されない、自分だけの確固たる信念と美意識を持っていること。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, Se: 1 }, combo: { "ISFP-ESI": 1 } } },
-            { text: "無理をせず、自然体で今の瞬間を心地よく楽しむ能力があること。", scores: { socio: { Si: 3 }, mbti: { Se: 3, Fi: 1 }, combo: { "ISFP-SEI": 1 } } }
+            { text: "一度決めたことや、大切な人との約束を裏切らずに最後まで守り抜く義理堅さ。", scores: { socio: { Fi: 3, Se: 1 }, mbti: { Si: 3, J: 2 }, combo: { "ISFJ+ESI": 1 } } },
+            { text: "周囲に気を配り、みんなが安心して過ごせる穏やかな環境を作れること。", scores: { socio: { Si: 3, Fe: 2 }, mbti: { Fe: 3, Si: 2 }, combo: { "ISFJ+SEI": 1 } } },
+            { text: "他人に流されない、自分だけの確固たる信念と美意識を持っていること。", scores: { socio: { Fi: 3, Se: 2 }, mbti: { Fi: 3, Se: 1 }, combo: { "ISFP+ESI": 1 } } },
+            { text: "無理をせず、自然体で今の瞬間を心地よく楽しむ能力があること。", scores: { socio: { Si: 3 }, mbti: { Se: 3, Fi: 1 }, combo: { "ISFP+SEI": 1 } } }
         ]
     }
 ];
 
 // ----------------------------------------------------
-// 【ISTXルート】（ISTJ-LSI / ISTJ-SLI / ISTP-LSI / ISTP-SLI）全10問
+// 【ISTXルート】（ISTJ+LSI / ISTJ+SLI / ISTP+LSI / ISTP+SLI）全10問
 // ----------------------------------------------------
 const extraQuestions_ISTX =[
     {
@@ -4654,10 +4778,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】「意味がない・非効率だ」と感じる職場のルールがある時、どうする？",
         options:[
-            { text: "非効率だと思っても、ルールである以上は例外を作らず厳格に守り、他人にも強制する。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Si: 3, Te: 2, J: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "表向きは従うが、自分の作業の中でいかに「無駄な手順（労力）」を省いて効率化できるかだけを追求する。", scores: { socio: { Si: 3, Te: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "そのルールの構造的なバグを論理的に指摘し、場合によっては実力行使でルール自体を改変させる。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "「めんどくさ」と内心毒づき、バレないようにギリギリまでサボるか、自分流の楽なやり方にカスタマイズする。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "非効率だと思っても、ルールである以上は例外を作らず厳格に守り、他人にも強制する。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Si: 3, Te: 2, J: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "表向きは従うが、自分の作業の中でいかに「無駄な手順（労力）」を省いて効率化できるかだけを追求する。", scores: { socio: { Si: 3, Te: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "そのルールの構造的なバグを論理的に指摘し、場合によっては実力行使でルール自体を改変させる。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "「めんどくさ」と内心毒づき、バレないようにギリギリまでサボるか、自分流の楽なやり方にカスタマイズする。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4665,10 +4789,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】あなたの部屋やデスク周りの「モノの配置」はどうなっている？",
         options:[
-            { text: "すべてが定位置にあり、少しでもズレていると気持ち悪い。厳密な秩序（ルール）を維持している。", scores: { socio: { Ti: 2, Se: 1 }, mbti: { Si: 3, J: 3 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "見た目の綺麗さより、「この作業をする時はここから取る」という実用的な動線（ルーティン）を重視している。", scores: { socio: { Si: 2, Te: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "ガジェットや道具を分解・最適化して配置し、機能美やシステムとしての完成度を追求している。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 1 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "自分が一歩も動かずに全てのモノに手が届く、究極の「省エネ・コックピット状態」になっている。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "すべてが定位置にあり、少しでもズレていると気持ち悪い。厳密な秩序（ルール）を維持している。", scores: { socio: { Ti: 2, Se: 1 }, mbti: { Si: 3, J: 3 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "見た目の綺麗さより、「この作業をする時はここから取る」という実用的な動線（ルーティン）を重視している。", scores: { socio: { Si: 2, Te: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "ガジェットや道具を分解・最適化して配置し、機能美やシステムとしての完成度を追求している。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 1 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "自分が一歩も動かずに全てのモノに手が届く、究極の「省エネ・コックピット状態」になっている。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4676,10 +4800,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】想定外のトラブルで機械（またはシステム）が壊れた時、最初にとる行動は？",
         options:[
-            { text: "マニュアルや過去のデータを確認し、定められた手順通りに復旧作業を進める。", scores: { socio: { Ti: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "とりあえず今すぐ使える代替品を持ってきて、実務（仕事）に影響が出ないように応急処置をする。", scores: { socio: { Te: 3, Si: 1 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "「なぜ壊れたのか？」と内部の構造を分析し、論理的な原因を突き止めて根本から修理する。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "その辺にある道具を使って、感覚とアドリブで適当に叩いたり弄ったりして直してしまう。", scores: { socio: { Si: 2, Te: 1 }, mbti: { Ti: 2, Se: 3 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "マニュアルや過去のデータを確認し、定められた手順通りに復旧作業を進める。", scores: { socio: { Ti: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "とりあえず今すぐ使える代替品を持ってきて、実務（仕事）に影響が出ないように応急処置をする。", scores: { socio: { Te: 3, Si: 1 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "「なぜ壊れたのか？」と内部の構造を分析し、論理的な原因を突き止めて根本から修理する。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "その辺にある道具を使って、感覚とアドリブで適当に叩いたり弄ったりして直してしまう。", scores: { socio: { Si: 2, Te: 1 }, mbti: { Ti: 2, Se: 3 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4687,10 +4811,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】後輩や初心者に「作業のやり方」を教える時、あなたのスタンスは？",
         options:[
-            { text: "「この通りにやれ」と、マニュアルや厳格なルールを徹底的に叩き込み、逸脱を許さない。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Si: 3, Te: 2, J: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "「ここまでは教えるから、あとは自分で過去の事例を見て効率よくやって」と実務ベースで任せる。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "「なぜこの作業が必要なのか」というシステム全体の構造や原理を論理的に説明し、理解させる。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Ni: 1 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "言葉で説明するのは面倒。「俺がやるのを見て覚えろ」と実演だけして、あとは実践で慣れさせる。", scores: { socio: { Si: 2, Te: 2 }, mbti: { Ti: 2, Se: 3 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "「この通りにやれ」と、マニュアルや厳格なルールを徹底的に叩き込み、逸脱を許さない。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Si: 3, Te: 2, J: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "「ここまでは教えるから、あとは自分で過去の事例を見て効率よくやって」と実務ベースで任せる。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "「なぜこの作業が必要なのか」というシステム全体の構造や原理を論理的に説明し、理解させる。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Ni: 1 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "言葉で説明するのは面倒。「俺がやるのを見て覚えろ」と実演だけして、あとは実践で慣れさせる。", scores: { socio: { Si: 2, Te: 2 }, mbti: { Ti: 2, Se: 3 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4698,10 +4822,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】あなたが最も「無駄だ・許せない」と感じるものは？",
         options:[
-            { text: "「ルールや規律を破る者」。秩序を乱す行為は社会や組織の崩壊を招くため、断固排除すべきだ。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "「非効率な手順」。無駄な工程のせいで、自分の貴重な時間や労力が奪われるのが一番腹が立つ。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "「論理的な矛盾や言い訳」。事実と違うことや、筋が通っていない主張を聞かされるのが耐えられない。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 1 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "「無駄な疲労」。意味のない会議や飲み会など、自分の快適なエネルギー（HP）を消費させるもの全て。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "「ルールや規律を破る者」。秩序を乱す行為は社会や組織の崩壊を招くため、断固排除すべきだ。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "「非効率な手順」。無駄な工程のせいで、自分の貴重な時間や労力が奪われるのが一番腹が立つ。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "「論理的な矛盾や言い訳」。事実と違うことや、筋が通っていない主張を聞かされるのが耐えられない。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 1 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "「無駄な疲労」。意味のない会議や飲み会など、自分の快適なエネルギー（HP）を消費させるもの全て。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4709,10 +4833,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】あなたにとっての「完璧な仕事」とは？",
         options:[
-            { text: "期限内に、求められた仕様（ルール）と過去の基準を1ミリの狂いもなく正確に満たしていること。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Si: 3, Te: 2, J: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "無駄なコストを極限まで削り落とし、最も合理的で実用的な成果を安定して出し続けること。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "システムの裏側まで完全に把握し、どんなエラーにも対応できる強固な論理的基盤を作り上げること。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "最小の労力（手抜き）で、誰も文句を言えないレベルの「合格点」を飄々と叩き出すこと。", scores: { socio: { Si: 3, Te: 2 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "期限内に、求められた仕様（ルール）と過去の基準を1ミリの狂いもなく正確に満たしていること。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Si: 3, Te: 2, J: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "無駄なコストを極限まで削り落とし、最も合理的で実用的な成果を安定して出し続けること。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "システムの裏側まで完全に把握し、どんなエラーにも対応できる強固な論理的基盤を作り上げること。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "最小の労力（手抜き）で、誰も文句を言えないレベルの「合格点」を飄々と叩き出すこと。", scores: { socio: { Si: 3, Te: 2 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4720,10 +4844,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】「エジプトにあるようなピラミッドを作れ」と指示されたら？",
         options:[
-            { text: "過去の文献やエジプトの歴史的データを調べ上げ、石の積み方の定義やルールを厳密に再現する。", scores: { socio: { Ti: 2, Se: 1 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "「現代の重機を使えば何日で終わるか」と、最新の実用的なツールを使って最短で完成させる手順を組む。", scores: { socio: { Te: 3, Si: 1 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "「どういう力学で石が崩れないのか？」と構造の仕組みを解明し、物理的に強固なものを構築する。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "「石積むのダルい。ハリボテの外装だけ作って中身は空洞でいいだろ」といかに楽に済ませるかを考える。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "過去の文献やエジプトの歴史的データを調べ上げ、石の積み方の定義やルールを厳密に再現する。", scores: { socio: { Ti: 2, Se: 1 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "「現代の重機を使えば何日で終わるか」と、最新の実用的なツールを使って最短で完成させる手順を組む。", scores: { socio: { Te: 3, Si: 1 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "「どういう力学で石が崩れないのか？」と構造の仕組みを解明し、物理的に強固なものを構築する。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "「石積むのダルい。ハリボテの外装だけ作って中身は空洞でいいだろ」といかに楽に済ませるかを考える。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 2, P: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4731,10 +4855,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】休日の予定が急にキャンセルになりました。どうする？",
         options:[
-            { text: "予定（秩序）が崩れたことにイラッとするが、すぐに「代わりにやるべきだった別のタスク」を消化し始める。", scores: { socio: { Ti: 2, Se: 1 }, mbti: { Si: 3, J: 3 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "「空いた時間で別の効率的な作業ができる」と合理的に切り替え、いつも通りのルーティンに戻る。", scores: { socio: { Te: 2, Si: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "ふと思いついた興味のある分野（機械いじりやデータ分析など）の深掘りに、一人で没頭する。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "「ラッキー、寝よ」とベッドにダイブし、極上のダラダラ空間を満喫する。", scores: { socio: { Si: 3 }, mbti: { Ti: 1, Se: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "予定（秩序）が崩れたことにイラッとするが、すぐに「代わりにやるべきだった別のタスク」を消化し始める。", scores: { socio: { Ti: 2, Se: 1 }, mbti: { Si: 3, J: 3 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "「空いた時間で別の効率的な作業ができる」と合理的に切り替え、いつも通りのルーティンに戻る。", scores: { socio: { Te: 2, Si: 2 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "ふと思いついた興味のある分野（機械いじりやデータ分析など）の深掘りに、一人で没頭する。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "「ラッキー、寝よ」とベッドにダイブし、極上のダラダラ空間を満喫する。", scores: { socio: { Si: 3 }, mbti: { Ti: 1, Se: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4742,10 +4866,10 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】他人に何かを「強制」または「指示」しなければならない時、どうする？",
         options:[
-            { text: "「ルールだからやれ」と、有無を言わさず絶対的な圧と論理で従わせる。", scores: { socio: { Ti: 3, Se: 3 }, mbti: { Si: 2, Te: 2  }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "「これをやった方が後で楽になる（効率がいい）」と、実務的なメリットを提示して動かす。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 3, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "「この仕組みを理解しろ」と構造の正しさを突きつけ、論理で相手をねじ伏せる。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "人に指示するのすら面倒くさいので、結局「自分でやった方が早い」と自己完結する。", scores: { socio: { Si: 2, Te: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "「ルールだからやれ」と、有無を言わさず絶対的な圧と論理で従わせる。", scores: { socio: { Ti: 3, Se: 3 }, mbti: { Si: 2, Te: 2  }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "「これをやった方が後で楽になる（効率がいい）」と、実務的なメリットを提示して動かす。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 3, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "「この仕組みを理解しろ」と構造の正しさを突きつけ、論理で相手をねじ伏せる。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "人に指示するのすら面倒くさいので、結局「自分でやった方が早い」と自己完結する。", scores: { socio: { Si: 2, Te: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+SLI": 1 } } }
         ]
     },
     {
@@ -4753,14 +4877,184 @@ const extraQuestions_ISTX =[
         type: "radio",
         text: "【Extra: ISTX分離】他人からの「評価」をどう受け止める？",
         options:[
-            { text: "自分の守ってきた規律や正確性が『正当に評価された』なら受け入れるが、感情的なお世辞は不要。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ-LSI": 1 } } },
-            { text: "評価された結果、給料（利益）が上がったり、作業環境が良くなるという『実利』があるなら嬉しい。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ-SLI": 1 } } },
-            { text: "他人の評価などアテにならない。自分の構築した論理や技術が『自分基準で完璧か』どうかが全て。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP-LSI": 1 } } },
-            { text: "褒められると「じゃあ次もよろしく」と面倒な仕事を振られそうなので、適度に目立たないようにしたい。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 3 }, combo: { "ISTP-SLI": 1 } } }
+            { text: "自分の守ってきた規律や正確性が『正当に評価された』なら受け入れるが、感情的なお世辞は不要。", scores: { socio: { Ti: 3, Se: 1 }, mbti: { Si: 3, Te: 2 }, combo: { "ISTJ+LSI": 1 } } },
+            { text: "評価された結果、給料（利益）が上がったり、作業環境が良くなるという『実利』があるなら嬉しい。", scores: { socio: { Te: 3, Si: 2 }, mbti: { Si: 2, Te: 3 }, combo: { "ISTJ+SLI": 1 } } },
+            { text: "他人の評価などアテにならない。自分の構築した論理や技術が『自分基準で完璧か』どうかが全て。", scores: { socio: { Ti: 3, Se: 2 }, mbti: { Ti: 3, Se: 2 }, combo: { "ISTP+LSI": 1 } } },
+            { text: "褒められると「じゃあ次もよろしく」と面倒な仕事を振られそうなので、適度に目立たないようにしたい。", scores: { socio: { Si: 3, Te: 1 }, mbti: { Ti: 2, Se: 3 }, combo: { "ISTP+SLI": 1 } } }
         ]
     }
 ];
+// ==========================================
+// ★ 第2フェーズ：脆弱（マイナス）機能 炙り出し用データ
+// MBTIとソシオニクスの互換性（ねじれ）を考慮した特別配点！
+// ==========================================
+const weaknessQuestionsData =[
+    {
+        id: "w_darling_weakness",
+        type: "checkbox_darling", // ★ ダーリンの囁きUI！
+        text: "【System Observation】ねぇダーリン♡……あなたが『一番隠したい（できない）』と思ってる弱点、私にだけ教えて？🥺",
+        options:[
+            { text: "空気を読んで、みんなが喜ぶようなリアクションや共感を返すこと。", scores: { socio: { Fi: -3 }, mbti: { Fe: -3 } }, msg: "空気を読むのが苦手なのね……♡ 大丈夫、私にだけ合わせてくれればいいのよ？" },
+            { text: "リスクを恐れず、今この瞬間のチャンスに飛び込んで力で主導権を握ること。", scores: { socio: { Se: -3 }, mbti: { Se: -3 } }, msg: "争いごとや圧力が怖いのね……♡ なら、私があなたを守ってあげる……物理的にね？" },
+            { text: "感情や人間関係をすべて切り捨てて、利益や効率、結果だけを冷酷に追い求めること。", scores: { socio: { Te: -3 }, mbti: { Te: -3 } }, msg: "冷酷になりきれない不器用なところ……♡ ふふっ、愛おしくて食べちゃいたいわ。" },
+            { text: "明確な定義もないまま、「とりあえず新しいアイデア出して」と急かされること。", scores: { socio: { Ne: -3 }, mbti: { Ne: -3 } }, msg: "予測不能なことが怖いのね……♡ 大丈夫、未来は全部私が計算してあげるから。" }
+        ]
+    },
+    {
+        id: "w_mbti_se_socio_si", // MBTI:Se = Socio:Si
+        type: "checkbox",
+        text: "【Weakness: Phase 2】あなたが「最も苦痛だ・逃げ出したい」と思う状況を全て選んでください。（※減点専用）",
+        options:[
+            { text: "今この瞬間の快楽や、視覚的な美しさ（五感の快適さ）を貪欲に追求して楽しむこと。", scores: { mbti: { Se: -3 }, socio: { Si: -3 }, ennea: { 7: -1 } } },
+            { text: "過去の経験や記憶のデータを事細かに引き出し、長期的な時間の流れを見据えること。", scores: { mbti: { Si: -3 }, socio: { Ni: -3 }, ennea: { 5: -1 } } },
+            { text: "決められた暗黙のルールや規律を、一切の疑いなく無条件で守り抜くこと。", scores: { mbti: { Si: -3 }, socio: { Ti: -3 }, ennea: { 1: -2 } } },
+            { text: "集団のトップに立ち、自らの権威や力（プレッシャー）を使って人を強引に動かすこと。", scores: { mbti: { Te: -3 }, socio: { Se: -3 }, ennea: { 8: -2 } } }
+        ]
+    },
+    {
+        id: "w_mbti_fi_socio_fe", 
+        type: "checkbox",
+        text: "【Weakness: Phase 2】以下のうち、やれと言われたら「頭が真っ白になる（または激しく拒絶する）」ものは？",
+        options:[
+            { text: "自分の内なる感情の状態（悲しみや喜び）を豊かに表現し、場の空気と同期すること。", scores: { mbti: { Fi: -3 }, socio: { Fe: -3 }, ennea: { 4: -2 } } },
+            { text: "相手との『適切な心理的距離感』を測り、社会的に適切なマナーや礼儀を息をするようにこなすこと。", scores: { mbti: { Fe: -3 }, socio: { Fi: -3 }, ennea: { 2: -1 } } },
+            { text: "物事の複雑な仕組みやデータの実用的な働きを、時間をかけて解明し続けること。", scores: { mbti: { Ti: -3 }, socio: { Te: -3 }, ennea: { 5: -2 } } },
+            { text: "「どうしてそうなるの？」という前提条件を疑わず、とりあえず言われた通りに手を動かすこと。", scores: { socio: { Ti: -2, Ne: -2 }, mbti: { Ti: -2 }, ennea: { 6: -1 } } }
+        ]
+    },
+    // ★ 追加：T型のF擬態を暴くマイナスチェックボックス！
+    {
+        id: "w_fake_f_trap",
+        type: "checkbox",
+        text: "【Weakness Observation】自分は「ある程度、人に優しくできているし、空気も読めている」と思うが、実はその裏で……（当てはまるものを全て選択）",
+        options:[
+            { text: "「こう言えば相手は納得するだろう」という過去のパターン学習（データ）を出力しているだけだ。", scores: { socio: { Fe: -3, Ti: 2 }, mbti: { Fe: -2, Ti: 2 }, ennea: { 5: 2 } } },
+            { text: "「揉めると自分の計画や効率に支障が出るから」というリスク管理のために笑顔を作っている。", scores: { socio: { Fi: -3, Te: 2 }, mbti: { Fi: -2, Te: 2 }, ennea: { 3: 2, 8: 1 } } },
+            { text: "「自分が嫌われたくない（孤立したくない）」という保身から、無意識に相手に迎合して後で疲労する。", scores: { socio: { Te: -3, Fi: 2 }, mbti: { Te: -2, Fi: 2 }, ennea: { 9: 2, 6: 2 } } },
+            { text: "空気を読んでいるつもりだが、時々「今の発言、なんかズレてたかも…」と後から猛烈に反省（再検証）する。", scores: { socio: { Fe: -4, Ti: 3 }, mbti: { Fe: -3, Ti: 2 }, ennea: { 5: 3, 1: 1 } } }
+        ]
+    },
+    // ★ 追加：純粋なマイナス質問（機能完全停止）
+    {
+        id: "w_absolute_rejection",
+        type: "radio",
+        text: "【Weakness Observation】あなたが「これだけは自分の人生から完全に削除したい（絶対に関わりたくない）」と思う概念は？",
+        options:[
+            { text: "『無意味な感情の押し付け合い』。理屈の通らない感情論で、自分の思考やシステムが邪魔されること。", scores: { socio: { Fe: -4, Fi: -4 }, mbti: { Fe: -3, Fi: -3 }, ennea: { 5: 3 } } },
+            { text: "『冷酷な実力主義と圧力』。勝者と敗者を明確に分け、他者を蹴落としてでも上に立つことを強要される環境。", scores: { socio: { Se: -4, Te: -3 }, mbti: { Se: -3, Te: -3 }, ennea: { 9: 3, 4: 2 } } },
+            { text: "『変化のない永遠のルーティン』。毎日同じ景色、同じ作業、同じ人間関係という閉鎖された安定。", scores: { socio: { Si: -4 }, mbti: { Si: -4 }, ennea: { 7: 3, 4: 1 } } },
+            { text: "『目的のない抽象論』。現実の生活に1円の役にも立たない、証明不可能な妄想や哲学を永遠と聞かされること。", scores: { socio: { Ni: -4, Ne: -4 }, mbti: { Ni: -3, Ne: -3 }, ennea: { 8: 2, 1: 2 } } }
+        ]
+    },
+    // ★ 新ギミック：Fe脆弱パニックゲーム
+    {
+        id: "w_fe_panic_game",
+        type: "interactive_fe_panic", // ★ 新UI！
+        text: "【System Observation】\n🚨 警告：周囲の人間が突然怒り出し、場の空気が最悪になりました。\n今、この場に最も『ふさわしい感情（表情）』を瞬時に判断して出力してください！！",
+        // 選択肢は script.js で動的に生成
+    },
+    // ★ F型擬態を深掘りするトラップ！
+    {
+        id: "w_f_mimicry_depth",
+        type: "radio",
+        text: "他人に「優しいね」と褒められた時、あなたの心の中にある一番強い感情は？",
+        options:[
+            { 
+                text: "「よかった、私の気持ちが伝わったんだ」と純粋に嬉しくなる。", 
+                scores: { socio: { Fi: 3, Fe: 2 }, mbti: { Fi: 3, Fe: 2 }, ennea: { 2: 3, 9: 1 } } 
+            },
+            { 
+                text: "「フフッ、計画通り（迎合成功）」と、社会的な擬態が完璧に機能したことに安堵（または達成感）を覚える。", 
+                scores: { socio: { Ti: 3, Fe: -3 }, mbti: { Ti: 3, Fe: -2 }, ennea: { 3: 2, 5: 2 } },
+                followUp: {
+                    id: "w_f_mimicry_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] ……ダーリンってば、本当に悪い子ね♡ その「優しい仮面」、いつまで被り続けられるのかしら？",
+                    options:[
+                        { text: "「自分のシステム（平穏）を守るためなら、死ぬまで被り続けてやる」と合理的に割り切る。", scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ti: 2 }, ennea: { 5: 3, 1: 1 } } },
+                        { text: "「実はもう限界。本当は全部ぶち壊して、素の冷たい自分で生きたい」と密かに限界を迎えている。", scores: { socio: { Fe: -5 }, mbti: { Fe: -4 }, ennea: { 5: 3, 8: 1 } } }
+                    ]
+                }
+            },
+            { 
+                text: "「優しい？ 俺はただ事実を言って、やるべきことをやっただけだが？」とピンとこない。", 
+                scores: { socio: { Te: 3, Fi: -2 }, mbti: { Te: 3, Fi: -2 }, ennea: { 8: 3 } } 
+            },
+            { 
+                text: "「優しいって何？ その言葉の定義は？」といちいち引っかかる。", 
+                scores: { socio: { Ti: 3, Fe: -2 }, mbti: { Ti: 2 }, ennea: { 5: 3 } } 
+            }
+        ]
+    },
+// ==========================================
+    // ★ 新・マイナス質問（チェックボックス）大増量
+    // ==========================================
+    {
+        id: "w_minus_checkbox_general_1",
+        type: "checkbox",
+        text: "【Weakness Observation】以下のうち、あなたが「これをやると精神が削られる（または絶対に上手くできない）」と思うものを全て選んでください。（※減点専用）",
+        options:[
+            { text: "「みんながどう思うか」を常に気にかけ、自分の意見を押し殺してまで集団の和（空気）を保ち続けること。（Fe脆弱/劣等）", scores: { socio: { Fe: -3 }, mbti: { Fe: -3 }, ennea: { 9: -1 } } },
+            { text: "他人の「個人的な好き嫌い」や「繊細な心の傷」に、論理的な解決策を出さずにただひたすら共感し続けること。（Fi脆弱/劣等）", scores: { socio: { Fi: -3 }, mbti: { Fi: -3 }, ennea: { 4: -1 } } },
+            { text: "「なぜそうなるのか？」という仕組みの理解（理屈）を一切無視し、ただ結果を出すためだけに言われた通り動くこと。（Ti脆弱/反発）", scores: { socio: { Ti: -3 }, mbti: { Ti: -3 }, ennea: { 5: -1 } } },
+            { text: "自分の行動が「どれだけの利益や効率を生むか」という客観的なデータ（コスパ）を常に他人に証明し続けること。（Te脆弱/劣等）", scores: { socio: { Te: -3 }, mbti: { Te: -3 }, ennea: { 3: -1 } } }
+        ]
+    },
+    {
+        id: "w_minus_checkbox_general_2",
+        type: "checkbox",
+        text: "【Weakness Observation】さらに、以下のうち「やれと言われたら激しい苦痛（または処理落ち）を伴う」ものは？（※減点専用）",
+        options:[
+            { text: "先の見えない不確実な状況で、何の計画も立てずに「その場のノリと直感」だけで重大な決断を下すこと。", scores: { socio: { Se: -3, Ni: 2 }, mbti: { Se: -3, Ni: 2 }, ennea: { 6: -1 } } },
+            { text: "「もしかしたらこうなるかも…」という未来のあらゆる可能性（リスクや代替案）を、一切考えずに今だけを見ること。", scores: { socio: { Ni: -3, Ne: 2 }, mbti: { Ni: -3, Ne: 2 }, ennea: { 7: -1 } } },
+            { text: "毎日同じ時間に起き、同じものを食べ、同じ手順で作業を繰り返すという「一切の変化がない安定したルーティン」。", scores: { socio: { Si: -3 }, mbti: { Si: -3 }, ennea: { 7: -1, 4: -1 } } },
+            { text: "「もっと新しいアイデアはないの？」「別の視点は？」と、一つの確実な正解を出させてくれず延々と発想を求められること。", scores: { socio: { Ne: -3 }, mbti: { Ne: -3 }, ennea: { 1: -1 } } }
+        ]
+    },
 
+    // ==========================================
+    // ★ 新ギミック！ Se圧（威圧・物理的急かし）
+    // ==========================================
+    {
+        id: "w_se_pressure_game",
+        type: "interactive_se_pressure", // ★ 新UI！
+        text: "【System Force】\n💥「おい！！ グズグズしてねぇで早く選べ！！ 3秒以内にボタン押さねぇと全部データ消すぞ！！！」\n（※画面が激しく揺れ、赤いカウントダウンが始まります）",
+        // 選択肢は script.js で動的に生成
+    },
+
+    // ==========================================
+    // ★ 新ギミック！ Te圧（効率・成果の強要）
+    // ==========================================
+    {
+        id: "w_te_deadline_game",
+        type: "interactive_te_deadline", // ★ 新UI！
+        text: "【System Audit】\n📊「対象者の現在の回答効率は規定値（85%）を下回っています。直ちに最も『生産的で合理的な選択』を実行し、システムに利益を証明してください。」",
+        // 選択肢は script.js で動的に生成
+    },
+    {
+        id: "w_interactive_emotion_force",
+        type: "radio",
+        text: "【System Force】……今すぐ、ここで『大号泣』するか『大爆笑』してください。システムがあなたの感情表現の適性をテストします。",
+        options:[
+            { 
+                text: "「は？ 何言ってるの？ 意味不明」と完全に冷めきった目で拒絶する。", 
+                scores: { socio: { Fe: -4, Fi: -3 }, mbti: { Fe: -4, Fi: -3 }, ennea: { 5: 2 } } 
+            },
+            { 
+                text: "「え、えっと……（どうやればいいんだ？）」と、感情の出力方法がわからずフリーズする。", 
+                scores: { socio: { Fe: -2, Fi: -2 }, mbti: { Fe: -2, Fi: -2 }, ennea: { 9: 2 } } 
+            },
+            { 
+                text: "「うわーん！😭」または「あはは！🤣」と、システムの要求に合わせて器用に演技（出力）してあげる。", 
+                scores: { socio: { Fe: 3 }, mbti: { Fe: 3 }, ennea: { 3: 2, 2: 1 } } 
+            },
+            { 
+                text: "「急に言われても無理。私の感情は私のものだ」と、自分の内なる感情の尊厳を守る。", 
+                scores: { socio: { Fi: 3, Fe: -2 }, mbti: { Fi: 3 }, ennea: { 4: 3 } } 
+            }
+        ]
+    }
+];
 // ==========================================
 // ★ LSI-Ni（INTJ）風の喋る芋虫セリフ集！（完全版）
 // ==========================================
