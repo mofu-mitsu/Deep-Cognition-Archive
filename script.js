@@ -4406,21 +4406,7 @@ const questionsData =[
             { text: "「捕まえてあげるから、こっちにおいで」と優しく（またはポエミーに）画面に触れる。", scores: { socio: { Fe: 3, Fi: 2 }, mbti: { Fe: 2, Fi: 3 }, ennea: { 2: 2, 9: 1 } } }
         ]
     },
-    {
-        id: "q_minus_only_pure", // ★ 純粋なマイナス（減点）だけの質問！
-        type: "checkbox",
-        text: "【Weakness Observation】以下のうち、あなたが「やれと言われたら著しくパフォーマンスが下がる（または苦痛な）こと」を選んでください。（※複数選択可・減点のみ）",
-        options:[
-            { text: "強い意志や圧力で相手を押し切り、主導権を奪う交渉をすること。", scores: { socio: { Se: -4 }, mbti: { Se: -2 , Te: -1 }, ennea: { 8: -2 } } },
-            { text: "場の空気を盛り上げるために、感情を大きく表現したり、人前でテンション高く振る舞うこと。", scores: { socio: { Fe: -2 }, mbti: { Fe: -4 }, ennea: { 2: -2 } } },
-            { text: "人との関係の距離感や信頼関係を細かく気にしながら行動すること。", scores: { socio: { Fi: -4 }, mbti: { Fi: -2 }, ennea: { 4: -2 } } },
-            { text: "成果・効率・実用性を最優先にして、結果だけで物事を評価すること。", scores: { socio: { Te: -4 }, mbti: { Te: -2 }, ennea: { 3: -2 } } },
-            { text: "身体の快適さや生活リズムを細かく整え、安定した心地よい環境を維持すること。", scores: { socio: { Si : -4 }, mbti: { Si : -2 ,  Se: -2 }, ennea: { 9: -2 } } },
-            { text: "一つの物事から次々と別の可能性やアイデアを連想し、話題を広げ続けること。", scores: { socio: { Ne: -4 }, mbti: { Ne: -4 }, ennea: { 7: -2 } } },
-            { text: "人との関係の距離感や信頼関係を細かく気にしながら行動すること。", scores: { socio: { Fi: -4 }, mbti: { Fi: -2 }, ennea: { 4: -2 } } },
-            { text: "物事の仕組みやルールを分解して、矛盾がないか論理的に整理すること。", scores: { socio: { Ti: -4 }, mbti: { Ti: -2 }, ennea: { 5: -2 } } }
-        ]
-    },
+
     {
         id: "q_ili_npc_encounter", // ★ ILI青年（NPC）の登場！！
         type: "ili_npc_radio", // 青文字ボヤキUI用
@@ -5338,6 +5324,20 @@ const weaknessQuestionsData =[
             { text: " 過去の確実なデータや目の前の現実を見ずに、「これは運命だ」「未来はこうなるはずだ」という証明不可能な妄想だけで全てを決定すること。", scores: { mbti: { Ni: -4 }, socio: { Ni: -4 }, ennea: { 6: -2, 8: -1 } } },
             
             { text: " たった一つの確実な正解を導き出したいのに、「もっと別の可能性は？」「全く違うやり方も試そう！」と永遠に発想を広げられ続けること。", scores: { mbti: { Ne: -4 }, socio: { Ne: -4 }, ennea: { 1: -2, 9: -1 } } }
+        ]
+    },
+    {
+        id: "q_minus_only_pure", // ★ 純粋なマイナス（減点）だけの質問！
+        type: "checkbox",
+        text: "【Weakness Observation】以下のうち、あなたが「やれと言われたら著しくパフォーマンスが下がる（または苦痛な）こと」を選んでください。（※複数選択可・減点のみ）",
+        options:[
+            { text: "強い意志や圧力で相手を押し切り、主導権を奪う交渉をすること。", scores: { socio: { Se: -4 }, mbti: { Se: -2 , Te: -1 }, ennea: { 8: -2 } } },
+            { text: "場の空気を盛り上げるために、感情を大きく表現したり、人前でテンション高く振る舞うこと。", scores: { socio: { Fe: -2 }, mbti: { Fe: -4 }, ennea: { 2: -2 } } },
+            { text: "人との関係の距離感や信頼関係を細かく気にしながら行動すること。", scores: { socio: { Fi: -4 }, mbti: { Fi: -2 }, ennea: { 4: -2 } } },
+            { text: "成果・効率・実用性を最優先にして、結果だけで物事を評価すること。", scores: { socio: { Te: -4 }, mbti: { Te: -2 }, ennea: { 3: -2 } } },
+            { text: "身体の快適さや生活リズムを細かく整え、安定した心地よい環境を維持すること。", scores: { socio: { Si : -4 }, mbti: { Si : -2 ,  Se: -2 }, ennea: { 9: -2 } } },
+            { text: "一つの物事から次々と別の可能性やアイデアを連想し、話題を広げ続けること。", scores: { socio: { Ne: -4 }, mbti: { Ne: -4 }, ennea: { 7: -2 } } },
+            { text: "物事の仕組みやルールを分解して、矛盾がないか論理的に整理すること。", scores: { socio: { Ti: -4 }, mbti: { Ti: -2 }, ennea: { 5: -2 } } }
         ]
     },
     {
