@@ -9,6 +9,22 @@ let mbtiScore  = { Ti: 0, Te: 0, Ni: 0, Ne: 0, Fi: 0, Fe: 0, Si: 0, Se: 0 };
 let enneaScore = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
 
 let nervousnessScore = 0; 
+// ==========================================
+// ★ タイマー暴走防止用の最強キラー！
+// ==========================================
+let activeIntervals =[];
+const originalSetInterval = window.setInterval;
+window.setInterval = function(fn, delay) {
+    const id = originalSetInterval(fn, delay);
+    activeIntervals.push(id);
+    return id;
+};
+
+function clearAllTimers() {
+    activeIntervals.forEach(clearInterval);
+    activeIntervals =[];
+}
+// ==========================================
 let comboScore = {}; 
 let directPsychoType = ""; 
 
@@ -69,6 +85,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
 });
 
 function renderQuestion() {
+    clearAllTimers();
     startTime = Date.now();
     const q = shuffledQuestions[currentQIndex];
     
