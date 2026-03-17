@@ -2079,29 +2079,60 @@ function showResult() {
     document.getElementById('behavior-log').insertAdjacentHTML('afterend', relationHTML + npcHTML + rankingHTML + shareHTML);
 
     // ==========================================
-    // 📸 画像保存ボタンの処理（html2canvas）
+    // 📸 画像保存ボタンの処理（スマホ対応・長押し保存版！）
     // ==========================================
     document.getElementById('save-img-btn').onclick = () => {
         const resultScreen = document.getElementById('result-screen');
         
-        // ★ 撮影する瞬間だけ、ボタン自体が画像に写らないように隠す！
+        // 撮影する瞬間だけ、ボタン自体が画像に写らないように隠す！
         document.getElementById('save-img-btn').style.display = 'none';
         document.getElementById('share-btn').style.display = 'none';
 
         // 魔法のカメラ（html2canvas）で画面を撮る！
-        html2canvas(resultScreen, { backgroundColor: "#fdfbf7" }).then(canvas => {
-            let link = document.createElement('a');
-            // ダウンロードされるファイル名もわかりやすく！
-            link.download = `DeepCognitionArchive_${finalSocio}_${finalMbti}.png`; 
-            link.href = canvas.toDataURL("image/png");
-            link.click();
+        html2canvas(resultScreen, { backgroundColor: "#fdfbf7", scale: 2 }).then(canvas => {
+            let imgData = canvas.toDataURL("image/png");
             
-            // ★ 撮影が終わったらボタンを画面に復活させる！
+            // ★ スマホでも確実に保存できるように、画像を画面に浮き上がらせて長押しさせる！
+            let overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100vw';
+            overlay.style.height = '100vh';
+            overlay.style.backgroundColor = 'rgba(0,0,0,0.85)';
+            overlay.style.zIndex = '9999';
+            overlay.style.display = 'flex';
+            overlay.style.flexDirection = 'column';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+
+            let msg = document.createElement('p');
+            msg.innerHTML = "📸 スマホの方は画像を<span style='color:#f85149;'>【長押し】</span>して保存してね！<br><span style='font-size:0.8em; color:#ccc;'>(画面をタップすると閉じます)</span>";
+            msg.style.color = '#fff';
+            msg.style.fontWeight = 'bold';
+            msg.style.textAlign = 'center';
+            msg.style.marginBottom = '15px';
+            msg.style.lineHeight = '1.5';
+
+            let img = document.createElement('img');
+            img.src = imgData;
+            img.style.maxWidth = '90%';
+            img.style.maxHeight = '75vh';
+            img.style.borderRadius = '8px';
+            img.style.boxShadow = '0 0 20px rgba(255,255,255,0.5)';
+
+            // 画面のどこかをタップしたら画像を閉じる
+            overlay.onclick = () => { document.body.removeChild(overlay); };
+            
+            overlay.appendChild(msg);
+            overlay.appendChild(img);
+            document.body.appendChild(overlay);
+
+            // 撮影が終わったら元のボタンを画面に復活させる！
             document.getElementById('save-img-btn').style.display = 'block';
             document.getElementById('share-btn').style.display = 'block';
         }).catch(err => {
             console.error("画像保存エラー:", err);
-            // 万が一エラーになってもボタンはちゃんと戻す！
             document.getElementById('save-img-btn').style.display = 'block';
             document.getElementById('share-btn').style.display = 'block';
             alert("画像の保存に失敗しちゃいました🥺");
@@ -2112,32 +2143,36 @@ function showResult() {
     // 📢 シェアボタンの処理（称号も一緒に乗せる！）
     // ==========================================
     document.getElementById('share-btn').onclick = () => {
-        // ★ ここに plainAchievements（改行済みの称号）をくっつける！
         let text = `深層認知診断 観測完了👁️\nソシオニクス: ${finalSocio}-${subtypeFunc} (${socioData.ranking[0].prob}%)\n推定MBTI: ${finalMbti}\nサイコソフィア: ${resultPsycho}\n\n【獲得称号】\n${plainAchievements}\n\n#深層認知診断 #DeepCognitionArchive\nhttps://mofu-mitsu.github.io/Deep-Cognition-Archive/`;
         
         if (navigator.share) {
-            // スマホのシェア機能が使える場合
             navigator.share({ title: 'Deep Cognition Archive', text: text }).catch(console.error);
         } else {
-            // パソコン等でクリップボードにコピーする場合
             navigator.clipboard.writeText(text).then(() => {
                 alert("診断結果と称号をクリップボードにコピーしたよ！SNSに貼り付けてね♡");
             });
         }
     };
 
+    // ==========================================
+    // ★ グラフが出ないエラーの修正箇所！！
+    // ==========================================
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyYheVL_4locE8gYOeBf7zMHQMBfI7tRmYumztZWs78UBagQLlKMQdnZbKbufOyDHkq/exec";
     
+    // ★ ジェミが教え忘れてた achievementsText をちゃんと作るよ！
+    let achievementsText = achievements.replace(/<br>/g, ' / ');
+
     let exportData = {
         subjectID: subjectID,
         selfReported: selfReportedType || "未入力",
         result: { mbti: finalMbti, socio: finalSocio, ennea: resultEnnea, sub: subtypeFunc, dcnh: resultDCNH },
-        behaviorLogs: logs, comboScores: comboScore, 
-        comboScores: comboScore,
-        achievements: achievementsText
+        behaviorLogs: logs, 
+        comboScores: comboScore, // ※comboScoresが2回書いてあったのも直したよ！
+        achievements: achievementsText // ★ これでエラー起きなくなった！
     };
     fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(exportData) });
 
+    // --- ここから下はグラフ描画の処理（エラーが直ったからちゃんと動くよ！） ---
     const ctxRadar = document.getElementById('function-chart').getContext('2d');
     new Chart(ctxRadar, {
         type: 'radar',
