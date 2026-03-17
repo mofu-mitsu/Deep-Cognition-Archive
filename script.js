@@ -1503,7 +1503,10 @@ function toggleCheckbox(scores, btnElement, option) {
 }
 
 document.getElementById('ambiguous-btn').addEventListener('click', () => {
-    currentScores = { scores: { socio: { Ti: 1, Ne: 1 }, mbti: { Ti: 1, Ni: 1 }, ennea: { 5: 2, 6: 1 } } };
+    currentScores = { 
+        text: "【曖昧/スキップ】「定義が曖昧」を選択、または回答を拒絶した。", // ★ これを追加！
+        scores: { socio: { Ti: 1, Ne: 1 }, mbti: { Ti: 1, Ni: 1 }, ennea: { 5: 2, 6: 1 } } 
+    };
     goToNext(true);
 });
 
@@ -1578,10 +1581,12 @@ function goToNext(isAmbiguous) {
 
     logs.push({ 
         qId: shuffledQuestions[currentQIndex].id, 
+        qText: shuffledQuestions[currentQIndex].text,
         timeMs: timeTaken || 0, 
         isAmbiguous: isAmbiguous,
         textData: loggedTextData,
-        chosenData: currentScores 
+        chosenData: currentScores,
+        
     });
 
     if (currentScores.nervousnessDelta) nervousnessScore += currentScores.nervousnessDelta;
@@ -2085,7 +2090,9 @@ function showResult() {
         subjectID: subjectID,
         selfReported: selfReportedType || "未入力",
         result: { mbti: finalMbti, socio: finalSocio, ennea: resultEnnea, sub: subtypeFunc, dcnh: resultDCNH },
-        behaviorLogs: logs, comboScores: comboScore 
+        behaviorLogs: logs, comboScores: comboScore, 
+        comboScores: comboScore,
+        achievements: achievementsText
     };
     fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(exportData) });
 
