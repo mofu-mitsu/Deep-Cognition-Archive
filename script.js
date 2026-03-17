@@ -1505,7 +1505,7 @@ function toggleCheckbox(scores, btnElement, option) {
 document.getElementById('ambiguous-btn').addEventListener('click', () => {
     currentScores = { 
         text: "【曖昧/スキップ】「定義が曖昧」を選択、または回答を拒絶した。", // ★ これを追加！
-        scores: { socio: { Ti: 1, Ne: 1 }, mbti: { Ti: 1, Ni: 1 }, ennea: { 5: 2, 6: 1 } } 
+        scores: { socio: { Ti: 1 }, mbti: { Ti: 1, Ni: 1 }, ennea: { 5: 1, 6: 1 } } 
     };
     goToNext(true);
 });
@@ -2079,31 +2079,41 @@ function showResult() {
     
     document.getElementById('behavior-log').insertAdjacentHTML('afterend', relationHTML + npcHTML + rankingHTML + shareHTML);
 
-    // ==========================================
-    // 📸 画像保存ボタンの処理（真っ白対策＆オシャレ枠版！）
+// ==========================================
+    // 📸 画像保存ボタンの処理（幽霊文字バグ対策版！）
     // ==========================================
     document.getElementById('save-img-btn').onclick = () => {
-        // ★ 対象を result-screen ではなく、トランプの装飾がある app 全体に変更！
         const appElement = document.getElementById('app');
         
-        // ★ 魔法の対策①：スクロール位置がズレてると真っ白になるから一番上に戻す！
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 0); // ズレ防止のため一番上に戻す
 
-        // 撮影する瞬間だけ、ボタン自体が画像に写らないように隠す
         document.getElementById('save-img-btn').style.display = 'none';
         document.getElementById('share-btn').style.display = 'none';
 
-        // ★ 魔法の対策②：グラフのアニメーションが終わるのを少し待ってから撮る！(500ミリ秒)
         setTimeout(() => {
             html2canvas(appElement, { 
                 backgroundColor: "#fdfbf7", 
-                scale: 2, // 高画質化
+                scale: 2, 
                 useCORS: true, 
-                scrollY: -window.scrollY // iOS Safariの真っ白対策
+                scrollY: -window.scrollY,
+                // ★ 魔法の対策④：撮影する瞬間だけ、透明になっちゃう文字を直接「濃い紫（黒）」に塗りつぶす！
+                onclone: (clonedDoc) => {
+                    const clonedApp = clonedDoc.getElementById('app');
+                    clonedApp.style.color = "#1a0b1c"; // 全体の文字色を強制指定
+
+                    // すべてのテキスト要素の「透明バグ」を防ぐ
+                    const allTextElements = clonedApp.querySelectorAll('h1, h2, h3, h4, p, span, div, li, strong');
+                    allTextElements.forEach(el => {
+                        el.style.color = "#1a0b1c";
+                    });
+
+                    // 特に大事な部分（警告色や青色）は個別に塗り直す！
+                    clonedDoc.querySelectorAll('.warn-text, #phase-title, .danger-btn').forEach(el => el.style.color = "#f85149");
+                    clonedDoc.querySelectorAll('.mbti-text, #save-img-btn').forEach(el => el.style.color = "#1f6feb");
+                }
             }).then(canvas => {
                 let imgData = canvas.toDataURL("image/png");
                 
-                // スマホ用の長押しオーバーレイ生成
                 let overlay = document.createElement('div');
                 overlay.style.position = 'fixed';
                 overlay.style.top = '0';
@@ -2127,21 +2137,18 @@ function showResult() {
 
                 let img = document.createElement('img');
                 img.src = imgData;
-                // ★ 魔法の対策③：画像が細長く潰れないようにスタイル調整！
                 img.style.width = '90%';
                 img.style.maxHeight = '75vh';
                 img.style.objectFit = 'contain'; 
                 img.style.borderRadius = '8px';
                 img.style.boxShadow = '0 0 20px rgba(255,255,255,0.5)';
 
-                // 画面のどこかをタップしたら画像を閉じる
                 overlay.onclick = () => { document.body.removeChild(overlay); };
                 
                 overlay.appendChild(msg);
                 overlay.appendChild(img);
                 document.body.appendChild(overlay);
 
-                // ボタンを元に戻す
                 document.getElementById('save-img-btn').style.display = 'block';
                 document.getElementById('share-btn').style.display = 'block';
             }).catch(err => {
@@ -2150,7 +2157,7 @@ function showResult() {
                 document.getElementById('share-btn').style.display = 'block';
                 alert("画像の保存に失敗しちゃいました🥺");
             });
-        }, 500); // 0.5秒待つ
+        }, 500); 
     };
 
     // ==========================================
@@ -2168,21 +2175,35 @@ function showResult() {
         }
     };
 
-    // --- ここから下は GAS送信 ＆ グラフ描画（そのまま残してね！） ---
+    // ==========================================
+    // 📊 スプレッドシート（GAS）へのデータ送信処理
+    // ==========================================
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyYheVL_4locE8gYOeBf7zMHQMBfI7tRmYumztZWs78UBagQLlKMQdnZbKbufOyDHkq/exec";
     
     let achievementsText = achievements.replace(/<br>/g, ' / ');
+
+    // ★ 裏技！GASのコードをいじらなくてもメールに届くように、行動ログの先頭に「称号」をねじ込む！
+    let exportLogs = [...logs]; 
+    exportLogs.unshift({
+        qId: "SYSTEM_ACHIEVEMENTS",
+        qText: "【System: 獲得実績データ】",
+        timeMs: 0,
+        isAmbiguous: false,
+        textData: `🏆 獲得称号: ${achievementsText}`,
+        chosenData: null
+    });
 
     let exportData = {
         subjectID: subjectID,
         selfReported: selfReportedType || "未入力",
         result: { mbti: finalMbti, socio: finalSocio, ennea: resultEnnea, sub: subtypeFunc, dcnh: resultDCNH },
-        behaviorLogs: logs, 
+        behaviorLogs: exportLogs, // ★ ねじ込んだログを送る！
         comboScores: comboScore, 
-        achievements: achievementsText
+        achievements: achievementsText 
     };
     fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(exportData) });
 
+    // --- グラフ描画 ---
     const ctxRadar = document.getElementById('function-chart').getContext('2d');
     new Chart(ctxRadar, {
         type: 'radar',
