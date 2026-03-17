@@ -2063,6 +2063,7 @@ function showResult() {
 
 // ★ 称号の <br> をテキスト用の改行（\n）に変換しておく！
 // ★ 称号の <br> をテキスト用の改行（\n）に変換しておく！
+// ★ 称号の <br> をテキスト用の改行（\n）に変換しておく！
     let plainAchievements = achievements.replace(/<br>/g, '\n');
 
     // ★ アイコンが同化しないように、<i>タグに直接 style="color:#fff;" を追加！
@@ -2079,75 +2080,100 @@ function showResult() {
     
     document.getElementById('behavior-log').insertAdjacentHTML('afterend', relationHTML + npcHTML + rankingHTML + shareHTML);
 
-// ==========================================
-    // 📸 画像保存ボタンの処理（幽霊文字バグ対策版！）
+    // ==========================================
+    // 📸 画像保存ボタンの処理（幽霊バグ完全撃退版！）
     // ==========================================
     document.getElementById('save-img-btn').onclick = () => {
         const appElement = document.getElementById('app');
         
         window.scrollTo(0, 0); // ズレ防止のため一番上に戻す
 
+        // 撮影する瞬間だけボタンを隠す
         document.getElementById('save-img-btn').style.display = 'none';
         document.getElementById('share-btn').style.display = 'none';
 
+        // ★ 魔法①：画面内の「フワッと表示」アニメーションを強制終了し、完全に不透明（濃く）する！
+        document.querySelectorAll('.fade-in, .slide-up, .screen').forEach(el => {
+            el.style.animation = 'none';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+
+        // ★ 魔法②：アニメーションやグラフが描画し終わるのを「1秒」しっかり待つ！
         setTimeout(() => {
             html2canvas(appElement, { 
-                backgroundColor: "#fdfbf7", 
-                scale: 2, 
+                backgroundColor: "#ffffff", // 背景を完全な白に固定
+                scale: 2, // 画質を固定
                 useCORS: true, 
                 scrollY: -window.scrollY,
-                // ★ 魔法の対策④：撮影する瞬間だけ、透明になっちゃう文字を直接「濃い紫（黒）」に塗りつぶす！
                 onclone: (clonedDoc) => {
-                    const clonedApp = clonedDoc.getElementById('app');
-                    clonedApp.style.color = "#1a0b1c"; // 全体の文字色を強制指定
-
-                    // すべてのテキスト要素の「透明バグ」を防ぐ
-                    const allTextElements = clonedApp.querySelectorAll('h1, h2, h3, h4, p, span, div, li, strong');
-                    allTextElements.forEach(el => {
-                        el.style.color = "#1a0b1c";
-                    });
-
-                    // 特に大事な部分（警告色や青色）は個別に塗り直す！
-                    clonedDoc.querySelectorAll('.warn-text, #phase-title, .danger-btn').forEach(el => el.style.color = "#f85149");
-                    clonedDoc.querySelectorAll('.mbti-text, #save-img-btn').forEach(el => el.style.color = "#1f6feb");
+                    // ★ 魔法③：撮影時専用の「絶対に色が消えないCSS」を注入！
+                    const style = clonedDoc.createElement('style');
+                    style.innerHTML = `
+                        /* 全てを不透明に固定！ */
+                        * { opacity: 1 !important; animation: none !important; }
+                        /* 変数を解釈できないスマホのために、色を直接16進数(HEX)で上書き！ */
+                        body, #app { background-color: #ffffff !important; background-image: none !important; }
+                        h1, h2, h3, h4, p, span, div, li, strong { color: #1a0b1c !important; }
+                        /* アイコンや特定の文字の色戻し */
+                        h1 i, h2 i, .fas, .far { color: #c91a25 !important; }
+                        #socio-type, #mbti-type { color: #1f6feb !important; font-weight: bold !important; }
+                        /* 枠線と背景のリセット */
+                        #app { border: 3px solid #1a0b1c !important; }
+                        .npc-message-box, .log-box { border: 2px dashed #c91a25 !important; background: #fffafb !important; }
+                        .chart-container { background-color: #ffffff !important; }
+                    `;
+                    clonedDoc.head.appendChild(style);
                 }
             }).then(canvas => {
                 let imgData = canvas.toDataURL("image/png");
                 
-                let overlay = document.createElement('div');
-                overlay.style.position = 'fixed';
-                overlay.style.top = '0';
-                overlay.style.left = '0';
-                overlay.style.width = '100vw';
-                overlay.style.height = '100vh';
-                overlay.style.backgroundColor = 'rgba(0,0,0,0.85)';
-                overlay.style.zIndex = '9999';
-                overlay.style.display = 'flex';
-                overlay.style.flexDirection = 'column';
-                overlay.style.justifyContent = 'center';
-                overlay.style.alignItems = 'center';
-
-                let msg = document.createElement('p');
-                msg.innerHTML = "📸 スマホの方は画像を<span style='color:#f85149;'>【長押し】</span>して保存してね！<br><span style='font-size:0.8em; color:#ccc;'>(画面をタップすると閉じます)</span>";
-                msg.style.color = '#fff';
-                msg.style.fontWeight = 'bold';
-                msg.style.textAlign = 'center';
-                msg.style.marginBottom = '15px';
-                msg.style.lineHeight = '1.5';
-
-                let img = document.createElement('img');
-                img.src = imgData;
-                img.style.width = '90%';
-                img.style.maxHeight = '75vh';
-                img.style.objectFit = 'contain'; 
-                img.style.borderRadius = '8px';
-                img.style.boxShadow = '0 0 20px rgba(255,255,255,0.5)';
-
-                overlay.onclick = () => { document.body.removeChild(overlay); };
+                // ★ パソコンとスマホで動作を分ける！
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                 
-                overlay.appendChild(msg);
-                overlay.appendChild(img);
-                document.body.appendChild(overlay);
+                if (!isMobile) {
+                    // PCならそのままダウンロード
+                    let link = document.createElement('a');
+                    link.download = `DeepCognitionArchive_${finalSocio}_${finalMbti}.png`; 
+                    link.href = imgData;
+                    link.click();
+                } else {
+                    // スマホなら長押し用のオーバーレイを表示
+                    let overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = '0';
+                    overlay.style.left = '0';
+                    overlay.style.width = '100vw';
+                    overlay.style.height = '100vh';
+                    overlay.style.backgroundColor = 'rgba(0,0,0,0.85)';
+                    overlay.style.zIndex = '9999';
+                    overlay.style.display = 'flex';
+                    overlay.style.flexDirection = 'column';
+                    overlay.style.justifyContent = 'center';
+                    overlay.style.alignItems = 'center';
+
+                    let msg = document.createElement('p');
+                    msg.innerHTML = "📸 スマホの方は画像を<span style='color:#f85149;'>【長押し】</span>して保存してね！<br><span style='font-size:0.8em; color:#ccc;'>(画面をタップすると閉じます)</span>";
+                    msg.style.color = '#fff';
+                    msg.style.fontWeight = 'bold';
+                    msg.style.textAlign = 'center';
+                    msg.style.marginBottom = '15px';
+                    msg.style.lineHeight = '1.5';
+
+                    let img = document.createElement('img');
+                    img.src = imgData;
+                    img.style.width = '90%';
+                    img.style.maxHeight = '75vh';
+                    img.style.objectFit = 'contain'; 
+                    img.style.borderRadius = '8px';
+                    img.style.boxShadow = '0 0 20px rgba(255,255,255,0.5)';
+
+                    overlay.onclick = () => { document.body.removeChild(overlay); };
+                    
+                    overlay.appendChild(msg);
+                    overlay.appendChild(img);
+                    document.body.appendChild(overlay);
+                }
 
                 document.getElementById('save-img-btn').style.display = 'block';
                 document.getElementById('share-btn').style.display = 'block';
@@ -2157,7 +2183,7 @@ function showResult() {
                 document.getElementById('share-btn').style.display = 'block';
                 alert("画像の保存に失敗しちゃいました🥺");
             });
-        }, 500); 
+        }, 1000); // ★ アニメーション完了まで1秒待つ！
     };
 
     // ==========================================
@@ -2182,7 +2208,6 @@ function showResult() {
     
     let achievementsText = achievements.replace(/<br>/g, ' / ');
 
-    // ★ 裏技！GASのコードをいじらなくてもメールに届くように、行動ログの先頭に「称号」をねじ込む！
     let exportLogs = [...logs]; 
     exportLogs.unshift({
         qId: "SYSTEM_ACHIEVEMENTS",
@@ -2197,13 +2222,13 @@ function showResult() {
         subjectID: subjectID,
         selfReported: selfReportedType || "未入力",
         result: { mbti: finalMbti, socio: finalSocio, ennea: resultEnnea, sub: subtypeFunc, dcnh: resultDCNH },
-        behaviorLogs: exportLogs, // ★ ねじ込んだログを送る！
+        behaviorLogs: exportLogs, 
         comboScores: comboScore, 
         achievements: achievementsText 
     };
     fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(exportData) });
 
-    // --- グラフ描画 ---
+    // --- グラフ描画（アニメーションをオフにして白飛びを完全に防ぐ！） ---
     const ctxRadar = document.getElementById('function-chart').getContext('2d');
     new Chart(ctxRadar, {
         type: 'radar',
@@ -2213,7 +2238,7 @@ function showResult() {
                 { label: 'Socionics', data:[socioScore.Ti, socioScore.Te, socioScore.Ni, socioScore.Ne, socioScore.Fi, socioScore.Fe, socioScore.Si, socioScore.Se], backgroundColor: 'rgba(201, 26, 37, 0.2)', borderColor: '#c91a25', borderWidth: 2 },
                 { label: 'MBTI', data:[mbtiScore.Ti, mbtiScore.Te, mbtiScore.Ni, mbtiScore.Ne, mbtiScore.Fi, mbtiScore.Fe, mbtiScore.Si, mbtiScore.Se], backgroundColor: 'rgba(31, 111, 235, 0.2)', borderColor: '#1f6feb', borderWidth: 2 }
             ]
-        }, options: { scale: { ticks: { beginAtZero: true, display: false }, pointLabels: { color: '#1a0b1c', font: { weight: 'bold' } } }, plugins: { legend: { labels: { color: '#1a0b1c' } } } }
+        }, options: { animation: false, scale: { ticks: { beginAtZero: true, display: false }, pointLabels: { color: '#1a0b1c', font: { weight: 'bold' } } }, plugins: { legend: { labels: { color: '#1a0b1c' } } } }
     });
 
     const ctxBar = document.getElementById('bar-chart').getContext('2d');
@@ -2226,7 +2251,7 @@ function showResult() {
                 { label: 'MBTI 推定', data:[mbtiScore.Ti, mbtiScore.Te, mbtiScore.Ni, mbtiScore.Ne, mbtiScore.Fi, mbtiScore.Fe, mbtiScore.Si, mbtiScore.Se], backgroundColor: '#1f6feb', borderRadius: 4 }
             ]
         },
-        options: { responsive: true, scales: { y: { beginAtZero: true, grid: { color: '#e0e0e0' }, ticks: { color: '#1a0b1c' } }, x: { grid: { display: false }, ticks: { color: '#1a0b1c', font: { weight: 'bold' } } } }, plugins: { legend: { labels: { color: '#1a0b1c' } } } }
+        options: { animation: false, responsive: true, scales: { y: { beginAtZero: true, grid: { color: '#e0e0e0' }, ticks: { color: '#1a0b1c' } }, x: { grid: { display: false }, ticks: { color: '#1a0b1c', font: { weight: 'bold' } } } }, plugins: { legend: { labels: { color: '#1a0b1c' } } } }
     });
     
     const ctxEnnea = document.getElementById('ennea-chart').getContext('2d');
@@ -2236,6 +2261,6 @@ function showResult() {
             labels:['Type1', 'Type2', 'Type3', 'Type4', 'Type5', 'Type6', 'Type7', 'Type8', 'Type9'],
             datasets:[{ label: 'Enneagram 分布', data:[enneaScore[1], enneaScore[2], enneaScore[3], enneaScore[4], enneaScore[5], enneaScore[6], enneaScore[7], enneaScore[8], enneaScore[9]], backgroundColor: 'rgba(248, 81, 73, 0.2)', borderColor: '#f85149', pointBackgroundColor: '#f85149', borderWidth: 2 }]
         },
-        options: { scale: { ticks: { beginAtZero: true, display: false }, pointLabels: { color: '#1a0b1c', font: { weight: 'bold' } } }, plugins: { legend: { display: false } } }
+        options: { animation: false, scale: { ticks: { beginAtZero: true, display: false }, pointLabels: { color: '#1a0b1c', font: { weight: 'bold' } } }, plugins: { legend: { display: false } } }
     });
 }
