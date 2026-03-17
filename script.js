@@ -460,7 +460,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
 
     // 👧🏻 ギミック：阿波弁ダーリンのミニゲーム（連打 or スライダー）
     else if (q.type === 'interactive_awa_darling') {
-        mediaArea.innerHTML = `<div class="darling-bored" style="color:#ff69b4;">👧🏻💤</div>`;
+        mediaArea.innerHTML = `<div class="darling-bored" style="color:#ff69b4;">🥺💤</div>`;
         
         inputArea.innerHTML = `
             <div style="text-align:center; margin: 20px 0;">
