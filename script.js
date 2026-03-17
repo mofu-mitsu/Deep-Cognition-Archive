@@ -1519,12 +1519,33 @@ function toggleCheckbox(scores, btnElement, option) {
     }
 }
 
+// ==========================================
+// ★ スキップボタン（定義が曖昧 / わからない）の処理！
+// ==========================================
 document.getElementById('ambiguous-btn').addEventListener('click', () => {
-    currentScores = { 
-        text: "【曖昧/スキップ】「定義が曖昧」を選択、または回答を拒絶した。", // ★ これを追加！
-        scores: { socio: { Ti: 1 }, mbti: { Ti: 1, Ni: 1 }, ennea: { 5: 1, 6: 1 } } 
-    };
-    goToNext(true);
+    // ★ どっちの理由でスキップするか、ポップアップで本人に選ばせる！
+    const skipReason = confirm(
+        "【System: スキップ理由の確認】\n\n" +
+        "あなたがこの質問に答えられない（または答えたくない）理由はどちらに近いですか？\n\n" +
+        "[OK] ＝ 前提条件や言葉の「定義が曖昧」すぎて、正確な判断（計算）ができないから。\n" +
+        "[キャンセル] ＝ 難しくてよく「わからない」、または自分の感情や直感に合わないから。"
+    );
+
+    if (skipReason) {
+        // [OK] を選んだ場合 ＝ T型（Ti/Ne）の定義厨・構造分析！
+        currentScores = { 
+            text: "【スキップ】「定義が曖昧で計算不能」として論理的に回答を拒絶。", 
+            scores: { socio: { Ti: 2, Ne: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 3, 6: 1 } } 
+        };
+    } else {
+        // [キャンセル] を選んだ場合 ＝ F型やS型の「よくわからない・ピンとこない」！
+        currentScores = { 
+            text: "【スキップ】「難しくてよくわからない・ピンとこない」として感覚的に回答を拒絶。", 
+            scores: { socio: { Si: 1, Fi: 1, Ti: -2 }, mbti: { Si: 1, Fi: 1, Fe: 1 }, ennea: { 9: 3, 4: 1 } } 
+        };
+    }
+    
+    goToNext(true); // 次の問題へ飛ぶ
 });
 
 document.getElementById('next-btn').addEventListener('click', () => {
@@ -1642,12 +1663,12 @@ function goToNext(isAmbiguous) {
     }
 
     if (timeTaken > 20000) { 
-        socioScore.Ti += 0.5; socioScore.Fi += 0.5;
-        mbtiScore.Ti += 0.5; mbtiScore.Fi += 0.5; mbtiScore.Si += 0.5; enneaScore[5] += 0.5;
+        socioScore.Ti += 0.2; socioScore.Fi += 0.2;
+        mbtiScore.Ti += 0.2; mbtiScore.Fi += 0.2; mbtiScore.Si += 0.2; enneaScore[5] += 0.2;
     }
     if (timeTaken > 0 && timeTaken < 3000) { 
-        socioScore.Se += 0.5; socioScore.Ne += 0.5; socioScore.Te += 0.5;  socioScore.Si += 0.5; 
-        mbtiScore.Se += 0.5; mbtiScore.Ne += 0.5; mbtiScore.Te += 0.5; enneaScore[8] += 0.5; 
+        socioScore.Se += 0.2; socioScore.Ne += 0.2; socioScore.Te += 0.2;  socioScore.Si += 0.2; 
+        mbtiScore.Se += 0.2; mbtiScore.Ne += 0.2; mbtiScore.Te += 0.2; enneaScore[8] += 0.2; 
     }
 
     currentScores = null;
