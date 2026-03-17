@@ -2061,25 +2061,67 @@ function showResult() {
         </div>
     `;
 
-    // ★ JS内の「再診断」ボタンは消去！シェアボタンだけにする
+// ★ 称号の <br> をテキスト用の改行（\n）に変換しておく！
+    let plainAchievements = achievements.replace(/<br>/g, '\n');
+
+    // ★ 画像保存ボタンとシェアボタンを縦に並べておしゃれにするUI！
     let shareHTML = `
-        <div style="text-align:center; margin-top:30px;">
-            <button id="share-btn" style="background:var(--accent-color); color:#fff; border:none; padding:12px 20px; border-radius:30px; font-weight:bold; font-size:1.1em; cursor:pointer;">
-                <i class="fas fa-share-alt"></i> 診断結果を共有する
+        <div style="text-align:center; margin-top:30px; display: flex; flex-direction: column; gap: 15px;">
+            <button id="save-img-btn" style="background:#1f6feb; color:#fff; border:none; padding:15px; border-radius:30px; font-weight:bold; font-size:1.1em; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <i class="fas fa-camera"></i> 診断結果を画像で保存する
+            </button>
+            <button id="share-btn" style="background:var(--accent-color); color:#fff; border:none; padding:15px; border-radius:30px; font-weight:bold; font-size:1.1em; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <i class="fas fa-share-alt"></i> 結果と称号をシェアする
             </button>
         </div>
     `;
     
     document.getElementById('behavior-log').insertAdjacentHTML('afterend', relationHTML + npcHTML + rankingHTML + shareHTML);
 
+    // ==========================================
+    // 📸 画像保存ボタンの処理（html2canvas）
+    // ==========================================
+    document.getElementById('save-img-btn').onclick = () => {
+        const resultScreen = document.getElementById('result-screen');
+        
+        // ★ 撮影する瞬間だけ、ボタン自体が画像に写らないように隠す！
+        document.getElementById('save-img-btn').style.display = 'none';
+        document.getElementById('share-btn').style.display = 'none';
+
+        // 魔法のカメラ（html2canvas）で画面を撮る！
+        html2canvas(resultScreen, { backgroundColor: "#fdfbf7" }).then(canvas => {
+            let link = document.createElement('a');
+            // ダウンロードされるファイル名もわかりやすく！
+            link.download = `DeepCognitionArchive_${finalSocio}_${finalMbti}.png`; 
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            
+            // ★ 撮影が終わったらボタンを画面に復活させる！
+            document.getElementById('save-img-btn').style.display = 'block';
+            document.getElementById('share-btn').style.display = 'block';
+        }).catch(err => {
+            console.error("画像保存エラー:", err);
+            // 万が一エラーになってもボタンはちゃんと戻す！
+            document.getElementById('save-img-btn').style.display = 'block';
+            document.getElementById('share-btn').style.display = 'block';
+            alert("画像の保存に失敗しちゃいました🥺");
+        });
+    };
+
+    // ==========================================
+    // 📢 シェアボタンの処理（称号も一緒に乗せる！）
+    // ==========================================
     document.getElementById('share-btn').onclick = () => {
-        let text = `深層認知診断 観測完了👁️\nソシオニクス: ${finalSocio}-${subtypeFunc} (${socioData.ranking[0].prob}%)\n推定MBTI: ${finalMbti}\nサイコソフィア: ${resultPsycho}\n\n#深層認知診断 #DeepCognitionArchive\nhttps://mofu-mitsu.github.io/Deep-Cognition-Archive/`;
+        // ★ ここに plainAchievements（改行済みの称号）をくっつける！
+        let text = `深層認知診断 観測完了👁️\nソシオニクス: ${finalSocio}-${subtypeFunc} (${socioData.ranking[0].prob}%)\n推定MBTI: ${finalMbti}\nサイコソフィア: ${resultPsycho}\n\n【獲得称号】\n${plainAchievements}\n\n#深層認知診断 #DeepCognitionArchive\nhttps://mofu-mitsu.github.io/Deep-Cognition-Archive/`;
         
         if (navigator.share) {
+            // スマホのシェア機能が使える場合
             navigator.share({ title: 'Deep Cognition Archive', text: text }).catch(console.error);
         } else {
+            // パソコン等でクリップボードにコピーする場合
             navigator.clipboard.writeText(text).then(() => {
-                alert("診断結果をクリップボードにコピーしました！SNS等に貼り付けてシェアしてください。");
+                alert("診断結果と称号をクリップボードにコピーしたよ！SNSに貼り付けてね♡");
             });
         }
     };
