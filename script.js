@@ -468,7 +468,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 <button id="awa-hit-btn" style="background:#ff69b4; color:#fff; border:none; padding:15px; font-size:1.2em; border-radius:8px; margin-bottom:15px; width:100%;">👊 力技で連打する！</button>
                 <br>
                 <input type="range" id="awa-slider" min="0" max="100" value="0" style="width:100%; cursor:pointer;">
-                <p style="font-size:0.8em; color:#8b949e;">（※スライダーをちょうど『77』の完璧な位置で止めろ：Ti/Ni）</p>
+                <p style="font-size:0.8em; color:#8b949e;">（※スライダーをちょうど『77』の完璧な位置で止めろ）</p>
                 <button id="awa-slide-btn" style="margin-top:10px;">🎯 調整完了（答える）</button>
             </div>
         `;
