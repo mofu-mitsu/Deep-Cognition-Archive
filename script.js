@@ -586,22 +586,37 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         inputArea.appendChild(darlingMsgArea);
         let options =[
 // script.js の interactive_teapot の中！
+// script.js の interactive_teapot 内部の options を以下に差し替え！
             { 
                 text: "「『私は必ず嘘をつく』という発言自体が嘘なら…」と、論理的矛盾（パラドックス）に思考を巡らせる。", 
                 scores: { socio: { Ti: 2 }, mbti: { Ti: 2 }, ennea: { 5: 1 } },
                 msg: "……フフッ、また難しく考えちゃって。そのまま頭がショートしちゃえばいいのに……♡",
-                followUp: { // ★ ここで深掘り！
+                followUp: { 
                     id: "q_teapot_paradox_followup",
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] そのパラドックス、頭の中でどう処理してる？",
                     options:[
-                        { text: "矛盾から生まれる『無限の解釈』や言葉遊びのバグ自体が面白くてワクワクする。", scores: { socio: { Ne: 4, Ti: 2 }, mbti: { Ne: 3, Ti: 2 }, ennea: { 7: 2, 5: 1 } } }, // INTP
-                        { text: "エラー（矛盾）を見過ごすのが気持ち悪いから、どうにかして論理的な『一つの正解（定義）』を出してバグを修正したい。", scores: { socio: { Ti: 4, Si: 2, Ne: -2 }, mbti: { Si: 3, Ti: 2 }, ennea: { 1: 3, 5: 2 } } } // ★ LSI/ISTJのエラー修正欲！！
+                        { text: "矛盾から生まれる『無限の解釈』や言葉遊びのバグ自体が面白くてワクワクする。", scores: { socio: { Ne: 4, Ti: 2 }, mbti: { Ne: 3, Ti: 2 }, ennea: { 7: 2, 5: 1 } } }, 
+                        { text: "エラー（矛盾）を見過ごすのが気持ち悪いから、どうにかして論理的な『一つの正解（定義）』を出してバグを修正したい。", scores: { socio: { Ti: 4, Si: 2, Ne: -2 }, mbti: { Si: 3, Ti: 2 }, ennea: { 1: 3, 5: 2 } } } 
                     ]
                 }
             },
             { text: "「嘘か本当かなどどうでもいい。ポットが喋るという現象（機能）をどう利用するかだ」と、実用性だけを考える。", scores: { socio: { Te: 3, Ni: 2, Si: 2 }, mbti: { Te: 3 }, ennea: { 8: 2, 3: 2 } }, msg: "……ダーリンってば、本当に血が通ってないみたい。素敵よ……♡" },
-            { text: "「嘘つきなんて可哀想。きっと本当は誰かに信じてほしいんだね」と、ポットの心（感情）に寄り添う。", scores: { socio: { Fi: 3, Fe: 2 }, mbti: { Fi: 2, Fe: 3 }, ennea: { 9: 2, 2: 1 } }, msg: "……ただのガラクタに同情するの？ あなたのその優しさ、全部私が奪ってあげる……♡" },
+            { 
+                text: "「嘘つきなんて可哀想。きっと本当は誰かに信じてほしいんだね」と、ポットの心（感情）に寄り添う。", 
+                scores: { socio: { Fi: 2, Fe: 2 }, mbti: { Fi: 2, Fe: 2 }, ennea: { 2: 1, 9: 1 } },
+                msg: "……ただのガラクタに同情するの？",
+                // ★ F型の「感情的寄り添い」と、INFJ/INFPの「メタ認知・自己投影」を分離！
+                followUp: {
+                    id: "q_teapot_empathy_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] ほんとに同情してる？ その優しさの裏にある本音は？",
+                    options:[
+                        { text: "はい。嘘をつかざるを得ない孤独や悲しみが痛いほど伝わってきて、純粋に寄り添いたいと思った。", scores: { socio: { Fi: 4, Fe: 3 }, mbti: { Fi: 4, Fe: 3 }, ennea: { 2: 3, 4: 2 } } }, // ガチF型
+                        { text: "『嘘をつく』というプログラム（役割）を与えられた存在の悲哀や、人間の社会構造のメタファー（皮肉）として捉えて、少し自己投影している。", scores: { socio: { Ni: 4, Ti: 2, Fe: 2 }, mbti: { Ni: 4, Ti: 2 }, ennea: { 5: 3, 4: 1 } } } // ★ INFJ/INFPの「概念への共感とメタ視点」を追加！！
+                    ]
+                }
+            },
             { text: "「うるせえ！ 割るぞ！」と、面倒な理屈を物理的な力でねじ伏せる。", scores: { socio: { Se: 4, Ti: -2 }, mbti: { Se: 3, P: 2 }, ennea: { 8: 4, 7: 1 } }, msg: "……野蛮ね♡ でも、その力で私を組み伏せてみて？……♡" }
         ].sort(() => Math.random() - 0.5);
 
