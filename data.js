@@ -2370,6 +2370,7 @@ const questionsData =[
             }
         ]
     },
+// q_originality (オリジナリティとは何か) LSIの模倣とINFJの解釈、T型の「中二病」を分離！
     {
         id: "q_originality",
         type: "radio",
@@ -2377,20 +2378,35 @@ const questionsData =[
         options:[
             { 
                 text: "過去の膨大なデータ（他人の作品や知識）を研究し、自分の中で要素を分解・再構築した結果生み出される『出力のバグ（差異）』。", 
-                scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 2, Ni: 3 }, ennea: { 5: 3 } } // ★ソシオTi/Ne、MBTI Ni/Ti
+                scores: { socio: { Ti: 1 }, mbti: { Ti: 1 }, ennea: { 5: 1 } },
+                // ★ N型の「構造再構築」とS型の「ルールの模倣」、INFJの「意味の再解釈」を分離！
+                followUp: {
+                    id: "q_originality_bug_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] その「再構築」のプロセスはどっちに近い？",
+                    options:[
+                        { text: "既存のシステム（知識）を完全に解体し、自分なりの全く新しい『論理モデル』として組み直すこと。", scores: { socio: { Ti: 4, Ne: 3 }, mbti: { Ti: 4, Ni: 2 }, ennea: { 5: 3 } } }, // ガチINTP/INTJ
+                        { text: "過去の優れたデータ（お手本）を正確に収集し、それを『ルール通りに完璧に再現する』中で生まれるわずかな違い。", scores: { socio: { Si: 4, Ti: 3, Ne: -2 }, mbti: { Si: 4, Te: 2 }, ennea: { 1: 3, 6: 2 } } }, // ★ LSI/ISTJの「お手本の模倣」！
+                        { text: "既存のデータそのものではなく、その裏にある『象徴的な意味やメッセージ』を抽出し、別の形に置き換えて表現すること。", scores: { socio: { Ni: 4, Fe: 2 }, mbti: { Ni: 4, Fe: 2 }, ennea: { 4: 2, 5: 1 } } } // ★ INFJ/IEIの「象徴の再解釈」！
+                    ]
+                }
             },
             { 
                 text: "自分の魂の奥底から湧き上がる、誰にも真似できない『唯一無二の感情や世界観』の表現。", 
-                scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, ennea: { 4: 3 } } 
+                scores: { socio: { Fi: 1 }, mbti: { Fi: 1 }, ennea: { 4: 1 } },
+                // ★ F型の「純粋な感情」とT型の「孤高の美学（中二病）」を分離！
+                followUp: {
+                    id: "q_originality_soul_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] その「世界観」の中身はどっちに近い？",
+                    options:[
+                        { text: "自分の中にある『言葉にならない愛や悲しみ、個人的な心の痛み』の表現。", scores: { socio: { Fi: 4, Ni: 2 }, mbti: { Fi: 4, Ni: 2 }, ennea: { 4: 4, 9: 1 } } }, // ガチF/INFP
+                        { text: "大衆には理解できない『複雑で難解な論理体系』や『ダークでシニカルな哲学（厨二病）』の表現。", scores: { socio: { Ti: 4, Ni: 3, Fe: -3 }, mbti: { Ti: 3, Ni: 3 }, ennea: { 5: 3, 4: 2 } } } // ★ ILI/LII/INTJの「孤高の論理美学」！！
+                    ]
+                }
             },
-            { 
-                text: "世間にウケる要素を組み合わせ、最も効率よく結果（評価や利益）を出せる『最適なパッケージング』。", 
-                scores: { socio: { Te: 3, Ni: 1 }, mbti: { Te: 3, Ni: 1 }, ennea: { 3: 3, 8: 1 } } 
-            },
-            { 
-                text: "個性なんてどうでもいい。求められた役割やルールを、いかに完璧に・正確にこなせるかが重要だ。", 
-                scores: { socio: { Ti: 1, Si: 2 }, mbti: { Si: 3, Te: 1 }, ennea: { 1: 3, 6: 1 } } 
-            }
+            { text: "世間にウケる要素を組み合わせ、最も効率よく結果（評価や利益）を出せる『最適なパッケージング』。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Te: 3, Ni: 1 }, ennea: { 3: 3, 8: 1 } } },
+            { text: "個性なんてどうでもいい。求められた役割やルールを、いかに完璧に・正確にこなせるかが重要だ。", scores: { socio: { Ti: 1, Si: 2 }, mbti: { Si: 3, Te: 1 }, ennea: { 1: 3, 6: 1 } } }
         ]
     },
 // q_dislike_reason (人を嫌いになる理由)
@@ -2557,6 +2573,7 @@ const questionsData =[
             }
         ]
     },
+// q_comm_style (コミュ力のバグ) F型のフリーズと、Fe強者の追加！
     {
         id: "q_comm_style",
         type: "radio",
@@ -2564,20 +2581,23 @@ const questionsData =[
         options:[
             { 
                 text: "【コミュ障】相手の感情や意図が読めなくて、どう返せば正解かわからずフリーズする。（多層構造で処理落ち）", 
-                scores: { socio: { Fe: -2, Ti: 2 }, mbti: { Ti: 2, Te: 1 }, ennea: { 5: 2, 6: 2 } } 
+                scores: { socio: { Ti: 1 }, mbti: { I: 1 }, ennea: { 5: 1 } },
+                // ★ T型の論理エラーと、F型の「優しすぎるエラー」を分離！
+                followUp: {
+                    id: "q_comm_freeze_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] フリーズする『本当の理由』はどっち？",
+                    options:[
+                        { text: "そもそも『他人の感情』という変数を処理する機能が弱く、論理的な正解が見つからないからフリーズする。", scores: { socio: { Fe: -4, Ti: 3 }, mbti: { Ti: 3, Te: 2, Fe: -3 }, ennea: { 5: 3, 6: 1 } } }, // ガチT
+                        { text: "相手の感情が読めないわけではないが、『どう言えば相手が一番傷つかないか』を考えすぎてしまい、言葉が出なくなるから。", scores: { socio: { Fi: 4, Fe: 2, Te: -2 }, mbti: { Fi: 3, Fe: 2 }, ennea: { 9: 3, 2: 1 } } } // ★ F型の「配慮しすぎフリーズ」！！
+                    ]
+                }
             },
-            { 
-                text: "【空気読めない】正論や事実、自分の興味あることを言った結果、なぜか場が凍りつく。（悪気はない）", 
-                scores: { socio: { Te: 2, Ne: 1, Fe: -1 }, mbti: { Ti: 2, Ne: 1 }, ennea: { 5: 1, 8: 1 } } 
-            },
-            { 
-                text: "【合わせすぎ】空気が読めすぎて、相手が求めるテンプレの返答を自動出力してしまい、後でどっと疲れる。", 
-                scores: { socio: { Fe: 3, Fi: 1 }, mbti: { Fe: 2 }, ennea: { 2: 1, 9: 2 } } 
-            },
-            { 
-                text: "バグはない。目的さえあれば、必要な対人スキルはツールとして割り切って使える。", 
-                scores: { socio: { Te: 2, Se: 1 }, mbti: { Te: 2 }, ennea: { 3: 2, 8: 1 } } 
-            }
+            { text: "【空気読めない】正論や事実、自分の興味あることを言った結果、なぜか場が凍りつく。（悪気はない）", scores: { socio: { Te: 2, Ne: 1, Fe: -3 }, mbti: { Ti: 3, Ne: 1, Fe: -2 }, ennea: { 5: 1, 8: 1 } } },
+            { text: "【合わせすぎ】空気が読めすぎて、相手が求めるテンプレの返答を自動出力してしまい、後でどっと疲れる。", scores: { socio: { Fe: 3, Fi: 1 }, mbti: { Fe: 3 }, ennea: { 2: 2, 9: 2 } } },
+            { text: "【バグはない】目的さえあれば、必要な対人スキルはツールとして割り切って使える。", scores: { socio: { Te: 3, Se: 1 }, mbti: { Te: 3 }, ennea: { 3: 2, 8: 1 } } },
+            // ★ Fe強者（ESFJ等）の「コミュ強」選択肢を追加！
+            { text: "【バグはない】誰とでもすぐ仲良くなれるし、場の空気を和ませてみんなを笑顔にするのが得意！", scores: { socio: { Fe: 5, Se: 2 }, mbti: { Fe: 4, E: 3 }, ennea: { 2: 3, 7: 2 } } }
         ]
     },
     {
@@ -2921,7 +2941,8 @@ const questionsData =[
             { text: "直感で「これだ」と思ったことは大体当たるので信じる。", scores: { socio: { Ni: 2 }, mbti: { Ni: 2 }, ennea: { 8: 1, 4: 1 } } }
         ]
     },
-{
+// q1 (悪い未来予測が見えた時) LII-Niの「一つずつ代替案を出す」直列処理を追加！
+    {
         id: "q1",
         type: "radio",
         text: "悪い未来予測（トラブルの予兆）が見えた。あなたはどうする？",
@@ -2930,21 +2951,20 @@ const questionsData =[
             { 
                 text: "どうせそうなるなら…どうすれば？ 代替案を分岐させる。", 
                 scores: { socio: { Ti: 1, Ne: 1 }, mbti: { Ni: 1 }, ennea: { 5: 1, 6: 1 } },
-                // ★ 代替案の目的を深掘り！
                 followUp: {
                     id: "q1_branch_followup",
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] 代替案をどうやって出す？ その目的は？",
                     options:[
-                        { text: "『ああなったらこう、こうなったらああ』と、論理的・システム的なあらゆる分岐パターン（可能性）を計算し尽くして最適化したいから。", scores: { socio: { Ti: 4, Ne: 3, Ni: 2 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 3 } } }, // LII/INTP
-                        { text: "自分や大切な人の平穏が壊れるのが怖いから、とりあえず一番『安全で確実な現実的ルート』を一つ確保しておきたい。", scores: { socio: { Si: 3, Ti: 2, Fi: 2 }, mbti: { Si: 4, Te: 2 }, ennea: { 6: 3, 1: 1 } } }, // ★ LSI/ESI/ISTJの防衛的代替案
-                        { text: "『こういう悲劇を防ぐためには、あの人の心にどう働きかけるべきか』等、人間関係や感情の未来を操作して救済したいから。", scores: { socio: { Ni: 3, Fe: 3, Fi: 2 }, mbti: { Ni: 3, Fe: 3 }, ennea: { 4: 2, 2: 2 } } } // ★ INFJの感情未来予測
+                        { text: "『ああなったらこう、こうなったらああ』と、論理的・システム的なあらゆる分岐パターン（可能性）を計算し尽くして最適化したいから。", scores: { socio: { Ti: 4, Ne: 3, Ni: 2 }, mbti: { Ti: 3, Ne: 3 }, ennea: { 5: 3 } } }, // LII-Ne/INTP
+                        { text: "いろんな分岐を一度に考えるのは無理（疲れる）。まずは一番確実そうな代替案を『1つ』出し、それがダメそうならまた次の代替案を考える（直列演算）。", scores: { socio: { Ni: 4, Ti: 3, Ne: -2 }, mbti: { Ni: 4, Ti: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ みつき（LII-Ni/INTJ）の直列処理！
+                        { text: "自分や大切な人の平穏が壊れるのが怖いから、とりあえず一番『安全で確実な現実的ルート』を一つ確保しておきたい。", scores: { socio: { Si: 3, Ti: 2, Fi: 2 }, mbti: { Si: 4, Te: 2 }, ennea: { 6: 3, 1: 1 } } }, // LSI/ESI/ISTJの防衛的代替案
+                        { text: "『こういう悲劇を防ぐためには、あの人の心にどう働きかけるべきか』等、人間関係や感情の未来を操作して救済したいから。", scores: { socio: { Ni: 3, Fe: 3, Fi: 2 }, mbti: { Ni: 3, Fe: 3 }, ennea: { 4: 2, 2: 2 } } } // INFJの感情未来予測
                     ]
                 }
             }, 
             { text: "みんなが不安にならないようにケアする。", scores: { socio: { Fe: 2 }, mbti: { Fe: 2 }, ennea: { 2: 2, 9: 1 } } },
             { text: "今すぐ動いて力技でぶっ壊す・防ぐ。", scores: { socio: { Se: 2 }, mbti: { Se: 2 }, ennea: { 8: 2, 3: 1 } } },
-            // ★ Fi単独の防衛を追加！
             { text: "トラブルの予兆を感じても、自分の信念や大切な人を守り抜く覚悟を決める（または一人で抱え込む）。", scores: { socio: { Fi: 3, Ni: 1 }, mbti: { Fi: 3, Ni: 1 }, ennea: { 4: 3, 9: 1 } } }
         ]
     },
@@ -3051,15 +3071,53 @@ const questionsData =[
             // 押さずに次へ進んだ場合は、script.js側で socio: Ti, mbti: J, ennea: 1, 6 を加算するよ！
         ]
     },
-    {
+// q7 (人に何かを説明する時) ESIの「結論最短」とT型の「調整」を深掘り！
+{
         id: "q7",
         type: "radio",
         text: "人に何かを説明するとき、どうなりがち？",
         options:[
-            { text: "正確を期すため、前提条件や定義から話し始めて長くなる", scores: { socio: { Ti: 2, Ne: 1 }, mbti: { Ti: 2 }, ennea: { 5: 2, 1: 1 } } },
-            { text: "結論だけを最短で、効率的に伝える", scores: { socio: { Te: 2, Ni: 1 }, mbti: { Te: 2 }, ennea: { 3: 2, 8: 1 } } },
-            { text: "相手の反応を見ながら、言葉を選んで柔らかく話す", scores: { socio: { Fe: 2, Fi: 1 }, mbti: { Fe: 2 }, ennea: { 2: 2, 9: 1 } } },
-            { text: "比喩やイメージを使って、感覚やビジョンを伝える", scores: { socio: { Ni: 1, Ne: 2 }, mbti: { Ne: 2, Ni: 1 }, ennea: { 4: 2, 7: 1 } } }
+            { 
+                text: "正確を期すため、前提条件や定義から話し始めて長くなる", 
+                scores: { socio: { Ti: 1 }, mbti: { Ti: 1 }, ennea: { 5: 1 } },
+                // ★ LII(Ne)とLSI(Se/Si)の分離！
+                followUp: {
+                    id: "q7_definition_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] なぜ「前提条件や定義」からしっかり話すの？",
+                    options:[
+                        { text: "言葉の定義（前提）を共有しておかないと、その後の論理展開にズレが生じて無数のバグ（誤解）が生まれるから。", scores: { socio: { Ti: 4, Ne: 2 }, mbti: { Ti: 3, Ne: 1 }, ennea: { 5: 3, 1: 1 } } }, // LII/INTP
+                        { text: "情報に抜け漏れがあって、後から「言った言わない」のトラブル（実害）になるのが嫌だから、最初から正確なデータと手順を全て提示しておきたい。", scores: { socio: { Ti: 4, Si: 3, Se: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 2 } } } // ★ LSI/ISTJの防衛的正確さ！！
+                    ]
+                }
+            },
+            { 
+                text: "結論だけを最短で、効率的に伝える", 
+                scores: { socio: { Te: 1 }, mbti: { Te: 1 }, ennea: { 3: 1 } },
+                followUp: {
+                    id: "q7_shortest_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] なぜ「結論だけを最短で」伝えるの？",
+                    options:[
+                        { text: "ビジネスや実務において、無駄なプロセスを省いて最速で結果を出すことが相手にとっても自分にとっても有益（合理的）だから。", scores: { socio: { Te: 4, Ni: 1 }, mbti: { Te: 4 }, ennea: { 8: 2, 3: 2 } } }, // ガチTe
+                        { text: "回りくどい説明を考えるのも聞かせるのも面倒。相手に一番伝わりやすく、かつサッサと実務を終わらせて自分の平穏に戻りたいから。", scores: { socio: { Fi: 3, Te: 3, Si: 2 }, mbti: { Si: 2, Te: 2 }, ennea: { 9: 3, 6: 1 } } } // ★ ESI/ISFJ等の「面倒だからTe稼働」に修正！！
+                    ]
+                }
+            },
+            { 
+                text: "相手の反応を見ながら、言葉を選んで柔らかく話す", 
+                scores: { socio: { Fe: 1 }, mbti: { F: 1 }, ennea: { 9: 1 } },
+                followUp: {
+                    id: "q7_soft_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] なぜ「相手の反応を見ながら言葉を選ぶ」の？",
+                    options:[
+                        { text: "相手が傷つかないように、またはその場が温かく平和な空気になるように（純粋な思いやり）。", scores: { socio: { Fe: 4, Fi: 2 }, mbti: { Fe: 3, Fi: 2 }, ennea: { 2: 3, 9: 2 } } },
+                        { text: "ここで相手を怒らせたり反発されると、今後の自分の計画や作業効率に『余計なノイズ（面倒事）』が発生するから。（保身・リスク管理）", scores: { socio: { Te: 3, Ti: 2, Fe: -2 }, mbti: { Ti: 3, Te: 2, Fe: -2 }, ennea: { 5: 2, 6: 1 } } }
+                    ]
+                }
+            },
+            { text: "比喩やイメージを使って、感覚やビジョンを伝える", scores: { socio: { Ni: 2, Ne: 2 }, mbti: { Ne: 2, Ni: 2 }, ennea: { 4: 2, 7: 1 } } }
         ]
     },
     {
@@ -3190,49 +3248,65 @@ const questionsData =[
             { text: "「とりあえずドアを蹴破るか、他に面白いヒントがないか部屋中を漁ってみる」とすぐ行動する。", scores: { socio: { Se: 3, Ne: 2 }, mbti: { Se: 3, Ne: 2 }, ennea: { 8: 2, 7: 2 } } }
         ]
     },
-    {
-        id: "q_party_extrovert", // ★ 外向型（E）および F型用の追加質問
+{
+        id: "q_party_extrovert", 
         type: "radio",
         text: "大勢の人が集まる賑やかなパーティー（交流会）。そこでのあなたの基本的な立ち回りは？",
         options:[
-            { 
-                text: "孤立している人に声をかけたり、みんなが楽しめるように場の空気（雰囲気）を盛り上げて回る。", 
-                scores: { socio: { Fe: 4 }, mbti: { Fe: 3, E: 3 }, ennea: { 2: 3, 7: 1 } } 
-            },
-            { 
-                text: "目立つポジションを取り、自分の実力や魅力をアピールして、有益な人脈（コネ）を作る。", 
-                scores: { socio: { Te: 3, Se: 3 }, mbti: { Te: 3, E: 2 }, ennea: { 3: 3, 8: 2 } } 
-            },
-            { 
-                text: "面白い話を持っていそうな人を見つけて、マニアックな話題や突拍子もないアイデアで盛り上がる。", 
-                scores: { socio: { Ne: 4 }, mbti: { Ne: 3, E: 2 }, ennea: { 7: 4 } } 
-            },
+            { text: "孤立している人に声をかけたり、みんなが楽しめるように場の空気（雰囲気）を盛り上げて回る。", scores: { socio: { Fe: 4 }, mbti: { Fe: 3, E: 3 }, ennea: { 2: 3, 7: 1 } } },
+            { text: "目立つポジションを取り、自分の実力や魅力をアピールして、有益な人脈（コネ）を作る。", scores: { socio: { Te: 3, Se: 3 }, mbti: { Te: 3, E: 2 }, ennea: { 3: 3, 8: 2 } } },
+            { text: "面白い話を持っていそうな人を見つけて、マニアックな話題や突拍子もないアイデアで盛り上がる。", scores: { socio: { Ne: 4 }, mbti: { Ne: 3, E: 2 }, ennea: { 7: 4 } } },
             { 
                 text: "「なんで私こんなとこ来ちゃったんだろう…」と後悔しつつ、壁際でスマホをいじるか、さっさと帰る理由を探す。", 
-                scores: { socio: { Ni: 2, Ti: 1, Fi: 1, Fe: -2 }, mbti: { Ni: 2, Ti: 1, Fi: 1, Fe: -2 }, ennea: { 5: 3, 4: 2, 9: 1 } } 
+                scores: { socio: { Ni: 1 }, mbti: { I: 2 }, ennea: { 5: 1 } },
+                // ★ N型とS型の「帰りたい理由」を分離！
+                followUp: {
+                    id: "q_party_escape_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] さっさと帰りたい「一番の理由」は？",
+                    options:[
+                        { text: "この集まりの目的や、ここで自分が構築できる有益な関係性（メリット）が全く見出せず、ただ時間を浪費しているだけだと悟ったから。", scores: { socio: { Ni: 3, Te: 2, Ti: 2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 3, 8: 1 } } }, // ★ LII/ILI/INTJの虚無！
+                        { text: "知らない人ばかりの騒がしい空間にいること自体が身体的・精神的に苦痛で、早く自分の安心できるパーソナルスペース（家）に帰りたいから。", scores: { socio: { Si: 4, Fi: 2, Se: -2 }, mbti: { Si: 3, Fi: 2 }, ennea: { 9: 3, 6: 2 } } } // ★ ESI/LSI/ISFJの防衛！
+                    ]
+                }
             }
         ]
     },
-    {
-        id: "q_group_vacation", // ★ S型・F型・外向型向け
+{
+        id: "q_group_vacation", 
         type: "radio",
         text: "友人たちと旅行の計画を立てることになりました。あなたの役割は？",
         options:[
             { 
                 text: "「みんなが行きたいならどこでもいいよ〜！」と笑顔で同意し、和気あいあいとしたムードを作る。", 
-                scores: { socio: { Fe: 3, Si: 2 }, mbti: { F: 2, P: 1 }, ennea: { 9: 3, 2: 2 } } 
+                scores: { socio: { Fe: 1 }, mbti: { P: 1 }, ennea: { 9: 1 } },
+                // ★ F型の優しさとT型の「思考放棄」を分離！
+                followUp: {
+                    id: "q_group_vacation_agree_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「どこでもいいよ」の裏にある本音は？",
+                    options:[
+                        { text: "みんなが笑顔で楽しめることが一番の目的だから、本当にどこでもいいし合わせたい。", scores: { socio: { Fe: 3, Si: 2 }, mbti: { F: 3, P: 1 }, ennea: { 9: 3, 2: 2 } } },
+                        { text: "自分で計画を立てるのが面倒（コスト）だから、誰かが代わりにやってくれるならそれにタダ乗り（思考放棄）したいだけ。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ti: 3 }, ennea: { 5: 3, 9: 2 } } } // ★ INTP/ISTP等の思考放棄！！
+                    ]
+                }
             },
-            { 
-                text: "「ホテルはここが安くて快適」「移動ルートはこれ」と、全員が困らないように完璧な手配とスケジュールを組む。", 
-                scores: { socio: { Te: 3, Si: 3 }, mbti: { Te: 2, J: 3 }, ennea: { 1: 3, 6: 2 } } 
-            },
-            { 
-                text: "「ここ行こうぜ！」「あれ絶対面白いからやろう！」と、テンション高く次々と新しいプランを提案する。", 
-                scores: { socio: { Se: 2, Ne: 3 }, mbti: { E: 3, P: 2 }, ennea: { 7: 4 } } 
-            },
+            { text: "「ホテルはここが安くて快適」「移動ルートはこれ」と、全員が困らないように完璧な手配とスケジュールを組む。", scores: { socio: { Te: 3, Si: 3 }, mbti: { Te: 2, J: 3 }, ennea: { 1: 3, 6: 2 } } },
+            { text: "「ここ行こうぜ！」「あれ絶対面白いからやろう！」と、テンション高く次々と新しいプランを提案する。", scores: { socio: { Se: 2, Ne: 3 }, mbti: { E: 3, P: 2 }, ennea: { 7: 4 } } },
             { 
                 text: "「集団行動は疲れるから、現地では少し単独行動させてほしい」と内心思いつつ、しぶしぶ付き合う。", 
-                scores: { socio: { Ni: 2, Fi: 2, Fe: -1 }, mbti: { I: 3 }, ennea: { 4: 2, 5: 2 } } 
+                scores: { socio: { Fi: 1 }, mbti: { I: 2 }, ennea: { 5: 1 } },
+                // ★ 状況によるT型の対応を細分化！
+                followUp: {
+                    id: "q_group_vacation_alone_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 旅行先でのあなたの「限界」はどこ？",
+                    options:[
+                        { text: "一日中他人のペースに合わせていると脳のエネルギーが枯渇するから、自分のペースで動く時間は絶対に確保したい。", scores: { socio: { Ti: 3, Ni: 2, Fe: -2 }, mbti: { Ti: 3, Ni: 3 }, ennea: { 5: 3 } } }, // ガチI/T
+                        { text: "断って関係が悪化するのが一番面倒だから行くが、常に「早く帰りたい」とHPを削りながら耐えている。", scores: { socio: { Fi: 3, Si: 3, Se: -2 }, mbti: { Si: 3, Fi: 2 }, ennea: { 9: 3, 6: 2 } } }, // 防衛的F/S
+                        { text: "単独行動したいと言いつつ、いざ見知らぬ土地で一人になるのも不安だから、結局誰かの後ろを無言でついて歩く。", scores: { socio: { Si: 2, Ne: -2, Te: -2 }, mbti: { Si: 3, Fe: 2 }, ennea: { 6: 3, 9: 2 } } } // ★ コミュ障・不安型（ISFJ等）のリアル！！
+                    ]
+                }
             }
         ]
     },
