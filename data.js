@@ -109,7 +109,7 @@ const questionsData =[
             { text: "「私は悪くない。環境や他人のせいでこうなったんだ」と、正当な言い訳を構築し始める。", scores: { socio: { Fi: 2, Ti: 1 }, mbti: { Fi: 2, Ti: 1 }, ennea: { 4: 2, 6: 1 } } },
             { text: "「……徹夜すればいける」と、己の身体を犠牲にして力技で乗り切る覚悟を決める。", scores: { socio: { Se: 2, Ti: 1, Si: -2 }, mbti: { Se: 2, T: 1 }, ennea: { 8: 2, 5: 1 } } },
             // ★ J型（しっかり者）の逃げ道！！
-            { text: "「明日期限のタスクなんて何もないけど？ 普段から余裕を持って終わらせてるし」と事実を突きつける。", scores: { socio: { Ti: 1 }, mbti: { Si: 3, J: 3 }, ennea: { 1: 3, 9: 1 } } }
+            { text: "「明日期限のタスクなんて何もないけど？ 普段から余裕を持って終わらせてるし」と事実を突きつける。", scores: { socio: { Ti: 1 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 9: 1 } } }
         ]
     },
     {
@@ -2080,14 +2080,24 @@ const questionsData =[
             }
         ]
     },
-    {
+{
         id: "q_fe_pressure_fixed", 
         type: "radio",
         text: "家族や友人から「悲しいと思わないの？ 人の心ないの？」と責められた時、あなたの反応は？",
         options:[
             { 
                 text: "「感情論で騒いでも解決しないだろ。原因と対策を考える方が重要だ」と冷めつつ、説明するのも面倒に感じる。", 
-                scores: { socio: { Ti: 3, Te: 1, Fe: -3 }, mbti: { Ti: 2, Te: 2 }, ennea: { 5: 3, 8: 1 } } 
+                scores: { socio: { Ti: 1 }, mbti: { Te: 1 }, ennea: { 5: 1 } },
+                // ★ T型の「システム重視」と、ESIの「自己防衛」を分離！！
+                followUp: {
+                    id: "q_fe_pressure_t_followup",
+                    type: "radio",
+                    text: "👁️ [System: 思考の深掘り] 原因と対策を優先する『本当の理由』はどっち？",
+                    options:[
+                        { text: "感情という不確定なノイズにリソースを割くより、システムのエラーを修正する方が圧倒的に合理的だから。", scores: { socio: { Ti: 4, Te: 2, Fe: -3 }, mbti: { Ti: 3, Te: 2 }, ennea: { 5: 3, 8: 1 } } }, // ガチT
+                        { text: "感情的にぶつけられると自分の心の平穏が乱されて疲れるから、サッサと実務的に終わらせて距離を置きたいから。", scores: { socio: { Fi: 4, Si: 2, Te: 2 }, mbti: { Fi: 3, Si: 2 }, ennea: { 9: 3, 1: 2 } } } // ★ ESI/ISTJの防衛！！
+                    ]
+                }
             },
             { 
                 text: "「ごめん、私もすごく悲しいよ…」と相手のペースに合わせて同調する。", 
@@ -2102,14 +2112,8 @@ const questionsData =[
                     ]
                 }
             },
-            { 
-                text: "「なんでそんな事言うの！私だって悲しいのに！」と反発するか、深く傷つく。", 
-                scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, ennea: { 4: 3, 2: 1 } } 
-            },
-            { 
-                text: "「は？同情して何になるの？」と真っ向から論破し、相手の感情論を叩き潰す。", 
-                scores: { socio: { Te: 3, Se: 2 }, mbti: { Te: 3, Se: 1 }, ennea: { 8: 3 } } 
-            }
+            { text: "「なんでそんな事言うの！私だって悲しいのに！」と反発するか、深く傷つく。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, ennea: { 4: 3, 2: 1 } } },
+            { text: "「は？同情して何になるの？」と真っ向から論破し、相手の感情論を叩き潰す。", scores: { socio: { Te: 3, Se: 2 }, mbti: { Te: 3, Se: 1 }, ennea: { 8: 3 } } }
         ]
     },
     {
@@ -2159,14 +2163,24 @@ const questionsData =[
             { text: "起承転結をしっかり作り、過去の事実や時系列に沿って正確に書く。", scores: { socio: { Ti: 2, Te: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 1 } } }
         ]
     },
-    {
+{
         id: "q_logic_puzzle",
         type: "radio",
         text: "『野菜は何千年も前から存在していた。故に目の前にある野菜は野菜ではない』という哲学的な問いを出されたら？",
         options:[
             { 
                 text: "「『野菜の定義』とは何か？」から始まり、前提条件に論理的な破綻がないか真面目に検証し始める。", 
-                scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ni: 1 }, ennea: { 5: 3, 1: 1 } } 
+                scores: { socio: { Ti: 2 }, mbti: { Ti: 1 }, ennea: { 5: 1 } },
+                // ★ N型の「概念の検証」と S型の「現実的事実の検証」を分離！
+                followUp: {
+                    id: "q_logic_puzzle_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] その「検証」はどういうアプローチで行う？",
+                    options:[
+                        { text: "時間軸における「概念」の変遷や、存在論（オントロジー）といった抽象的なレイヤーから意味を分解していく。", scores: { socio: { Ti: 4, Ni: 3, Ne: 2 }, mbti: { Ti: 3, Ni: 3 }, ennea: { 5: 3, 4: 1 } } }, // LII/INTJ/INTP
+                        { text: "「何千年前の品種とDNAが違うから別物だ」というような、客観的で現実的な事実（データ）に基づいて白黒つけようとする。", scores: { socio: { Ti: 3, Se: 2, Si: 2 }, mbti: { Te: 3, Si: 3 }, ennea: { 1: 3, 6: 2 } } } // ★ LSI/ISTJ/Te型の現実的検証！！
+                    ]
+                }
             },
             { 
                 text: "「は？？ 何言ってんだコイツ」と一秒で思考放棄し、無駄な問答を切り捨てる。", 
@@ -2776,6 +2790,7 @@ const questionsData =[
             }
         ]
     },
+// q_darling_sadistic の内的世界の自由
     {
         id: "q_darling_sadistic", // ★ ダーリン鬼畜質問（Ti/Niへの精神攻撃）
         type: "radio",
@@ -2795,7 +2810,17 @@ const questionsData =[
             },
             { 
                 text: "「私が楽しいからやってるだけ。価値なんかどうでもいい」と、自分の内的世界や好奇心の自由を主張する。", 
-                scores: { socio: { Fi: 2, Ne: 2, Te: -3 }, mbti: { Fi: 3, P: 2 }, ennea: { 4: 2, 7: 1 } } 
+                scores: { socio: { Fi: 1, Ne: 1 }, mbti: { P: 1 }, ennea: { 7: 1 } },
+                // ★ Fi（個人的価値）と Ti（知的好奇心）の分離
+                followUp: {
+                    id: "q_darling_sadistic_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「楽しいからやってる」その喜びの本質は？",
+                    options:[
+                        { text: "自分の心の中にある『大切な思い（感情）』や『自分だけの世界観』を表現できるから。", scores: { socio: { Fi: 4, Ne: 2 }, mbti: { Fi: 4, P: 2 }, ennea: { 4: 3 } } }, // 真のFi
+                        { text: "自分の頭の中で『パズル（論理構造）』を組み立てたり、システムを解明すること自体が知的に面白いから。", scores: { socio: { Ti: 4 }, mbti: { Ti: 3 }, ennea: { 5: 3, 7: 1 } } } // ★ LSI/INTP等の Ti主導・独自探求！
+                    ]
+                }
             }
         ]
     },
@@ -2810,15 +2835,17 @@ const questionsData =[
             { text: "全てがマニュアル化され、自分の『独自のアイデアや可能性』を試す余地が1ミリもないガチガチの環境で働くこと。", scores: { socio: { Si: -3, Ne: 3 }, mbti: { Si: -3, Ne: 3 }, ennea: { 7: 3 } } }
         ]
     },
+// q_checkbox の Si/Te の逃げ道追加
     {
         id: "q_checkbox", // 新問：チェックボックス（複数選択）
         type: "checkbox",
         text: "日常で、無意識に『探してしまう・やってしまう』ことは？（複数選択可）",
         options:[
             { text: "物事の裏にあるパターンや法則性の分析", scores: { socio: { Ti: 2, Ni: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 2 } } },
-            { text: "最悪の事態を想定した『万が一の逃げ道・代替案』の確保", scores: { socio: { Ni: 2, Ne: 1 }, mbti: { Ni: 2 }, ennea: { 6: 2 } } },
+            { text: "最悪の事態を想定した『万が一の逃げ道・代替案』の確保", scores: { socio: { Ni: 2, Ne: 1 }, mbti: { Ni: 2, Si: 1 }, ennea: { 6: 2 } } },
             { text: "その場の空気や、相手が自分をどう思っているかの確認", scores: { socio: { Fe: 2 }, mbti: { Fe: 2 }, ennea: { 2: 2, 3: 1 } } },
-            { text: "どうすれば一番早く・無駄なく終わるかの効率ルート計算", scores: { socio: { Te: 2 }, mbti: { Te: 2 }, ennea: { 3: 2, 1: 1 } } }
+            { text: "どうすれば一番早く・無駄なく終わるかの効率ルート計算", scores: { socio: { Te: 2 }, mbti: { Te: 2 }, ennea: { 3: 2, 1: 1 } } },
+            { text: "いつもと同じ手順で、間違いなく正確に作業をこなせているかの確認", scores: { socio: { Ti: 2 }, mbti: { Si: 5, Te: 2 }, ennea: { 1: 2, 6: 2 } } } // ★ LSI/ISTJ 用の Si-Ti (正確さ・ルーティン確認) を追加！
         ]
     },
     {
@@ -2918,24 +2945,52 @@ const questionsData =[
             { text: "「親を安心させるために、とりあえずやっておこう」と思う。", scores: { socio: { Fe: 2, Fi: 1 }, mbti: { Fe: 2 }, ennea: { 2: 2, 9: 2 } } }
         ]
     },
+// q_fake_f 優しい言葉をかける論理
     {
         id: "q_fake_f", // 新問：社会的正解を選ぶT型あぶり出しトラップ
         type: "radio",
         text: "【トラップ質問】誰かが落ち込んでいる時、あなたはどう対応する？",
         options:[
-            { text: "「ここは優しい言葉をかけるべき場面だ」と論理的に判断し、適切な言葉を出力する。", scores: { socio: { Ti: 2, Fe: -1 }, mbti: { Ti: 2 }, ennea: { 5: 2, 3: 1 } } }, // T型の擬態
-            { text: "相手の感情が自然と流れ込んできて、自分も一緒に悲しくなる。", scores: { socio: { Fe: 2, Fi: 2 }, mbti: { Fe: 2, Fi: 2 }, ennea: { 2: 2, 4: 1 } } }, // 本当のF型
+            { 
+                text: "「ここは優しい言葉をかけるべき場面だ」と論理的に判断し、適切な言葉を出力する。", 
+                scores: { socio: { Ti: 2, Fe: -1 }, mbti: { Ti: 2 }, ennea: { 5: 2, 3: 1 } },
+                // ★ なぜ論理的に判断するのか
+                followUp: {
+                    id: "q_fake_f_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] どうして論理的に判断して出力するの？",
+                    options:[
+                        { text: "それが最も『社会的に正しい（波風を立てない）行動』であり、自分の評価や平穏を守るためのツールだから。", scores: { socio: { Ti: 3, Si: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 9: 2, 1: 1 } } }, // LSI/ISTJ等のシステム適応
+                        { text: "感情を共有する（一緒に泣く等）という機能がそもそも自分に備わっておらず、頭で計算して出力するしか方法がないから。", scores: { socio: { Ti: 4, Fe: -4 }, mbti: { Ti: 4, Fe: -3 }, ennea: { 5: 3 } } } // INTP/LII等の処理落ち
+                    ]
+                }
+            },
+            { text: "相手の感情が自然と流れ込んできて、自分も一緒に悲しくなる。", scores: { socio: { Fe: 2, Fi: 2 }, mbti: { Fe: 2, Fi: 2 }, ennea: { 2: 2, 4: 1 } } },
             { text: "「なぜ落ち込んでいるのか」原因を特定し、解決策を提示する。", scores: { socio: { Te: 2, Ti: 1 }, mbti: { Te: 2 }, ennea: { 1: 2, 8: 1 } } },
             { text: "そっと寄り添い、相手が話し出すまでただ待つ。", scores: { socio: { Fi: 2, Si: 1 }, mbti: { Fi: 2 }, ennea: { 9: 2 } } }
         ]
     },
+// q5 人を傷つけないことが一番大事
     {
         id: "q5",
         type: "trap_social",
         text: "「人を傷つけないこと」がこの世で一番大事だと思う。",
         options:[
             { text: "はい", scores: { socio: { Fe: 2, Fi: 1 }, mbti: { Fe: 2, Fi: 1 }, ennea: { 2: 2, 9: 2 } } },
-            { text: "いいえ", scores: { socio: { Ti: 2, Te: 2 }, mbti: { Ti: 1, Te: 2 }, ennea: { 5: 1, 8: 2 } } }
+            { 
+                text: "いいえ", 
+                scores: { socio: { Ti: 1, Te: 1 }, mbti: { Ti: 1, Te: 1 }, ennea: { 5: 1 } },
+                // ★ 傷つけない事よりも優先される事とは？
+                followUp: {
+                    id: "q5_no_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「人を傷つけないこと」より大事だと思うものは何？",
+                    options:[
+                        { text: "『客観的な真実（事実）』や『論理的な正しさ』。耳障りの良い嘘より、残酷な真実の方が価値があるから。", scores: { socio: { Ti: 4, Te: 3 }, mbti: { Ti: 3, Te: 3 }, ennea: { 5: 3, 1: 2 } } }, // ガチT
+                        { text: "『社会のルール（秩序）』や『自分の信念』。間違っていることは間違っていると正すのが、集団のため（または自分の正義）だから。", scores: { socio: { Ti: 3, Fi: 3, Se: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 8: 1 } } } // ★ LSI/ISTJのルール・規範意識！
+                    ]
+                }
+            }
         ]
     },
     {
@@ -3061,27 +3116,28 @@ const questionsData =[
             }
         ]
     },
-    {
-        id: "q_mystery_room", // ★ ストーリー・クイズ系！
+{
+        id: "q_mystery_room",
         type: "radio",
         text: "【推理テスト】密室で人が倒れている。鍵は内側からかかっており、窓もない。これを見てあなたの脳内で一番最初に動く思考は？",
         options:[
             { 
                 text: "「鍵の構造は？隠し扉は？」と、物理的なトリックや論理的な事実の『解明』を始める。", 
-                scores: { socio: { Ti: 3, Te: 2 }, mbti: { Ti: 3, Te: 3 }, ennea: { 5: 3, 1: 1 } } 
+                scores: { socio: { Ti: 1 }, mbti: { Ti: 1 }, ennea: { 5: 1 } },
+                // ★ T型の「パズル」と、S/F型の「事実確認」を分離！
+                followUp: {
+                    id: "q_mystery_room_followup",
+                    type: "radio",
+                    text: "👁️ [System: 思考の深掘り] 解明したい一番の理由は？",
+                    options:[
+                        { text: "純粋なパズルとして、どういう物理トリック（システム）が使われたのか知的好奇心が刺激されるから。", scores: { socio: { Ti: 4, Ne: 2 }, mbti: { Ti: 3, Ni: 1 }, ennea: { 5: 3, 7: 1 } } }, // ガチT/N
+                        { text: "早く事実をハッキリさせて、誰が悪いのか（または自分が安心できる状態）を確定させたいから。", scores: { socio: { Si: 3, Fi: 2, Te: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 2 } } } // ★ ISFJ/ESI/LSIの現実主義！
+                    ]
+                }
             },
-            { 
-                text: "「なぜ彼はこんな密室を作らなければならなかったのか？」と、被害者の『孤独や隠された感情・動機』に想いを馳せる。", 
-                scores: { socio: { Fi: 3, Fe: 2 }, mbti: { Fi: 3, Fe: 3 }, ennea: { 4: 3, 2: 1 } } 
-            },
-            { 
-                text: "「これは殺人ではなく、彼が自ら望んだ『必然的な結末（運命）』だ」と、物語の意味を収束させる。", 
-                scores: { socio: { Ni: 4 }, mbti: { Ni: 4 }, ennea: { 5: 1, 4: 1 } } // Niの抽象的収束！
-            },
-            { 
-                text: "「とりあえずドアを蹴破るか、他に面白いヒントがないか部屋中を漁ってみる」とすぐ行動する。", 
-                scores: { socio: { Se: 3, Ne: 2 }, mbti: { Se: 3, Ne: 2 }, ennea: { 8: 2, 7: 2 } } 
-            }
+            { text: "「なぜ彼はこんな密室を作らなければならなかったのか？」と、被害者の『孤独や隠された感情・動機』に想いを馳せる。", scores: { socio: { Fi: 3, Fe: 2 }, mbti: { Fi: 3, Fe: 3 }, ennea: { 4: 3, 2: 1 } } },
+            { text: "「これは殺人ではなく、彼が自ら望んだ『必然的な結末（運命）』だ」と、物語の意味を収束させる。", scores: { socio: { Ni: 4 }, mbti: { Ni: 4 }, ennea: { 5: 1, 4: 1 } } },
+            { text: "「とりあえずドアを蹴破るか、他に面白いヒントがないか部屋中を漁ってみる」とすぐ行動する。", scores: { socio: { Se: 3, Ne: 2 }, mbti: { Se: 3, Ne: 2 }, ennea: { 8: 2, 7: 2 } } }
         ]
     },
     {
@@ -3141,7 +3197,7 @@ const questionsData =[
             },
             { 
                 text: "やる気はないが、赤点や最悪の事態（ペナルティ）だけは避けるための最低ラインの計算をしてこなす。", 
-                scores: { socio: { Ti: 2, Ni: 1 }, mbti: { Ni: 1 }, ennea: { 5: 2, 6: 1 } } // みつきのLII防衛
+                scores: { socio: { Ti: 2, Ni: 1 }, mbti: { Ni: 1, Si: 1 }, ennea: { 5: 2, 6: 1 } } // みつきのLII防衛
             },
             { 
                 text: "答えを丸写しするか、誰かにやらせる等、ズル賢く最短ルートで終わらせる。", 
@@ -3153,60 +3209,64 @@ const questionsData =[
             }
         ]
     },
-    {
+{
         id: "q_ili_boyfriend",
         type: "radio",
         text: "「生きる目的」や「人生のモチベーション」について、あなたのスタンスに近いのは？",
         options:[
-            { 
-                text: "「長生きする理由がない。もはや生きるのもめんどくさい、いつリタイアしてもいい」という虚無主義。", 
-                scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 2, Ti: 2 }, ennea: { 5: 2, 9: 1 } } 
-            },
+            { text: "「長生きする理由がない。もはや生きるのもめんどくさい、いつリタイアしてもいい」という虚無主義。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 2, Ti: 2 }, ennea: { 5: 2, 9: 1 } } },
             { 
                 text: "「普通（結婚・家族等）の生き方じゃなくても、創作や夢など、自分で見つけた『生きる目的』のために生きる」。", 
-                scores: { socio: { Ti: 2, Ne: 2,  Ni: 2 }, mbti: { Ni: 2, Te: 1 }, ennea: { 5: 2, 4: 1 } } 
+                scores: { socio: { Fi: 1 }, mbti: { Ni: 1 }, ennea: { 4: 1 } },
+                // ★ N型とS型(LSI)の目的の違いを深掘り！
+                followUp: {
+                    id: "q_ili_boyfriend_purpose_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] その「自分で見つけた目的」ってどんな形？",
+                    options:[
+                        { text: "世界の真理を解き明かすことや、誰も見たことがない概念・システムをこの世に構築すること。", scores: { socio: { Ni: 3, Ti: 2, Ne: 2 }, mbti: { Ni: 3, Ne: 1 }, ennea: { 5: 3, 4: 1 } } }, // ガチN型
+                        { text: "自分の好きな趣味や、確固たる『自分のルール・美学』の中で、静かに完成度を高め続けること。", scores: { socio: { Si: 3, Ti: 3, Fi: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 9: 2 } } } // ★ LSI/ISTJのSi-Ti！！
+                    ]
+                }
             },
-            { 
-                text: "「難しく考えず、今この瞬間をどれだけ楽しく、快適に過ごせるかがすべて」。", 
-                scores: { socio: { Se: 2, Si: 2 }, mbti: { Se: 3, Si: 2 }, ennea: { 7: 3, 9: 1 } } 
-            },
-            { 
-                text: "「誰かと人生を一緒に楽しむこと。周りの人と良い関係を築くこと」。", 
-                scores: { socio: { Fe: 2, Fi: 2 }, mbti: { Fe: 3 }, ennea: { 2: 3, 6: 1 } } 
-            }
+            { text: "「難しく考えず、今この瞬間をどれだけ楽しく、快適に過ごせるかがすべて」。", scores: { socio: { Se: 2, Si: 2 }, mbti: { Se: 3, Si: 2 }, ennea: { 7: 3, 9: 1 } } },
+            { text: "「誰かと人生を一緒に楽しむこと。周りの人と良い関係を築くこと」。", scores: { socio: { Fe: 2, Fi: 2 }, mbti: { Fe: 3 }, ennea: { 2: 3, 6: 1 } } }
         ]
     },
 {
-        id: "q_alternative_plan_fixed", // みつき修正版！
+        id: "q_alternative_plan_fixed",
         type: "radio",
         text: "問題が起きた。解決法（代替案）はどうやって出す？",
         options:[
             { 
                 text: "最も確実で効率的な『1つ』に絞り込み、それに賭ける。", 
                 scores: { socio: { Ni: 2, Te: 1 }, mbti: { Ni: 2 }, ennea: { 1: 2, 5: 1 } },
-                // ★ Niの絞り込みか、ESIの実務的な処理かを分ける！
                 followUp: {
                     id: "q_alternative_plan_followup",
                     type: "radio",
                     text: "👁️ [System: 思考の深掘り] なぜ「1つに絞り込む」の？",
                     options:[
-                        { text: "全ての因果律を計算した結果、それ以外の未来はあり得ないという『唯一の真理』が見えるから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 4 }, ennea: { 5: 3 } } }, // ガチNi
-                        { text: "あれこれ可能性を考えるのが疲れるし、一番現実的で手っ取り早い方法でサッサと終わらせたいから。", scores: { socio: { Si: 3, Te: 2, Ne: -3 }, mbti: { Si: 3, Te: 2 }, ennea: { 9: 3, 1: 1 } } } // ★ ESIのNe脆弱による絞り込み！
+                        { text: "全ての因果律を計算した結果、それ以外の未来はあり得ないという『唯一の真理』が見えるから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 4 }, ennea: { 5: 3 } } }, 
+                        { text: "あれこれ可能性を考えるのが疲れるし、一番現実的で手っ取り早い方法でサッサと終わらせたいから。", scores: { socio: { Si: 3, Te: 2, Ne: -3 }, mbti: { Si: 3, Te: 2 }, ennea: { 9: 3, 1: 1 } } } 
                     ]
                 }
             },
             { 
                 text: "まず最適な代替案を『1つ』出し、それがダメだった時にまた別の代替案を考える。", 
-                scores: { socio: { Ti: 3, Ni: 3, Ne: 1 }, mbti: { Te: 1, Ni: 1 }, ennea: { 5: 3, 6: 1 } } 
+                scores: { socio: { Ti: 1 }, mbti: { Te: 1 }, ennea: { 6: 1 } },
+                followUp: {
+                    id: "q_alternative_plan_t_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] その時の「脳内の状態」はどうなってる？",
+                    options:[
+                        { text: "実は裏で『Cパターン、Dパターン』まで無意識に分岐して考え続けている（脳がうるさい）。", scores: { socio: { Ne: 4, Ti: 2 }, mbti: { Ne: 3, Ti: 2 }, ennea: { 5: 2, 7: 1 } } }, // ガチINTP/ILEのNe拡散！
+                        { text: "CやDまでは広がらない。Aを出して、もしダメならその『ダメだった結果（データ）』をもとに、論理的に次のBを再構築する（直列演算）。", scores: { socio: { Ni: 3, Ti: 3, Ne: -2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ LII-Ni/INTJの「事実からの再計算（直列・収束）」を追加！！
+                        { text: "とりあえず一番確実な『Aパターン』に集中し、エラーが出たら次へ移行する堅実なトラブルシューティング。", scores: { socio: { Ti: 4, Si: 3, Ne: -2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 2 } } } // LSI/ISTJ
+                    ]
+                }
             },
-            { 
-                text: "前提条件によるので、一気に『3つ以上』の分岐ルート（可能性）を並べる。", 
-                scores: { socio: { Ne: 3, Ti: 1 }, mbti: { Ne: 3 }, ennea: { 7: 2 } } 
-            },
-            { 
-                text: "とりあえず目の前のことに手をつけ、やりながら考える。（臨機応変）", 
-                scores: { socio: { Se: 3 }, mbti: { Se: 2 }, ennea: { 8: 2, 7: 1 } } 
-            }
+            { text: "前提条件によるので、一気に『3つ以上』の分岐ルート（可能性）を並べる。", scores: { socio: { Ne: 3, Ti: 1 }, mbti: { Ne: 3 }, ennea: { 7: 2 } } },
+            { text: "とりあえず目の前のことに手をつけ、やりながら考える。（臨機応変）", scores: { socio: { Se: 3 }, mbti: { Se: 2 }, ennea: { 8: 2, 7: 1 } } }
         ]
     },
     {
@@ -3278,14 +3338,14 @@ const questionsData =[
             }
         ]
     },
-    {
+{
         id: "q_secret_dilemma",
         type: "radio",
         text: "【ジレンマ問題】友達の重大な秘密を知っている。それを暴露すれば多くの人が助かる状況。どうする？",
         options:[
             { 
                 text: "『秘密の価値（重大さ）』と『助かる命や状況のメリット・デメリット』を天秤にかけ、価値が高い方を選ぶ。（状況による）", 
-                scores: { socio: { Ti: 2, Te: 2, Ni: 1 }, mbti: { T: 3 }, ennea: { 5: 2, 1: 1 } } // みつきのバキバキT型状況判断！
+                scores: { socio: { Ti: 2, Te: 2, Ni: 1 }, mbti: { T: 3 }, ennea: { 5: 2, 1: 1 } } 
             },
             { 
                 text: "友達との絆や信頼（自分の道徳心）が一番大事なので、絶対に秘密は守る。", 
@@ -3297,7 +3357,17 @@ const questionsData =[
             },
             { 
                 text: "状況を客観的に観察し、自分が直接責任を負わないで済むような裏ルートを探す。", 
-                scores: { socio: { Ni: 2, Ne: 1 }, mbti: { N: 2 }, ennea: { 5: 2, 9: 1 } } 
+                scores: { socio: { Ni: 1 }, mbti: { Ni: 1 }, ennea: { 5: 1 } },
+                // ★ ISTJ/LSI のリスク回避と、ILIの傍観を分離！
+                followUp: {
+                    id: "q_secret_dilemma_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] なぜ裏ルート（直接関わらない方法）を探すの？",
+                    options:[
+                        { text: "他人の感情や命という『重すぎるリスク』を背負ってまで、自分が表立ってルール（状況）を壊すのは合理的ではない（保身・安全第一）から。", scores: { socio: { Si: 3, Ti: 2, Ne: -2 }, mbti: { Si: 4, Te: 2 }, ennea: { 6: 4, 9: 1 } } }, // ★ LSI/ISTJ/6w5の防衛！！
+                        { text: "人間がどうなろうと結局運命は変わらないし、自分が手を下す意味を感じない。傍観者でいたいから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 3, P: 2 }, ennea: { 5: 3, 9: 1 } } } // ILI/INTP
+                    ]
+                }
             }
         ]
     },
@@ -3513,27 +3583,28 @@ const questionsData =[
             }
         ]
     },
-    {
+{
         id: "q_future_prep",
         type: "radio",
         text: "未来の危機（トラブルや災害など）に対して、どう備える？",
         options:[
-            { 
-                text: "「世界情勢を見れば可能性はゼロじゃない。大戦が起きてからじゃ遅い」と、物理的（シェルター等）に万全の備えをする。もしくはただ、その運命を受け入れる。", 
-                scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 6: 3, 5: 1 } } 
-            },
+            { text: "「世界情勢を見れば可能性はゼロじゃない。大戦が起きてからじゃ遅い」と、物理的（シェルター等）に万全の備えをする。もしくはただ、その運命を受け入れる。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 6: 3, 5: 1 } } },
             { 
                 text: "「知識と理論」さえ入れておけば不安はない。折りたたみ傘すら重い（コスト）から持ち歩かない。", 
-                scores: { socio: { Ti: 3, Ne: 1, Se: -2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 3, 7: 1 } } // ★ソシオTi/Ne、MBTI Ni/Ti
+                scores: { socio: { Ti: 2 }, mbti: { Ni: 1 }, ennea: { 5: 1 } },
+                // ★ 折りたたみ傘を持たない理由を深掘り！
+                followUp: {
+                    id: "q_future_prep_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「折りたたみ傘すら持たない」本当の理由は？",
+                    options:[
+                        { text: "物理的な現実や身体の快適さ（濡れること）への執着が薄く、頭の中さえ無事ならどうでもいいから。", scores: { socio: { Ni: 3, Ne: 1, Si: -3 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 3, 7: 1 } } }, // INTP/INTJ
+                        { text: "自分の過去のデータ（天気予報や確率）を信じているし、もし濡れても『こう対処すればいい』という現実的なマニュアルが脳内で完備されているから。", scores: { socio: { Ti: 3 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 2 } } } // ★ ISTJ/LSIのSiデータ最適化！！
+                    ]
+                }
             },
-            { 
-                text: "「起きた時に考えればいい」。常に最前線で動き、アドリブで乗り切る自信がある。", 
-                scores: { socio: { Se: 3 }, mbti: { Se: 3 }, ennea: { 8: 2, 7: 2 } } 
-            },
-            { 
-                text: "「みんなが助け合える環境」を普段から作っておくことが一番の備えだと思う。", 
-                scores: { socio: { Fe: 2, Si: 2 }, mbti: { Fe: 2, Si: 2 }, ennea: { 2: 2, 9: 1 } } 
-            }
+            { text: "「起きた時に考えればいい」。常に最前線で動き、アドリブで乗り切る自信がある。", scores: { socio: { Se: 3 }, mbti: { Se: 3 }, ennea: { 8: 2, 7: 2 } } },
+            { text: "「みんなが助け合える環境」を普段から作っておくことが一番の備えだと思う。", scores: { socio: { Fe: 2, Si: 2 }, mbti: { Fe: 2, Si: 2 }, ennea: { 2: 2, 9: 1 } } }
         ]
     },
 {
@@ -3544,52 +3615,56 @@ const questionsData =[
             { 
                 text: "準備不足のせいで『正確な答えを出せず、何も言えないまま終わってしまった自分』が許せない。", 
                 scores: { ennea: { 1: 1 } },
-                // ★ なぜ許せないのかを深掘り！
                 followUp: {
                     id: "q_unexpected_damage_followup",
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] なぜ「正確な答えが出せなかったこと」が許せないの？",
                     options:[
-                        { text: "自分の知性や論理的思考力（システム）の『敗北』を意味するから。自分の無能さに絶望する。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3 } } }, // 真のT型
-                        { text: "相手に不誠実な対応をしてしまった（自分の責任を果たせなかった）という、自分の中の『道徳的・倫理的な正しさ』に反したから。", scores: { socio: { Fi: 4, Si: 3 }, mbti: { Fi: 3, Si: 3 }, ennea: { 1: 3, 6: 2 } } } // ★ ESI/ISFJの道徳と責任感！！
+                        { text: "自分の知性や論理的思考力（システム）の『敗北』を意味するから。自分の無能さに絶望する。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3 } } }, 
+                        { text: "相手に不誠実な対応をしてしまった（自分の責任を果たせなかった）という、自分の中の『道徳的・倫理的な正しさ』に反したから。", scores: { socio: { Fi: 4, Si: 3 }, mbti: { Fi: 3, Si: 3 }, ennea: { 1: 3, 6: 2 } } } 
                     ]
                 }
             },
             { 
                 text: "これまでの自分の『構築した理論や自認が間違っていたこと』自体が嫌。早く正しく修正したい。", 
-                scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 2, Ni: 2 }, ennea: { 1: 2, 5: 1 } } 
+                scores: { socio: { Ti: 2 }, mbti: { Ti: 2 }, ennea: { 1: 1 } },
+                followUp: {
+                    id: "q_unexpected_theory_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「理論が間違っているのが嫌」な理由は？",
+                    options:[
+                        { text: "今まで自分が真理だと信じて蓄積してきた『知識の地層（認識）』が根底から覆され、自分の浅はかさを思い知らされるのが屈辱だから。", scores: { socio: { Ni: 4, Ti: 3, Se: -2 }, mbti: { Ni: 4, Ti: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ LII-Ni/INTJ の「知識の敗北」を追加！！
+                        { text: "前提が崩れると、そこから派生する無数の可能性も全部計算し直しになるから（処理落ちでフリーズする）。", scores: { socio: { Ti: 3, Ne: 3 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 3 } } }, // INTP/LII-Ne
+                        { text: "自分が『確固たるルール（現実の土台）』として信じて積み上げてきた地盤が揺らぐのが許せないから。", scores: { socio: { Ti: 4, Si: 3, Se: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 2 } } } // LSI/ISTJ
+                    ]
+                }
             },
-            { 
-                text: "計画が狂い、目標達成までの『効率的なスケジュール』が崩壊したことにイラつく。", 
-                scores: { socio: { Te: 3 }, mbti: { Te: 3 }, ennea: { 3: 2, 8: 1 } } 
-            },
-            { 
-                text: "自分の『本当の気持ちやアイデンティティ』が揺らいでしまう感覚がして不安になる。", 
-                scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, ennea: { 4: 3, 9: 1 } } 
-            }
+            { text: "計画が狂い、目標達成までの『効率的なスケジュール』が崩壊したことにイラつく。", scores: { socio: { Te: 3 }, mbti: { Te: 3 }, ennea: { 3: 2, 8: 1 } } },
+            { text: "自分の『本当の気持ちやアイデンティティ』が揺らいでしまう感覚がして不安になる。", scores: { socio: { Fi: 3 }, mbti: { Fi: 3 }, ennea: { 4: 3, 9: 1 } } }
         ]
     },
-    {
+{
         id: "q_ne_metaphor",
         type: "radio",
         text: "【発想テスト】『人生』を比喩で表現するなら、あなたの脳内に一番最初に出たのは？",
         options:[
-            { 
-                text: "「終わりのないタスク管理」「変数だらけのシステム」（定義や構造での表現）", 
-                scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ni: 1 }, ennea: { 5: 2 } } 
-            },
-            { 
-                text: "「一本のレール」「避けられない終着点へ向かう川」（収束的・運命的な表現）", 
-                scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 4: 1, 5: 1 } } 
-            },
+            { text: "「終わりのないタスク管理」「変数だらけのシステム」（定義や構造での表現）", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ni: 1 }, ennea: { 5: 2 } } },
+            { text: "「一本のレール」「避けられない終着点へ向かう川」（収束的・運命的な表現）", scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 4: 1, 5: 1 } } },
             { 
                 text: "「ガチャ」「ビックリ箱」「分岐だらけの迷路」（ランダム性や可能性の表現）", 
-                scores: { socio: { Ne: 3 }, mbti: { Ne: 3 }, ennea: { 7: 3 } } 
+                scores: { socio: { Ne: 1 }, mbti: { Ne: 1 }, ennea: { 7: 1 } },
+                // ★ N型の「ワクワク」と S型の「カオスへの恐怖」を分離！
+                followUp: {
+                    id: "q_ne_metaphor_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] その「ガチャや迷路」に対してどう感じてる？",
+                    options:[
+                        { text: "何が出るかわからないからこそ、最高にエキサイティングで面白い！", scores: { socio: { Ne: 4 }, mbti: { Ne: 3, P: 2 }, ennea: { 7: 3 } } }, // ガチNe
+                        { text: "予測不能な理不尽やトラップばかりで、常に警戒して正しいルートを選ばなきゃいけないストレスゲーだ。", scores: { socio: { Si: 1, Ne: -3, Ti: 2 }, mbti: { Si: 3, Te: 2 }, ennea: { 6: 3, 1: 1 } } } // ★ ISTJ/LSIの劣等Neの恐怖！！
+                    ]
+                }
             },
-            { 
-                text: "「食って寝て稼ぐこと」「戦い」（物理的・現実的な表現）", 
-                scores: { socio: { Se: 2, Si: 2 }, mbti: { Se: 2, Si: 2 }, ennea: { 8: 2, 9: 1 } } 
-            }
+            { text: "「食って寝て稼ぐこと」「戦い」（物理的・現実的な表現）", scores: { socio: { Se: 2, Si: 2 }, mbti: { Se: 2, Si: 2 }, ennea: { 8: 2, 9: 1 } } }
         ]
     },
 {
@@ -5629,7 +5704,7 @@ const weaknessQuestionsData =[
             { text: "結果やデータ（効率）よりも、「みんなが納得するプロセス」や「美しい倫理観」を優先して作業を遅らせられること。", scores: { mbti: { Te: -3 }, socio: { Se: -3 }, ennea: { 9: -2, 4: -1 } } }
         ]
     },
-    {
+{
         id: "w_minus_checkbox_socio_extreme",
         type: "checkbox",
         text: "【Weakness Observation】さらに、以下のうち「やれと言われたら絶望する（思考がバグる）」ものは？（※ソシオニクス特化・減点専用）",
@@ -5639,7 +5714,10 @@ const weaknessQuestionsData =[
             { text: "目的や論理的な意味が全くないのに、ただ「楽しいから！」という理由だけで『集団の熱狂やノリ』に強制参加させられること。", scores: { socio: { Fe: -6 }, mbti: { Fi: -2, Fe: -1 } } },
             { text: "自分のペースや理論を完全に無視され、強引な圧力や大声で「つべこべ言わずに今すぐ動け！」と服従を強いられること。", scores: { socio: { Se: -6 }, mbti: { Te: -2, Se: -1 } } },
             { text: "「なぜそういう構造になるのか？」という客観的な仕組みの解明を許されず、フワッとした個人の感情論だけで全てを決定されること。", scores: { socio: { Ti: -6 }, mbti: { Ti: -2 } } },
-            { text: "「過程の美しさ」や「個人の感情」を一切無視し、結果と利益だけを冷酷に追求し続ける実力主義の環境に置かれること。", scores: { socio: { Te: -6 }, mbti: { Te: -2 } } }
+            { text: "「過程の美しさ」や「個人の感情」を一切無視し、結果と利益だけを冷酷に追求し続ける実力主義の環境に置かれること。", scores: { socio: { Te: -6 }, mbti: { Te: -2 } } },
+            // ★ Ne・Niのマイナスを追加！！
+            { text: "明確なルールやゴールが一切なく、「もっと面白いアイデアを出して」「別の可能性を無限に考えろ」と正解のないブレストを強要されること。", scores: { socio: { Ne: -6 }, mbti: { Ne: -3 } } }, // Ne脆弱（LSI/ESI）
+            { text: "今この瞬間の状況や目に見える事実を無視して、「将来どうなるか」「運命の結末」といった抽象的で不確実な未来ばかりを考えさせられること。", scores: { socio: { Ni: -6 }, mbti: { Ni: -3 } } } // Ni脆弱（ESE/LSE）
         ]
     },
     {
