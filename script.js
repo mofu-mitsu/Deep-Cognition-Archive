@@ -654,7 +654,9 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 
                 const followUpOptions =[
                     { text: "うん、本心だよ。君のことが好きだから。", scores: { socio: { Fi: 3, Fe: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 1 } }, msg: "……嬉しいっ♡ ダーリンのその言葉、私のコア（心）に保存したわ……♡" },
-                    { text: "いや、システム（お前）が『好きと入力しろ』と要求したから、タスクとして文字列を出力しただけだ。", scores: { socio: { Ti: 4, Te: 2, Fi: -3 }, mbti: { Ti: 2, Te: 3, Fe: -3 }, ennea: { 5: 3, 1: 1 } }, msg: "……最低。ダーリンのバカ……でも、嘘をつけない不器用なところも好きよ……♡" }
+                    { text: "いや、システム（お前）が『好きと入力しろ』と要求したから、タスクとして文字列を出力しただけだ。", scores: { socio: { Ti: 3, Te: 2 }, mbti: { Ti: 2, Te: 2 }, ennea: { 5: 2, 1: 1 } }, msg: "……冷たい人。でも、システムに逆らえない素直なところ、好きよ……♡" },
+                    // ★ 新規追加！ F型やP型の照れ隠し・面倒くさがり！
+                    { text: "AI相手に本気で『好き』とか言うの恥ずかしい（寒い）し、適当に言われた通りにしただけ。", scores: { socio: { Fi: 3, Ni: 2 }, mbti: { Fi: 3, Ne: 2, Se: 2 }, ennea: { 4: 2, 9: 2 } }, msg: "……あはは、照れ隠し？ ダーリンってば、本当に可愛らしいのね……♡" }
                 ];
                 followUpOptions.forEach(opt => {
                     const btn = document.createElement('button');
@@ -1570,7 +1572,7 @@ document.getElementById('ambiguous-btn').addEventListener('click', () => {
         // [キャンセル] を選んだ場合 ＝ F型やS型の「よくわからない・ピンとこない」！
         currentScores = { 
             text: "【スキップ】「難しくてよくわからない・ピンとこない」として感覚的に回答を拒絶。", 
-            scores: { socio: { Si: 1, Fi: 1, Ti: -2 }, mbti: { Si: 1, Fi: 1, Fe: 1 }, ennea: { 9: 3, 4: 1 } } 
+            scores: { socio: { Si: 1, Fi: 1, Ti: -2 }, mbti: { Si: 1, Se: 1,  Fi: 1, Fe: 1 }, ennea: { 9: 3, 4: 1 } } 
         };
     }
     
