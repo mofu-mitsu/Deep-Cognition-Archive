@@ -1060,7 +1060,7 @@ const questionsData =[
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] 競争したくない本当の理由は？",
                     options:[
-                        { text: "無駄なエネルギーを消費して自分の思考のノイズになるのが非効率だから。", scores: { socio: { Ti: 3, Ni: 3, Se: -2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3 } } }, // ガチT (LII/ILI等)
+                        { text: "無駄なエネルギーを消費して自分の思考のノイズになるのが非効率だから。", scores: { socio: { Ti: 3, Ni: 4, Se: -2 }, mbti: { Ti: 3, Ni: 3 }, ennea: { 5: 3 } } }, // ガチT (LII/ILI等)
                         { text: "他人のペースに巻き込まれて、自分の平穏や心身の快適さ（ペース）が乱されるのが死ぬほど嫌だから。", scores: { socio: { Si: 4, Fi: 2, Te: 2 }, mbti: { Si: 3, Fi: 2 }, ennea: { 9: 3, 6: 2 } } }, // ★ LSI/ESIの防衛！
                         { text: "競争によって人間関係が歪み、相手や自分が傷つくような残酷な未来を想像してしまい耐えられないから。", scores: { socio: { Fi: 4, Ni: 3, Ne: 1 }, mbti: { Fi: 3, Ni: 3 }, ennea: { 4: 2, 9: 2 } } } // ★ INFJ/EIIの未来予測的防衛！
                     ]
@@ -4915,7 +4915,7 @@ const questionsData =[
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] その「防壁（要塞）」は、何から『誰を』守るためのもの？",
                     options:[
-                        { text: "無知でいることで、予測不能なバグ（トラブル）に巻き込まれるリスクから『自分の思考システム』を守りたい。", scores: { socio: { Ti: 4, Ni: 3 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 4, 6: 1 } } }, // ガチT型
+                        { text: "無知でいることで、予測不能なバグ（トラブル）に巻き込まれるリスクから『自分の思考システム』を守りたい。", scores: { socio: { Ti: 4, Ni: 4 }, mbti: { Ti: 3, Ni: 3 }, ennea: { 5: 4, 6: 1 } } }, // ガチT型
                         { text: "理不尽な悪意や他人の干渉から、『自分の平穏なテリトリーや大切な身内』を物理的・精神的に守り抜きたい。", scores: { socio: { Fi: 4, Si: 3, Se: 3 }, mbti: { Fe: 3, Si: 3 }, ennea: { 6: 3, 1: 2 } } } // ★ ESIの防壁！！
                     ]
                 }
