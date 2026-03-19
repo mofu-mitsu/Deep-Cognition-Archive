@@ -1510,7 +1510,7 @@ const questionsData =[
             },
             {
                 text: "面白そうならすぐ試す。合わなかったら捨てるだけ。",
-                scores: { socio: { Se: 2, Ne: 1 }, mbti: { Se: 2, Ne: 1 }, ennea: { 7: 2 } }
+                scores: { socio: { Se: 2, Ne: 2 }, mbti: { Se: 2, Ne: 2 }, ennea: { 7: 2 } }
             },
             // ★ F型の追加！
             {
@@ -4935,7 +4935,7 @@ const questionsData =[
         type: "checkbox",
         text: "【Weakness Observation】あなたが「無意識にやってしまうが、結果的に自分の首を絞めている（バグる）」行動を全て選んでください。（複数選択可）",
         options:[
-            { text: "他人の言葉の裏を読みすぎたり、起きてもいない最悪の未来をシミュレーションしすぎて、行動前にHPが尽きる。", scores: { socio: { Ni: 2, Se: -2 }, mbti: { Ni: 2, Se: -2 }, ennea: { 5: 2, 6: 2 } } },
+            { text: "他人の言葉の裏を読みすぎたり、起きてもいない最悪の未来をシミュレーションしすぎて、行動前にHPが尽きる。", scores: { socio: { Ni: 5, Se: -3 }, mbti: { Ni: 5, Se: -4 }, ennea: { 5: 2, 6: 2 } } },
             { text: "一つの「論理の矛盾」や「なぜ？」が気になり始めると、それが解決するまで他のことが一切手につかなくなる。", scores: { socio: { Ti: 3, Te: -2 }, mbti: { Ti: 3, Te: -2 }, ennea: { 5: 3, 1: 1 } } },
             { text: "他人の感情を吸い込みすぎて、自分の本当の気持ち（核）がわからなくなり、突然すべてを断ち切りたくなる。", scores: { socio: { Fe: 3, Fi: -2 }, mbti: { Fe: 3, Fi: -2 }, ennea: { 2: 2, 9: 2 } } },
             { text: "「あれもこれも」と色々な可能性に手を出しすぎて、結局どれも形にならず、実務的な結果が出ない。", scores: { socio: { Ne: 3, Si: -2, Te: -1 }, mbti: { Ne: 3, Si: -2, Te: -1 }, ennea: { 7: 3 } } }
@@ -5059,7 +5059,7 @@ const questionsData =[
                     text: "👁️[System: 思考の深掘り] 「関わりたくない」と思う裏で、もし相手が完全に無関係な人だったり、理不尽にあなたの『テリトリーや身内』を荒らしてきたらどうする？",
                     options:[
                         { text: "相手が誰であれ、強く出られると頭が真っ白になり、とにかく物理的・精神的に逃げ出したくなる。", scores: { socio: { Se: -4, Ni: 2 }, mbti: { Se: -3, Ni: 2 }, ennea: { 5: 3, 9: 2 } } }, // LII/EIIなどのSe脆弱
-                        { text: "人によってはズバッと切り捨てるし、自分の「正しい価値観」や身内が脅かされたら、相手に圧をかけて反撃できる。", scores: { socio: { Fi: 5, Se: 5 }, mbti: { Fi: 3, Se: 2 }, ennea: { 1: 3, 8: 3 } } }, // ★ ESIのお母さん！！Fi判断からのSe創造発動！
+                        { text: "人によってはズバッと切り捨てるし、自分の「正しい価値観」や身内が脅かされたら、相手に圧をかけて反撃できる。", scores: { socio: { Fi: 5, Se: 5 }, mbti: { Fi: 3, Te: 2}, ennea: { 1: 3, 8: 3 } } }, // ★ ESIのお母さん！！Fi判断からのSe創造発動！
                         { text: "直接は戦わず、相手の感情を操作して鎮めるか、もっと権力のある人を使って構造的に排除する。", scores: { socio: { Fe: 2, Ti: 2, Ni: 1 }, mbti: { Fe: 2, Te: 2 }, ennea: { 3: 2, 6: 1 } } }
                     ]
                 }
@@ -5903,7 +5903,7 @@ const weaknessQuestionsData =[
         type: "checkbox",
         text: "【Weakness Observation】以下のうち、あなたが『これを要求されると著しくパフォーマンスが低下する（絶対にやりたくない）』ものを全て選んでください。（※減点専用）",
         options:[
-            { text: "【A】目の前の五感の刺激を味わい、自分の身体的な快適さ（温度や食欲）を細かく整え続けること。", scores: { mbti: { Se: -3 }, socio: { Si: -3 }, ennea: { 7: -1 } } },
+            { text: "【A】目の前の五感の刺激を味わい、自分の身体的な快適さ（温度や食欲）を細かく整え続けること。", scores: { mbti: { Se: -4 }, socio: { Si: -4 }, ennea: { 7: -1 } } },
             { text: "【B】過去の歴史や記憶のデータを事細かに引き出し、時間の流れを長期的に見据えること。", scores: { mbti: { Si: -3 }, socio: { Ni: -3 }, ennea: { 5: -1 } } },
             { text: "【C】決められた暗黙のルールや規律を、背景の論理を問わずに無条件で守り抜くこと。", scores: { mbti: { Si: -3 }, socio: { Ti: -3 }, ennea: { 8: -2, 7: -1 } } },
             { text: "【D】物事の複雑な仕組みを解明し、それを「いかに効率よく実用的に使えるか」を証明し続けること。", scores: { mbti: { Ti: -3 }, socio: { Te: -3 }, ennea: { 4: -2 } } },
