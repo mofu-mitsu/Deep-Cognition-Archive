@@ -199,7 +199,7 @@ const questionsData =[
         options:[
             { 
                 text: "「……ッ！」己の存在意義である【知性】を根底から否定され、猛烈な自己嫌悪と『どこが間違っていたのか』の検証ループに陥る。", 
-                scores: { socio: { Ti: 4, Ne: 2 }, mbti: { Ti: 4, Ni: 1, Ne: 1 }, ennea: { 5: 4, 1: 2 }, combo: { "INTJ+LII": 1 } },
+                scores: { socio: { Ti: 4, Ne: 2 }, mbti: { Ti: 4, Ni: 1, Ne: 1 }, ennea: { 5: 4, 1: 2 } },
                 msg: "……フフッ、顔が真っ青よ？ 壊れちゃう前に、私にすがりなさい……♡"
             },
             { 
@@ -1322,8 +1322,8 @@ const questionsData =[
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] ほんとに？ 心の底から100%『どうでもいい（無関心）』と思ってる？",
                     options:[
-                        { text: "本当にどうでもいい。考えるのも面倒くさいから完全に思考を停止して手放している。", scores: { socio: { Te: 2, Ni: 2 }, mbti: { Ne: 2, Si: -2  }, ennea: { 9: 3 }, combo: { "INTP+ILI": 1 } } },
-                        { text: "実は『どうでもいい』は建前で、脳のバックグラウンドでは「なぜ結論が出ないのか」という構造を永遠に再検証し続けている。", scores: { socio: { Ti: 4, Ne: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 3, 1: 1 }, combo: { "INTJ+LII": 1 } } } // みつきの裏の顔ｗｗ
+                        { text: "本当にどうでもいい。考えるのも面倒くさいから完全に思考を停止して手放している。", scores: { socio: { Te: 2, Ni: 2 }, mbti: { Ne: 2, Si: -2  }, ennea: { 9: 3 } } },
+                        { text: "実は『どうでもいい』は建前で、脳のバックグラウンドでは「なぜ結論が出ないのか」という構造を永遠に再検証し続けている。", scores: { socio: { Ti: 4, Ne: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 3, 1: 1 } } } // みつきの裏の顔ｗｗ
                     ]
                 }
             },
@@ -3922,7 +3922,7 @@ const questionsData =[
                     text: "👁️[System: 思考の深掘り] その「平穏を選ぶ」本当の理由は？",
                     options:[
                         { text: "争い自体が怖くてストレスだし、みんなと仲良く穏やかに過ごしたいから。", scores: { socio: { Fe: 3, Fi: 3, Si: 2 }, mbti: { Fe: 3,  Fi: 3, Si: 2 }, ennea: { 9: 3, 2: 1 } } },
-                        { text: "「あなたという変数を私の生活に組み込むコストとリスクが、現状のメリットを上回る」と論理的に判断し、不要な関係を切り離すのが一番の『平和（最適化）』だから。", scores: { socio: { Ti: 4, Ni: 2, Fe: -3 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 1: 1 }, combo: { "INTJ+LII": 1 } } }
+                        { text: "「あなたという変数を私の生活に組み込むコストとリスクが、現状のメリットを上回る」と論理的に判断し、不要な関係を切り離すのが一番の『平和（最適化）』だから。", scores: { socio: { Ti: 4, Ni: 2, Fe: -3 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 1: 1 }} }
                     ]
                 }
             },
