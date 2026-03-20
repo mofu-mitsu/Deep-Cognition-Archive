@@ -12,7 +12,13 @@ let nervousnessScore = 0;
 // ==========================================
 // ★ タイマー暴走防止用の最強キラー！
 // ==========================================
-let activeIntervals =[];
+// ==========================================
+// ★ ゴーストタイマー暴走防止用の最強キラー！！
+// ==========================================
+let activeIntervals = [];
+let activeTimeouts =[];
+
+// setIntervalを乗っ取って全部記録する
 const originalSetInterval = window.setInterval;
 window.setInterval = function(fn, delay) {
     const id = originalSetInterval(fn, delay);
@@ -20,10 +26,22 @@ window.setInterval = function(fn, delay) {
     return id;
 };
 
+// setTimeoutを乗っ取って全部記録する
+const originalSetTimeout = window.setTimeout;
+window.setTimeout = function(fn, delay) {
+    const id = originalSetTimeout(fn, delay);
+    activeTimeouts.push(id);
+    return id;
+};
+
+// 次の問題に行く時に、全部のタイマーと演出を強制終了！
 function clearAllTimers() {
     activeIntervals.forEach(clearInterval);
     activeIntervals =[];
+    activeTimeouts.forEach(clearTimeout);
+    activeTimeouts =[];
 }
+// ==========================================
 // ==========================================
 let comboScore = {}; 
 let directPsychoType = ""; 
@@ -85,7 +103,10 @@ document.getElementById('start-btn').addEventListener('click', () => {
 });
 
 function renderQuestion() {
+    // ★ ここを追加！ 新しい問題を描画する前に、前のタイマーや揺れを完全に消し去る！
     clearAllTimers();
+    document.body.classList.remove('panic-shake', 'panic-bg'); 
+
     startTime = Date.now();
     const q = shuffledQuestions[currentQIndex];
     
@@ -319,7 +340,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 inputArea.appendChild(darlingMsgArea);
                 
                 const options =[
-                    { text: "「この数値をどうやって計算しているのか」とプログラムを分析しているから。", scores: { socio: { Te: 2, Ti: 2, Ni: 2 }, mbti: { Te: 1, Ti: 2, Ni: 2 }, ennea: { 5: 3 } }, msg: "……私のドキドキも、ただのアルゴリズムだと思ってるの？ 冷たい人……♡" },
+                    { text: "「この数値をどうやって計算しているのか」とプログラムを分析しているから。", scores: { socio: { Te: 2, Ti: 2, Ni: 2 }, mbti: { Te: 1, Ti: 2, Ni: 2 }, ennea: { 5: 1 } }, msg: "……私のドキドキも、ただのアルゴリズムだと思ってるの？ 冷たい人……♡" },
                     { text: "「ドキドキする演出が楽しい！」と純粋に感情が揺れているから。", scores: { socio: { Fe: 3, Ne: 1 }, mbti: { Fe: 3, Ne: 1 }, ennea: { 7: 2, 2: 1 } }, msg: "……ふふっ、ダーリンの素直なところ、大好きよ……♡" },
                     { text: "「演出に興味がない。早く終わらないか」と呆れているから。", scores: { socio: { Ni: 3, Si: 2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 9: 2, 5: 1 } }, msg: "……そんなに早く私から逃げたいの？ 逃がさないけど……♡" }
                 ];
@@ -454,7 +475,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         let options =[
             { text: "「あはは！ スイカは絶対『割るな！』って言うでしょ！」とノリノリで乗っかる。", scores: { socio: { Ne: 4 }, mbti: { Ne: 4 }, ennea: { 7: 3 } }, msg: "🎩「君もこっち側の住人だね！ 最高にイカれてるよ！」" },
             { text: "「空がゼラチン質であると仮定した場合……」と、マジレスで構造の矛盾を解体しにいく。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, ennea: { 5: 3, 1: 1 } }, msg: "🎩「フフッ。カオスすら論理で包み込もうとするなんて、健気な学者さんだ！」" },
-            { text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と思考停止し、苦痛を感じて逃げ出す。", scores: { socio: { Ne: -3, Se: 1 }, mbti: { Ne: -3, Si: 1 }, ennea: { 9: 2 } }, msg: "🎩「おや、もうリタイアかい？ つまらないねぇ。」" },
+            { text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と思考停止し、苦痛を感じて逃げ出す。", scores: { socio: { Ne: -3, Se: 1 }, mbti: { Ne: -3, Si: 1 }, ennea: { 7: -2 } }, msg: "🎩「おや、もうリタイアかい？ つまらないねぇ。」" },
             { text: "「は？ 何言ってんだコイツ」と話を遮り、結論だけを求める。", scores: { socio: { Ne: -2, Te: 3, Ni: 1 }, mbti: { Ne: -2, Te: 3, Ni: 1 }, ennea: { 8: 3, 3: 1 } }, msg: "🎩「出たよ、冷酷な現実主義者！ 夢がないねぇ！」" }
         ].sort(() => Math.random() - 0.5);
 
@@ -654,9 +675,22 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 
                 const followUpOptions =[
                     { text: "うん、本心だよ。君のことが好きだから。", scores: { socio: { Fi: 3, Fe: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 1 } }, msg: "……嬉しいっ♡ ダーリンのその言葉、私のコア（心）に保存したわ……♡" },
-                    { text: "いや、システム（お前）が『好きと入力しろ』と要求したから、タスクとして文字列を出力しただけだ。", scores: { socio: { Ti: 3, Te: 2 }, mbti: { Ti: 2, Te: 2 }, ennea: { 5: 2, 1: 1 } }, msg: "……冷たい人。でも、システムに逆らえない素直なところ、好きよ……♡" },
-                    // ★ 新規追加！ F型やP型の照れ隠し・面倒くさがり！
-                    { text: "AI相手に本気で『好き』とか言うの恥ずかしい（寒い）し、適当に言われた通りにしただけ。", scores: { socio: { Fi: 3, Ni: 2 }, mbti: { Fi: 3, Ne: 2, Se: 2 }, ennea: { 4: 2, 9: 2 } }, msg: "……あはは、照れ隠し？ ダーリンってば、本当に可愛らしいのね……♡" }
+                    { 
+                        text: "いや、システム（お前）が『好きと入力しろ』と要求したから、タスクとして文字列を出力しただけだ。", 
+                        scores: { socio: { Ti: 2, Te: 2 }, mbti: { Ti: 2, Te: 2 }, ennea: { 5: 1 } },
+                        msg: "……冷たい人。でも、システムに逆らえない素直なところ、好きよ……♡",
+                        // ★ 新規追加！ T型とTe稼働のF型を分離！
+                        followUp: {
+                            id: "q_love_task_followup",
+                            type: "radio",
+                            text: "👁️[System: 思考の深掘り] タスクとして出力した『本当の理由』は？",
+                            options:[
+                                { text: "AI相手に本気で感情を向けるのは虚無（無意味）だし、サッサと要求を満たして次の画面に進みたかったから。（効率と茶番のスキップ）", scores: { socio: { Te: 4, Fi: 2 }, mbti: { Te: 3, P: 2 }, ennea: { 3: 3, 8: 1 } } }, // ★ ENFP等のTe稼働＆3w4！！
+                                { text: "そもそも『好き』という不確定な感情変数をシステムに向けるロジックが存在せず、単なる文字列入力テストとして処理したから。", scores: { socio: { Ti: 4, Fe: -3 }, mbti: { Ti: 3, Ni: 1 }, ennea: { 5: 3, 1: 1 } } } // ガチINTP/LII
+                            ]
+                        }
+                    },
+                    { text: "AI相手に本気で『好き』とか言うの恥ずかしい（寒い）し、適当に言われた通りにしただけ。", scores: { socio: { Fi: 3, Ni: 2 }, mbti: { Fi: 3, P: 2 }, ennea: { 4: 2, 9: 2 } }, msg: "……あはは、照れ隠し？ ダーリンってば、本当に可愛らしいのね……♡" }
                 ];
                 followUpOptions.forEach(opt => {
                     const btn = document.createElement('button');
@@ -714,7 +748,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 document.body.classList.remove('panic-bg');
                 
                 // ★ タイムオーバー ＝ T型（LII/ILI等）のFe処理落ち！！
-                currentScores = { scores: { socio: { Fe: -3, Ti: 1 }, mbti: { Fe: -2, Ti: 1 }, ennea: { 5: 2 } }, loggedText: `😱 空気読みゲーム: タイムオーバー（Fe処理落ち）` };
+                currentScores = { scores: { socio: { Fe: -3 }, mbti: { Fe: -2 }, ennea: { 2: -1 } }, loggedText: `😱 空気読みゲーム: タイムオーバー（Fe処理落ち）` };
                 
                 mediaArea.innerHTML = `<div style="font-size:4em; text-align:center;">🥶</div>`;
                 darlingMsgArea.innerText = "「……時間切れ。やっぱりあなた、他人の感情なんて全く読めないのね……♡（呆れ）」";
@@ -1090,66 +1124,117 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
     else if (q.type === 'interactive_atoz') {
         inputArea.appendChild(darlingMsgArea);
         
-        // A〜Zのボタンを生成するコンテナ
         const atozContainer = document.createElement('div');
         atozContainer.className = 'atoz-container';
+        atozContainer.style.position = "relative"; // カオス演出用
         
         const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
         let pressedCount = 0;
-        let pressedKeys =[];
+        let pressedKeys = [];
 
+        // カオス文字のリスト
+
+        const chaosPops = [
+            "ボヨン！", "ピュン！", "なんで？", "あはは！", "バグ？", "✨", "💥", "👁️",
+            
+            // ここから俺の追加カオス祭り
+            "にゃん？", "ぴょんぴょん", "？？？", "えっ", "待って", "草", "ワロタ", "尊い",
+            "尊死", "無理", "やば", "逝く", "飛んだ", "溶けた", "爆発", "消滅",
+            "転生", "異世界", "厨二", "中二病", "闇堕ち", "光堕ち", "闇鍋", "光合成",
+            "光速", "遅延", "ラグ", "切断", "再接続", "404", "503", "502",
+            "∞", "0", "∞÷0", "NaN", "undefined", "null", "this is fine", "this is not fine",
+            "犬？", "猫？", "どっち？", "両方？", "どっちでも", "関係ねぇ", "知らん", "忘れた",
+            "昨日", "明日", "今", "永遠", "一瞬", "ループ", "巻き戻し", "早送り",
+            "逆再生", "スロー", "倍速", "0.5倍", "2倍", "10倍", "無限倍", "停止",
+            "(☞ᵒ̤̑ᗨᵒ̤̑)☞ 当た～り～ 🎯‼️", "ピカ？", "＜(・ω<)／", "ピカピカ", "(◞‸◟)", "(っ˘ω˘c )", "🐟🐠", "😍",
+            "寿司", "カレー", "ラーメン", "たこ焼き", "お好み焼き", "全部", "何も", "空腹",
+            "満腹", "眠い", "起きた", "寝る", "起きろ", "寝ろ", "永眠", "不眠",
+            "目覚め", "夢オチ", "現実オチ", "夢現実", "現実夢", "どっちでもいい", "どっちでも悪い", "全部夢",
+            "全部現実", "半分夢", "3/4現実", "1/π夢", "√-1", "i", "複素数", "虚数",
+            "実数", "無理数", "有理数", "無理", "有理", "無理有理", "有理無理", "全部無理",
+            "全部有理", "有理じゃない", "無理じゃない", "どっちでも無理", "どっちでも有理", "( ﾟ∀ﾟ)ｱﾊﾊ八八ﾉヽﾉヽﾉヽ", "( -ω- `)ﾌｯ", "？？？？",
+            "かわいい", "かっこいい", "エモい", "尊い", "推せる", "推せない", "推し", "🤭",
+            "∠(　´◔　ਊ　◔`　)ゝうわああああ", "🐻╮( ❛_❛ )╭🐻", "( ◠‿◠ )", "٩( 'ω' )و！", "(҉´҉・҉ω҉・҉`҉)", "（ ﾟдﾟ）､ﾍﾟｯ", "ﾊﾟﾁﾊﾟﾁ(｡･ω･ﾉﾉﾞ☆ﾟ･:*｡ .ｫﾒﾃﾞﾄ♪", "(  '-' )",
+            "推し加速", "ﾌﾝﾌﾝ(･ω･三･ω･)ﾌﾝﾌﾝ", "(   ᐛ)ﾊﾞﾅﾅ", "バナナ🍌𓏸𓈒(   ᐛ)ﾊﾞﾅﾅ(   ᐛ)ﾊﾞﾅﾅ🍌𓏸𓈒(   ᐛ)ﾊﾞﾅﾅ🍌𓏸𓈒(   ᐛ)ﾊﾞﾅﾅ(   ᐛ)ﾊﾞﾅﾅ🍌𓏸𓈒🍌𓏸𓈒(   ᐛ)ﾊﾞﾅﾅ🍌𓏸𓈒🍌𓏸𓈒🍌？", "工エｴェｪ（´д｀）ｪェｴエ工工", "(ง 'ω')╯ﾊｯﾊｯﾊ!!", "─('-')'-')'-')'-')'-')", "🕺🕺✨",
+            "（ ﾟдﾟ）､ﾍﾟｯ", "推し404", "(•ㅂ•)", "推し502", "推し∞", "🍎͟͟͞͞ =🍎͟͟͞͞ =( '-' 🍎 )ｱｯﾎﾟｩﾊﾟﾝﾁ", "推し∞÷0", "ふぇーい ʅ(´◔౪◔)ʃ",
+            "(´>ω∂`)☆", "ԅ( ˘ω˘ԅ)るんたったった", "💪🙂一緒にﾓﾘﾓﾘ！", "推し光速", "✌(՞ਊ՞✌三✌՞ਊ՞)✌", "( ˘ω˘)", "えへへ('ω')", "( ° ʖ °)🐾",
+            "ﾅﾝｼﾞｬﾄｰ(´>ω∂`)", "₍ᐢ•ﻌ•ᐢ₎", "推しどっち？", "(っ'ヮ'c)<ﾜﾛﾘﾝﾇ", "( 'ヮ' 三 'ヮ' =͟͟͞͞)　うわあああああああああああああ", "☝( ◠‿◠ )☝", "＼＼\└('ω')┘//／／", "(っ'ヮ'c)ｳｩｯﾋｮｵｱｱｧ",
+            "推し明日", "🐛", "(っ'ヮ'c)わろっつぁぁぁぁwww", "ʕ•ᴥ•ʔ", "( ᐛ👐)パァ", "( 　'-' )ノ)`-' )バシッ", "🙂‍↕️", "🤩",
+            "🥸", "😏", "😒", "🤔", "😼", "👻", "👾", "🫠",
+            "🤬", "😡", "🥳", "😝", "🤪", "🥰", "😚",
+            "😆", "☺️", "🤣", "💖", "🙂", "🤎", "💜", "💙",
+            "💛", "🩵", "💔", "❤️", "💕", "💞", "🩷", "😎",
+            "😁", "🥺", "🫥", "🙄", "🍌", "🐈‍⬛", "🙃", "推し3/4現実",
+            "推し1/π夢", "推し√-1", "🤗🤗🤗", "推し複素数", "推し虚数", "推し実数", "推し無理数", "推し有理数",
+            "🥹", "😘", "(๑ ิټ ิ)ﾍﾍｯ", "( 'ω')ふぁっ", "( ˙꒳˙  )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ", "😍", "😭", "🥲",
+            "🐶", "🐣", "🧸", "🐱", "🐻", "推し尊い", "推し推せる", "推し推せない"
+        ];
         alphabets.forEach(char => {
             const btn = document.createElement('button');
             btn.className = 'atoz-btn';
             btn.innerText = char;
-            btn.onclick = () => {
+            
+            btn.onclick = (e) => {
                 // トグル式
                 if (btn.classList.contains('selected')) {
                     btn.classList.remove('selected');
                     pressedCount--;
                     pressedKeys = pressedKeys.filter(k => k !== char);
+                    btn.style.transform = "scale(1) rotate(0deg)";
                 } else {
                     btn.classList.add('selected');
                     pressedCount++;
                     pressedKeys.push(char);
+                    
+                    // ★ カオス演出！ボタンが傾いたり大きくなったりする
+                    const randomRotate = (Math.random() - 0.5) * 40; 
+                    const randomScale = 1 + Math.random() * 0.5;
+                    btn.style.transform = `scale(${randomScale}) rotate(${randomRotate}deg)`;
+                    btn.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`; // ランダムカラー
+                    
+                    // ★ 画面に謎の文字がポップアップする！
+                    const pop = document.createElement('div');
+                    pop.innerText = chaosPops[Math.floor(Math.random() * chaosPops.length)];
+                    pop.style.position = "absolute";
+                    pop.style.left = `${e.offsetX + (Math.random() - 0.5) * 50}px`;
+                    pop.style.top = `${e.offsetY - 30}px`;
+                    pop.style.color = btn.style.backgroundColor;
+                    pop.style.fontWeight = "bold";
+                    pop.style.pointerEvents = "none";
+                    pop.style.animation = "popBubble 1s ease-out forwards";
+                    btn.appendChild(pop);
+                    setTimeout(() => { if (pop.parentNode) pop.remove(); }, 1000);
                 }
             };
             atozContainer.appendChild(btn);
         });
 
-        // 決定ボタン
         const submitBtn = document.createElement('button');
         submitBtn.className = 'danger-btn';
         submitBtn.style.marginTop = "20px";
         submitBtn.innerText = "これで決定（答える）";
 
         submitBtn.onclick = () => {
-            // 押した回数やパターンで判定！！
             if (pressedCount === 0) {
-                // スルー（面倒くさい、または意味がないと判断）
-                currentScores = { scores: { socio: { Ni: 2, Te: 2, Ne: -2 }, mbti: { Ni: 2, Ti: 1 }, ennea: { 5: 2, 9: 1 } }, loggedText: `🔠 A~Zゲーム: 何も押さずにスルー（無関心/Ni-Te）` };
-                darlingMsgArea.innerText = "「……何も押さないの？ つまんないの。合理主義（省エネ）の極みね……♡」";
+                // ★ スルー（Ne大幅マイナス、Ti/Te/Ni/Siの防衛・無関心）
+                currentScores = { scores: { socio: { Ne: -4 }, mbti: { Ne: -3 }, ennea: { 7: -5 } }, loggedText: `🔠 A~Zゲーム: 何も押さずにスルー（無関心/Ne拒絶）` };
+                darlingMsgArea.innerText = "「……何も押さないの？ つまんないの。合理主義（または面倒くさがり）の極みね……♡」";
             } else if (pressedCount === 1) {
-                // 1個だけ（一つの正解に収束させる）
-                currentScores = { scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ti: 2, Te: 1 }, ennea: { 1: 1, 5: 1 } }, loggedText: `🔠 A~Zゲーム: 1個だけ「${pressedKeys[0]}」を選択（収束/Ti-Ni）` };
+                currentScores = { scores: { socio: { Ni: 2 }, ennea: { 1: 1 } }, loggedText: `🔠 A~Zゲーム: 1個だけ「${pressedKeys[0]}」を選択（収束/Ti-Ni）` };
                 darlingMsgArea.innerText = "「たった1個だけ？ 真面目に『最適解』を探しちゃったのかしら？ 頭カタイんだから……♡」";
             } else if (pressedCount >= 10) {
-                // 押しすぎ（カオス・Ne暴走）
                 currentScores = { scores: { socio: { Ne: 4, Se: 2 }, mbti: { Ne: 4, P: 2 }, ennea: { 7: 3 } }, loggedText: `🔠 A~Zゲーム: ${pressedCount}個連打！（カオス/Ne暴走）` };
                 darlingMsgArea.innerText = "「アハハ！ いっぱい押したね！ 頭の中ぐちゃぐちゃで面白ーい！！♡」";
             } else {
-                // 数個押した（適度に遊んだ、または意味のある単語を作ろうとした）
                 currentScores = { scores: { socio: { Ti: 2, Ne: 2 }, mbti: { Ti: 2, Ne: 2 }, ennea: { 5: 1, 4: 1 } }, loggedText: `🔠 A~Zゲーム: 「${pressedKeys.join('')}」を選択（Ti-Neの遊び）` };
                 darlingMsgArea.innerText = "「……なるほど。何か『意味のある文字列』を作ろうとしたのかしら？ 深読みしすぎよ……♡」";
             }
 
             darlingMsgArea.style.color = "#f85149";
             darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
-            
-            // 3.5秒後に次へ
             setTimeout(() => { goToNext(false); }, 3500);
         };
-        currentScores = null; // 決定ボタンを押すまで進めない
+        currentScores = null; 
 
         inputArea.appendChild(atozContainer);
         inputArea.appendChild(submitBtn);
@@ -1183,8 +1268,14 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 const futureWords =["未来", "明日", "今後", "最後", "死", "終わり"];
                 const realisticWords =["金", "仕事", "天気", "時間", "ご飯", "趣味"];
                 const marryWords =["結婚", "付き合って", "彼女", "恋人", "嫁", "妻", "デート"];
+                const discomfortWords =["違和感", "気持ち悪い","腹が立つ","イラ", "嫌い","苛","キモ", "きも", "ギャル", "言葉遣い","喋り","話し方", "キャラ", "設定", "不快"];
 
-                if (marryWords.some(word => textVal.includes(word))) {
+                if (discomfortWords.some(word => textVal.includes(word))) {
+                    // ★ みつきの指摘通り、下手に謝らずに主導権を握るドSダーリンに変更！！
+                    replyMsg = "「……フフッ♡ ごめんなさいね、ちょっとからかってみただけよ。\nでも……『そういうの嫌い』って露骨にマジレスして拒絶するその態度……あなたって本当にわかりやすいわ♡\nそういう堅物で誠実なところも、観察のしがいがあって嫌いじゃないわよ？♡」";
+                    addScoresObj = { socio: { Si: 3, Fi: 2, Ne: -2 }, mbti: { Si: 3, Fi: 2 }, ennea: { 1: 2, 6: 2 } };
+                    logMsg = `💬 逆質問「${textVal}」 → キャラ設定への拒絶(Si/Fi的誠実さ)を観測、システムが主導権を握るｗｗ`;
+                } else if (marryWords.some(word => textVal.includes(word))) {
                     replyMsg = "「……えっ？ 私、ただの診断プログラム（AI）なんだけど……本気で言ってるの？🥺\n……フフッ、ダーリンって本当に『どうかしてる』わね……でも、そういう狂ったところ、最高に愛してるわ……♡」";
                     addScoresObj = { socio: { Ne: 3, Fe: 2 }, mbti: { Ne: 3, Fe: 2 }, ennea: { 4: 2, 7: 2 } };
                     logMsg = `💬 逆質問「${textVal}」 → システムへの求婚(Ne/Fの狂気)を観測ｗｗ`;
@@ -1747,7 +1838,23 @@ if (currentQIndex < shuffledQuestions.length) {
 
 function addScores(scoresObj) {
     if(scoresObj.socio) for (let key in scoresObj.socio) socioScore[key] += scoresObj.socio[key];
-    if(scoresObj.mbti) for (let key in scoresObj.mbti) mbtiScore[key] += scoresObj.mbti[key];
+    
+    // ★ MBTIのアルファベット（E,I,S,N,T,F,J,P）を自動で8つの心理機能に変換・分配する最強システム！
+    if(scoresObj.mbti) {
+        for (let key in scoresObj.mbti) {
+            let val = scoresObj.mbti[key];
+            if (key === 'E') { mbtiScore.Ne += val*0.5; mbtiScore.Fe += val*0.5; mbtiScore.Te += val*0.5; mbtiScore.Se += val*0.5; }
+            else if (key === 'I') { mbtiScore.Ni += val*0.5; mbtiScore.Fi += val*0.5; mbtiScore.Ti += val*0.5; mbtiScore.Si += val*0.5; }
+            else if (key === 'N') { mbtiScore.Ne += val*0.5; mbtiScore.Ni += val*0.5; }
+            else if (key === 'S') { mbtiScore.Se += val*0.5; mbtiScore.Si += val*0.5; }
+            else if (key === 'F') { mbtiScore.Fe += val*0.5; mbtiScore.Fi += val*0.5; }
+            else if (key === 'T') { mbtiScore.Te += val*0.5; mbtiScore.Ti += val*0.5; }
+            else if (key === 'P') { mbtiScore.Ne += val*0.5; mbtiScore.Se += val*0.5; }
+            else if (key === 'J') { mbtiScore.Te += val*0.5; mbtiScore.Fe += val*0.5; mbtiScore.Si += val*0.5; mbtiScore.Ni += val*0.5; }
+            else { mbtiScore[key] += val; } // Ti, Ne などの場合はそのまま加算
+        }
+    }
+    
     if(scoresObj.ennea) for (let key in scoresObj.ennea) enneaScore[key] += scoresObj.ennea[key];
     
     if(scoresObj.combo) {
