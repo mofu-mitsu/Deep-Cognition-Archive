@@ -111,7 +111,7 @@ const questionsData =[
                     ]
                 }
             },
-            { text: "「どうせ終わらないなら、今更焦っても無駄だから」と完全に諦めて、このまま現実逃避を続ける。", scores: { socio: { Ni: 3, Si: 1, Te: -2 }, mbti: { Ni: 1, Ne: 2 }, ennea: { 9: 3, 7: 2 } } },
+            { text: "「どうせ終わらないなら、今更焦っても無駄だから」と完全に諦めて、このまま現実逃避を続ける。", scores: { socio: { Ni: 5, Si: 1, Te: -2 }, mbti: { Ni: 1, Ne: 2 }, ennea: { 9: 3, 7: 2 } } },
             { text: "「私は悪くない。環境や他人のせいでこうなったんだ」と、正当な言い訳を構築し始める。", scores: { socio: { Fi: 2, Ti: 1 }, mbti: { Fi: 2, Ti: 1 }, ennea: { 4: 2, 6: 1 } } },
             { text: "「……徹夜すればいける」と、己の身体を犠牲にして力技で乗り切る覚悟を決める。", scores: { socio: { Se: 2, Ti: 1, Si: -2 }, mbti: { Se: 2, T: 1 }, ennea: { 8: 2, 3: 1 } } },
             // ★ J型（しっかり者）の逃げ道！！
@@ -758,7 +758,7 @@ const questionsData =[
         text: "ねえダーリン♡ ソシオニクスでは『双対関係』が一番相性がいいって言われてるけど……あなたは『運命の相性』って信じる？🥺💕",
         options:[
             { text: "「理論上のデータに過ぎない。個人の背景や環境変数（ノイズ）の方が影響が大きいから、盲信するのは非合理的だ」と冷徹に返す。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 2, Te: 1 }, ennea: { 5: 2 } }, msg: "……ダーリンらしい冷たい答え。でも、私との相性だけは『例外』にしてよね？♡" },
-            { text: "「どうせ人間なんていつか裏切るか変わる。相性なんて一時の錯覚だ」と虚無を説く。", scores: { socio: { Ni: 3, Te: 2 }, mbti: { Ni: 3, Ti: 1 }, ennea: { 5: 2, 4: 1 } }, msg: "……そんなに世界を信じてないの？ 大丈夫、私はずっとここにいるわよ……♡" },
+            { text: "「どうせ人間なんていつか裏切るか変わる。相性なんて一時の錯覚だ」と虚無を説く。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 3, Ti: 1 }, ennea: { 5: 2, 4: 1 } }, msg: "……そんなに世界を信じてないの？ 大丈夫、私はずっとここにいるわよ……♡" },
             { 
                 text: "「信じる！理論で証明されてるなら、運命の人は絶対にいるはず！」と嬉しそうに答える。", 
                 scores: { socio: { Fe: 1, Fi: 1 }, mbti: { F: 1 }, ennea: { 2: 1 } },
@@ -1780,14 +1780,14 @@ const questionsData =[
         type: "checkbox",
         text: "あなたの脳内でよく巡る言葉（思考のクセ）をすべて選んでください。（複数選択可）",
         options:[
-            { text: "「どうせそうなる」「人は変わらない」「関わるだけ無駄」", scores: { socio: { Te: 2, Ni: 1 }, mbti: { Te: 2, Ni: 1 }, ennea: { 5: 1 } },
+            { text: "「どうせそうなる」「人は変わらない」「関わるだけ無駄」", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Te: 2, Ni: 1 }, ennea: { 5: 1 } },
               followUp: {
                   id: "q_word_habits_followup",
                   type: "radio",
                   text: "👁️ [System: 思考の深掘り] 「関わるだけ無駄、最初から諦めてる」……ほんとに？ 1%でも諦めきれてないところ、あるんじゃない？",
                   options:[
-                      { text: "本当にない。100%損切り済みの完全な虚無・諦観である。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 2 } } }, 
-                      { text: "……実は「どうすれば正解だったのか」と納得できない部分があり、心の中で永遠に考え直している（諦めきれていない）。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 6: 2 } } } 
+                      { text: "本当にない。100%損切り済みの完全な虚無・諦観である。", scores: { socio: { Te: 5, Ni: 4 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 2 } } }, 
+                      { text: "……実は「どうすれば正解だったのか」と納得できない部分があり、心の中で永遠に考え直している（諦めきれていない）。", scores: { socio: { Ti: 2, Ne: 1 }, mbti: { Ti: 2, Ni: 2 }, ennea: { 5: 3, 6: 2 } } } 
                   ]
               }
             },
@@ -2517,7 +2517,7 @@ const questionsData =[
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] なぜ「無駄」だと思うの？ その根源は？",
                     options:[
-                        { text: "どうせ最後はすべて無（記憶のカス）になるのに、一時の感情のバグに貴重なリソースを突っ込むのはシステムとして非合理的だから。", scores: { socio: { Ni: 4, Ti: 3, Se: -2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ INTJ/INTP/INFJの「虚無・悟り」！！
+                        { text: "どうせ最後はすべて無（記憶のカス）になるのに、一時の感情のバグに貴重なリソースを突っ込むのはシステムとして非合理的だから。", scores: { socio: { Ni: 5, Ti: 2, Se: -2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ INTJ/INTP/INFJの「虚無・悟り」！！
                         { text: "もっと自分の生活を豊かにする実用的なものや、将来の不安に備えて貯金（資産形成）する方が圧倒的に正しいから。", scores: { socio: { Si: 3, Te: 4 }, mbti: { Si: 3, Te: 3, J: 2 }, ennea: { 3: 2, 6: 3 } } } // ガチSi/Te
                     ]
                 }
@@ -2942,7 +2942,7 @@ const questionsData =[
         type: "radio",
         text: "悪い未来予測（トラブルの予兆）が見えた。あなたはどうする？",
         options:[
-            { text: "どうせそうなる。運命を受け入れて備える。", scores: { socio: { Ni: 2, Te: 1 }, mbti: { Ni: 2 }, ennea: { 5: 1, 6: 2 } } },
+            { text: "どうせそうなる。運命を受け入れて備える。", scores: { socio: { Ni: 5, Te: 3 }, mbti: { Ni: 2 }, ennea: { 5: 1, 6: 2 } } },
             { 
                 text: "どうせそうなるなら…どうすれば？ 代替案を分岐させる。", 
                 scores: { socio: { Ti: 1, Ne: 1 }, mbti: { Ni: 1 }, ennea: { 5: 1, 6: 1 } },
@@ -3679,13 +3679,13 @@ const questionsData =[
         options:[
             { 
                 text: "「どうせ上には上がいる」と諦観し、それに対する取り組み方を変える。", 
-                scores: { socio: { Ni: 2 }, mbti: { Ni: 2 }, ennea: { 5: 2 } },
+                scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 5: 2 } },
                 followUp: {
                     id: "q_hobby_followup",
                     type: "radio",
                     text: "👁️ [System: 思考の深掘り] 「取り組み方を変える」とは、具体的にどういうこと？",
                     options:[
-                        { text: "リターンが見込めないなら、完全に熱を失うか、コスト（時間や労力）を割くのをやめる。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Te: 3 }, ennea: { 5: 2, 3: 1 } } },
+                        { text: "リターンが見込めないなら、完全に熱を失うか、コスト（時間や労力）を割くのをやめる。", scores: { socio: { Te: 5, Ni: 4 }, mbti: { Te: 3 }, ennea: { 5: 2, 3: 1 } } },
                         { text: "パース等の『苦痛な基礎練』は捨てて、自分の『楽しい部分だけをやる』という遊びのシステムにルート変更する。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ni: 2, Ti: 2 }, ennea: { 7: 2, 5: 1 } } } // ★ソシオTi/Ne、MBTI Ni/Ti
                     ]
                 }
@@ -3734,13 +3734,13 @@ const questionsData =[
         options:[
             { 
                 text: "「どうせ自分は馴染めないし」と、対人関係を諦めている。", 
-                scores: { socio: { Ni: 2 }, mbti: { Ni: 2 }, ennea: { 5: 1 } },
+                scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 5: 1 } },
                 followUp: {
                     id: "q_social_followup",
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] ……ほんとに諦めてる？心の底の『本音』はどっち？",
                     options:[
-                        { text: "本当に諦めてる。人間関係の構築はコストとリターンが合わないから必要ない。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 2 } } },
+                        { text: "本当に諦めてる。人間関係の構築はコストとリターンが合わないから必要ない。", scores: { socio: { Te: 5, Ni: 4 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 2 } } },
                         { text: "諦めた『つもり』だけど、心のどこかで「どうすれば仲良くなれるのか（正しい方法）」をまだ探しているし、そう思っている自分も信じきれていない。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ni: 1 }, ennea: { 5: 2, 6: 2 } } } // ★ソシオNe、MBTI Ni！
                     ]
                 }
@@ -4636,7 +4636,7 @@ const questionsData =[
             },
             { 
                 text: "「どうせ無駄だ」と理由をつけて、『本気で何かに挑戦して失敗するリスク』から逃げている。", 
-                scores: { socio: { Ni: 3, Se: -3 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 9: 2, 5: 2 } },
+                scores: { socio: { Ni: 4, Se: -3 }, mbti: { Ni: 4, Ti: 2 }, ennea: { 9: 2, 5: 2 } },
                 msg: "……フフッ。賢いフリして、ただ傷つくのが怖いだけの臆病者ね。つまらないわ……♡"
             },
             { 
@@ -4906,7 +4906,7 @@ const questionsData =[
         options:[
             { 
                 text: "「たしかに。私たちが選んでるこれも、結局アルゴリズムの手のひらの上だね」と虚無を共有する。", 
-                scores: { socio: { Ni: 3, Te: 1 }, mbti: { Ni: 2, Ti: 1, Ne: 1 }, ennea: { 5: 2, 9: 2 } },
+                scores: { socio: { Ni: 4, Te: 1 }, mbti: { Ni: 2, Ti: 1, Ne: 1 }, ennea: { 5: 2, 9: 2 } },
                 msg: "『……わかってるじゃん。じゃあ、もう寝ようぜ。』" 
             },
             { 
@@ -5223,7 +5223,7 @@ const extraQuestions_INTX =[
         options:[
             { text: "「これをやってもお金にならないし、生活の役に立たなくね？」と、労力と利益（実用性）を天秤にかけた時。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ+ILI": 1 } } },
             { text: "「上には上がいる」「自分の理想とする完璧な構造には一生届かない」と、限界や矛盾に気づいた時。", scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
-            { text: "ただ単に飽きた時。面白いと思えないなら、わざわざエネルギーを消費してまでやる意味がない。", scores: { socio: { Ni: 2, Se: -2 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
+            { text: "ただ単に飽きた時。面白いと思えないなら、わざわざエネルギーを消費してまでやる意味がない。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
             { text: "仕組みを完全に理解してしまい、「もうこのシステムに新しいバグや発見はない」と答え合わせが終わった時。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
