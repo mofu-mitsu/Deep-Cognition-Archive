@@ -475,7 +475,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         let options =[
             { text: "「あはは！ スイカは絶対『割るな！』って言うでしょ！」とノリノリで乗っかる。", scores: { socio: { Ne: 4 }, mbti: { Ne: 4 }, ennea: { 7: 3 } }, msg: "🎩「君もこっち側の住人だね！ 最高にイカれてるよ！」" },
             { text: "「空がゼラチン質であると仮定した場合……」と、マジレスで構造の矛盾を解体しにいく。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, ennea: { 5: 3, 1: 1 } }, msg: "🎩「フフッ。カオスすら論理で包み込もうとするなんて、健気な学者さんだ！」" },
-            { text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と思考停止し、苦痛を感じて逃げ出す。", scores: { socio: { Ne: -3, Se: 1 }, mbti: { Ne: -3, Si: 1 }, ennea: { 7: -2 } }, msg: "🎩「おや、もうリタイアかい？ つまらないねぇ。」" },
+            { text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と思考停止し、苦痛を感じて逃げ出す。", scores: { socio: { Ne: -3 }, mbti: { Ne: -3 }, ennea: { 7: -2 } }, msg: "🎩「おや、もうリタイアかい？ つまらないねぇ。」" },
             { text: "「は？ 何言ってんだコイツ」と話を遮り、結論だけを求める。", scores: { socio: { Ne: -2, Te: 3, Ni: 1 }, mbti: { Ne: -2, Te: 3, Ni: 1 }, ennea: { 8: 3, 3: 1 } }, msg: "🎩「出たよ、冷酷な現実主義者！ 夢がないねぇ！」" }
         ].sort(() => Math.random() - 0.5);
 
@@ -807,7 +807,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 document.body.classList.remove('panic-shake');
                 
                 // ★ タイムオーバー ＝ Se脆弱（みつき達LIIやEII）のフリーズ！！
-                currentScores = { scores: { socio: { Se: -4, Ni: 2 }, mbti: { Se: -3, Ni: 2 }, ennea: { 5: 3, 9: 1 } }, loggedText: `💥 Se圧ゲーム: 威圧にフリーズしてタイムオーバー（Se脆弱）` };
+                currentScores = { scores: { socio: { Se: -3, Ni: 2 }, mbti: { Se: -3, Ni: 2 }, ennea: { 8: -1 } }, loggedText: `💥 Se圧ゲーム: 威圧にフリーズしてタイムオーバー（Se脆弱）` };
                 
                 mediaArea.innerHTML = `<div style="font-size:4em; text-align:center;">😵‍💫</div>`;
                 darlingMsgArea.innerText = "「……チッ。大声出されただけで固まってんじゃねぇよ。使えねぇな」";
