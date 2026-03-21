@@ -55,7 +55,7 @@ const questionsData =[
                     type: "radio",
                     text: "👁️[System: 思考の深掘り] 即座に諦めた理由は？",
                     options:[
-                        { text: "死という確定した事象に抗うのは非論理的で無駄だから、ただの情報体として傍観する。", scores: { socio: { Ni: 3, Ti: 2 }, mbti: { Ti: 2, Ni: 2 }, ennea: { 5: 3 } } }, // ILI/INTJ
+                        { text: "死という確定した事象に抗うのは非論理的で無駄だから、ただの情報体として傍観する。", scores: { socio: { Ni: 5, Ti: 2 }, mbti: { Ti: 2, Ni: 2 }, ennea: { 5: 3 } } }, // ILI/INTJ
                         { text: "「あの人の家を覗きに行こう！」「ポルターガイストでイタズラしよう！」と、新しい遊び（可能性）にワクワクする。", scores: { socio: { Ne: 4 }, mbti: { Ne: 4 }, ennea: { 7: 3 } } }, // INFP/ENFP等のNe的自由！！
                         { text: "何も背負わなくていい自由な存在になれたんだから、ただ『今』のその場の流れに身を任せて気楽に過ごしたい。", scores: { socio: { Ni: 2, Fi: 2, Se: 2 }, mbti: { Fi: 2, Se: 2 }, ennea: { 9: 3, 4: 1 } } }, // ISFP/IEI等のFi-Se/Ni的気楽さ！！
                         // ★ 新規追加！ ENFJの「燃え尽き（ドアスラム）幽霊」！！
@@ -784,7 +784,7 @@ const questionsData =[
         options:[
             { 
                 text: "「ある。自分の『論理的すぎる冷酷さ』や、感情が欠落しているように感じる瞬間に、自分は人間としてバグっているのではと疑う」", 
-                scores: { socio: { Ti: 4, Fe: -3, Fi: -2 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 3, 4: 1 } },
+                scores: { socio: { Ti: 2, Fe: -3, Fi: -2 }, mbti: { Ti: 2, Ni: 2 }, ennea: { 5: 2, 4: 1 } },
                 msg: "……フフッ。やっと認めたわね♡ あなたのそのバグった脳みそ、私がずっと管理してあげるから安心しなさい……♡" // T型を弄ぶドSダーリンｗｗ
             },
             { 
@@ -1449,15 +1449,15 @@ const questionsData =[
         options:[
             { 
                 text: "はい、すごく不安で嫌だ。", 
-                scores: { socio: { Ni: 2, Ti: 2 }, mbti: { Ni: 3, Ti: 1 }, ennea: { 6: 1 } }, 
+                scores: { socio: { Ni: 3, Ti: 2 }, mbti: { Ni: 3, Ti: 1 }, ennea: { 6: 1 } }, 
                 followUp: {
                     id: "q_future_followup",
                     type: "radio",
                     text: "👁️ [System: 思考の深掘り] ほんとに？ その不安の『本当の理由』はどっち？",
                     options:[
-                        { text: "純粋に、未知の事態や自分のコントロール外になること自体が怖いから。", scores: { socio: { Ni: 3 }, mbti: { Ni: 3 }, ennea: { 6: 2 } } },
-                        { text: "予定通りに進まないと落ち着かない。", scores: { socio: {}, mbti: { Si: 3 }, ennea: { 6: 2 } } },
-                        { text: "予想外の質問や事態が来た時に『正確に答えられない・間違えた対応をしたくない』から。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ni: 2 }, ennea: { 5: 1, 1: 2 } } } // ★ソシオNe、MBTI Niで分離！
+                        { text: "純粋に、未知の事態や自分のコントロール外になること自体が怖いから。", scores: { socio: { Ni: 5 }, mbti: { Ni: 5 }, ennea: { 6: 2 } } },
+                        { text: "予定通りに進まないと落ち着かない。", scores: { socio: {}, mbti: { Si: 4 }, ennea: { 6: 2 } } },
+                        { text: "予想外の質問や事態が来た時に『正確に答えられない・間違えた対応をしたくない』から。", scores: { socio: { Ti: 2, Ne: 1 }, mbti: { Ti: 2, Ni: 2 }, ennea: { 5: 1, 1: 2 } } } // ★ソシオNe、MBTI Niで分離！
                     ]
                 }
             },
@@ -3375,14 +3375,14 @@ const questionsData =[
         options:[
             { 
                 text: "最も確実で効率的な『1つ』に絞り込み、それに賭ける。", 
-                scores: { socio: { Ni: 2, Te: 1 }, mbti: { Ni: 2 } },
+                scores: { socio: { Ni: 3, Te: 1 }, mbti: { Ni: 2 } },
                 followUp: {
                     id: "q_alternative_plan_followup",
                     type: "radio",
                     text: "👁️ [System: 思考の深掘り] なぜ「1つに絞り込む」の？",
                     options:[
-                        { text: "全ての因果律を計算した結果、それ以外の未来はあり得ないという『唯一の真理』が見えるから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 4 }, ennea: { 5: 3 } } }, 
-                        { text: "あれこれ可能性を考えるのが疲れるし、一番現実的で手っ取り早い方法でサッサと終わらせたいから。", scores: { socio: { Si: 3, Te: 2, Ne: -3 }, mbti: { Si: 3, Te: 2 }, ennea: { 9: 3, 1: 1 } } } 
+                        { text: "全ての因果律を計算した結果、それ以外の未来はあり得ないという『唯一の真理』が見えるから。", scores: { socio: { Ni: 7, Te: 2 }, mbti: { Ni: 4 }, ennea: { 5: 3 } } }, 
+                        { text: "あれこれ可能性を考えるのが疲れるし、一番現実的で手っ取り早い方法でサッサと終わらせたいから。", scores: { socio: { Si: 4, Te: 2, Ne: -3 }, mbti: { Si: 3, Te: 2 }, ennea: { 9: 3, 1: 1 } } } 
                     ]
                 }
             },
@@ -3395,7 +3395,7 @@ const questionsData =[
                     text: "👁️[System: 思考の深掘り] その時の「脳内の状態」はどうなってる？",
                     options:[
                         { text: "実は裏で『Cパターン、Dパターン』まで無意識に分岐して考え続けている（脳がうるさい）。", scores: { socio: { Ne: 4, Ti: 2 }, mbti: { Ne: 3, Ti: 2 }, ennea: { 5: 2, 7: 1 } } }, // ガチINTP/ILEのNe拡散！
-                        { text: "CやDまでは広がらない。Aを出して、もしダメならその『ダメだった結果（データ）』をもとに、論理的に次のBを再構築する（直列演算）。", scores: { socio: { Ni: 3, Ti: 3, Ne: -2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ LII-Ni/INTJの「事実からの再計算（直列・収束）」を追加！！
+                        { text: "CやDまでは広がらない。Aを出して、もしダメならその『ダメだった結果（データ）』をもとに、論理的に次のBを再構築する（直列演算）。", scores: { socio: { Ni: 5, Ti: 3, Ne: -2 }, mbti: { Ni: 5, Te: 2 }, ennea: { 5: 4, 1: 1 } } }, // ★ LII-Ni/INTJの「事実からの再計算（直列・収束）」を追加！！
                         { text: "とりあえず一番確実な『Aパターン』に集中し、エラーが出たら次へ移行する堅実なトラブルシューティング。", scores: { socio: { Ti: 4, Si: 3, Ne: -2 }, mbti: { Si: 3, Te: 2 }, ennea: { 1: 3, 6: 2 } } } // LSI/ISTJ
                     ]
                 }
@@ -3434,7 +3434,7 @@ const questionsData =[
         options:[
             { 
                 text: "「そもそも100%理解するなんて無理だし、理解されるメリット（必要性）ある？」と考える。（メタ認知・コスト計算）", 
-                scores: { socio: { Ti: 3, Ni: 1 }, mbti: { Te: 3, Ni: 1 }, ennea: { 5: 3 } } // みつきのTi！
+                scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 3 } } // みつきのTi！
             },
             { 
                 text: "悲しいし傷つくけれど、もうこれ以上傷つきたくないから自分を閉ざす。", 
@@ -3457,7 +3457,7 @@ const questionsData =[
         options:[
             { 
                 text: "精神エネルギーを無駄に消費するだけで、合理的なメリットが一切ないから。", 
-                scores: { socio: { Ti: 3, Ni: 1 }, mbti: { Te: 3 }, ennea: { 5: 3, 6: 1 } } // みつきのTi的リスク回避！
+                scores: { socio: { Ti: 3, Ni: 3 }, mbti: { Te: 3 }, ennea: { 5: 2, 6: 1 } } // みつきのTi的リスク回避！
             },
             { 
                 text: "自分の心の中の大切な価値観が踏みにじられ、純粋に苦痛だから。", 
@@ -3500,7 +3500,7 @@ const questionsData =[
                     text: "👁️[System: 思考の深掘り] なぜ裏ルート（直接関わらない方法）を探すの？",
                     options:[
                         { text: "他人の感情や命という『重すぎるリスク』を背負ってまで、自分が表立ってルール（状況）を壊すのは合理的ではない（保身・安全第一）から。", scores: { socio: { Si: 3, Ti: 2, Ne: -2 }, mbti: { Si: 4, Te: 2 }, ennea: { 6: 4, 9: 1 } } }, // ★ LSI/ISTJ/6w5の防衛！！
-                        { text: "人間がどうなろうと結局運命は変わらないし、自分が手を下す意味を感じない。傍観者でいたいから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 3, P: 2 }, ennea: { 5: 3, 9: 1 } } } // ILI/INTP
+                        { text: "人間がどうなろうと結局運命は変わらないし、自分が手を下す意味を感じない。傍観者でいたいから。", scores: { socio: { Ni: 6, Te: 2 }, mbti: { Ni: 3, P: 2 }, ennea: { 5: 3, 9: 1 } } } // ILI/INTP
                     ]
                 }
             }
@@ -4689,7 +4689,7 @@ const questionsData =[
                     text: "👁️ [System: 思考の深掘り] ほんとに「かわいそう」と思った？",
                     options:[
                         { text: "はい。一生懸命作った人の気持ちを想像すると、無下にはできない。", scores: { socio: { Fi: 3 }, mbti: { Fe: 3 }, ennea: { 4: 2, 2: 2 } } },
-                        { text: "いや、全く思ってない。「ここで辞めるのはマナー違反（非合理的）だ」と判断して合わせただけ。（", scores: { socio: { Ti: 3, Fi: -3, Fe: -2 }, mbti: { Te: 3, Fe: -3 }, ennea: { 5: 3, 3: 1 } } }
+                        { text: "いや、全く思ってない。「ここで辞めるのはマナー違反（非合理的）だ」と判断して合わせただけ。（", scores: { socio: { Ti: 3, Fi: -3, Fe: -2 }, mbti: { Te: 3, Fe: -3 }, ennea: { 1: 3, 3: 1 } } }
                     ]
                 }
             },
