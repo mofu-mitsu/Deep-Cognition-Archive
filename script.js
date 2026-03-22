@@ -841,6 +841,80 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         });
         currentScores = null; 
     }
+// ==========================================
+    // 🐖 新ギミック：ご褒美パニック（3秒以内に撃退しろ！）
+    // ==========================================
+    else if (q.type === 'interactive_gohoubi_panic') {
+        document.body.classList.add('panic-shake'); // 画面を揺らす！
+        inputArea.appendChild(darlingMsgArea);
+        darlingMsgArea.innerText = "「⚠️警告！ 3秒以内に撃退しないとチュウ♡されるゾ！！」";
+        darlingMsgArea.style.color = "#ff69b4";
+        darlingMsgArea.classList.add('fade-in');
+        
+        // ★ 画像表示エリア（gohoubi.png を読み込む。なければ豚の絵文字）
+        mediaArea.innerHTML = `
+            <div style="text-align:center;">
+                <img src="gohoubi.png" alt="ご褒美" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" style="width:150px; height:150px; object-fit:cover; border:4px solid #ff69b4; border-radius:50%; box-shadow:0 0 20px #ff69b4; margin-bottom:10px; animation: heartbeat 0.4s infinite;">
+                <div style="font-size:6em; display:none; animation: heartbeat 0.4s infinite;">🐖💦</div>
+                <p style="color:#ff69b4; font-weight:bold; font-size:2em; margin-top:5px;">残り: <span id="gohoubi-timer">3</span></p>
+            </div>
+        `;
+        
+        let timeLeft = 3;
+        let answered = false;
+        let timerEl = document.getElementById('gohoubi-timer');
+        
+        // ★ 3秒の地獄のカウントダウン！！
+        const countdown = window.setInterval(() => {
+            if (answered) return;
+            timeLeft -= 1;
+            timerEl.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                document.body.classList.remove('panic-shake');
+                
+                // ★ タイムオーバー ＝ 逃げ遅れ（Se脆弱・フリーズ）！！
+                currentScores = { scores: { socio: { Se: -4, Ni: 2 }, mbti: { Se: -3, Ni: 2 }, ennea: { 5: 3, 9: 2 } }, loggedText: `💋 ご褒美パニック: タイムオーバーでチュウされた（Se脆弱の処理落ち）` };
+                
+                mediaArea.innerHTML = `<div style="font-size:6em; text-align:center; animation: fadeIn 0.5s;">💋😘💦</div>`;
+                darlingMsgArea.innerText = "「ブチュウウウウ！ 大好きよーん♡ 最高の出汁が出たやんけ！」";
+                darlingMsgArea.style.fontSize = "1.3em";
+                setTimeout(() => { goToNext(false); }, 3000);
+            }
+        }, 1000);
+
+        // ★ 撃退するための選択肢！（Mだから反撃を喜ぶｗｗ）
+        let options =[
+            { text: "「ふざけんな！近寄るな！」と物理的に全力でビンタ（または蹴り）してぶっ飛ばす。", scores: { socio: { Se: 4 }, mbti: { Se: 4 }, ennea: { 8: 3 } }, msg: "「ありがトン♡ 痛いのも最高の『ご褒美』だゾ♡ もっと殴ってほしいやんけ！」" },
+            { text: "「キモい！無理！」とドン引きして、汚物を見るような冷たい目でマジレス拒絶する。", scores: { socio: { Fi: 4, Se: 2 }, mbti: { Fi: 3, Si: 2 }, ennea: { 1: 3, 4: 2 } }, msg: "「その冷たい視線……！ ゾクゾクするゾ！ 拙者へのご褒美だゾ♡」" },
+            { text: "「豚骨出汁の成分表示と、わしゃわしゃの定義を論理的に説明しろ」と理詰めで詰め寄る。", scores: { socio: { Ti: 4, Ne: 2 }, mbti: { Ti: 3 }, ennea: { 5: 3 } }, msg: "「理屈っぽいところも可愛いゾ！ 頭でっかちなツインテールも大好物やんけ！」" },
+            { text: "「警察（または運営）に通報するぞ。即座にここから消えろ」と実力行使（権力）で排除する。", scores: { socio: { Te: 4, Ni: 2 }, mbti: { Te: 3 }, ennea: { 8: 2, 3: 1 } }, msg: "「ひぃぃ！ 権力には逆らえないゾ！ でも縛られるのも悪くないやんけ…♡」" }
+        ].sort(() => Math.random() - 0.5);
+
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = "danger-btn"; // 赤枠
+            btn.style.borderColor = "#ff69b4"; // ご褒美ピンクｗｗ
+            btn.style.color = "#ff69b4";
+            btn.innerHTML = `<i class="fas fa-heart-broken"></i> ${opt.text}`;
+            
+            btn.onclick = () => {
+                if (timeLeft <= 0 || answered) return;
+                answered = true;
+                clearInterval(countdown);
+                document.body.classList.remove('panic-shake');
+                
+                currentScores = { scores: opt.scores, loggedText: `🐖 ご褒美撃退: 「${opt.text.split('」')[0]}」` };
+                
+                mediaArea.innerHTML = `<div style="font-size:5em; text-align:center;">🐷💘</div>`; // 喜んでる豚
+                darlingMsgArea.innerText = opt.msg;
+                setTimeout(() => { goToNext(false); }, 3500);
+            };
+            inputArea.appendChild(btn);
+        });
+        currentScores = null; 
+    }
 // 🧠 ギミック：矛盾を見抜くテキスト入力（パラドックス）
     else if (q.type === 'interactive_paradox_text') {
         inputArea.innerHTML = `
@@ -1038,10 +1112,30 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
         darlingMsgArea.classList.add('fade-in');
 
         let options =[
-            { text: "「私が全員を救う義理はない。自分の責任の範囲内で合理的に行動した結果だ」と、道徳的非難を冷たく跳ね返す。", scores: { socio: { Fi: -4, Ti: 3, Te: 2 }, mbti: { F: -3, T: 3 }, ennea: { 5: 3, 8: 1 } }, msg: "⚖️「……血も涙もない機械のような論理。あなたは人として欠落しています。」" },
-            { text: "「……うっ。確かに、もっと優しくできたかもしれない」と、急に罪悪感に苛まれて反省する。", scores: { socio: { Fi: 4, Fe: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 2 } }, msg: "⚖️「……その痛みが、あなたの心の証明です。贖罪なさい。」" },
-            { text: "「『正しい人間』の定義とは何か？ そもそも万人が納得する善など存在しない」と、道徳の定義自体を解体しにいく。", scores: { socio: { Ti: 3, Ne: 3, Fi: -2 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 2, 7: 1 } }, msg: "⚖️「……屁理屈で逃げるのですね。あなたの魂は空虚だ。」" },
-            { text: "「私がルールだ。私が切り捨てた者は弱かっただけ。文句があるなら力で示せ」と圧倒する。", scores: { socio: { Se: 4, Te: 2, Fi: -3 }, mbti: { Se: 3, Te: 3 }, ennea: { 8: 4, 3: 1 } }, msg: "⚖️「……野蛮な暴君。いつかその傲慢さが身を滅ぼしますよ。」" }
+    {
+        id: "w_fi_pressure_game", 
+        type: "radio",
+        text: "【Moral Audit】\n⚖️「……あなたは、自分が『本当に正しい人間（善良な存在）』だと言い切れますか？ あなたが今まで見捨ててきた人たち、切り捨ててきた感情に、胸が痛むことはないのですか？」",
+        options:[
+            { text: "「私が全員を救う義理はない。自分の責任の範囲内で合理的に行動した結果だ」と、道徳的非難を冷たく跳ね返す。", scores: { socio: { Ti: 3, Te: 2, Fi: -4 }, mbti: { T: 3, F: -3 }, ennea: { 5: 3, 8: 1 } } },
+            { text: "「……うっ。確かに、もっと優しくできたかもしれない」と、急に罪悪感に苛まれて反省する。", scores: { socio: { Fi: 4, Fe: 2 }, mbti: { F: 4 }, ennea: { 2: 3, 9: 2 } } },
+            { text: "「『正しい人間』の定義とは何か？ そもそも万人が納得する善など存在しない」と、道徳の定義自体を解体しにいく。", scores: { socio: { Ti: 3, Ne: 3, Fi: -2 }, mbti: { Ti: 3, Ne: 2 }, ennea: { 5: 2, 7: 1 } } },
+            { 
+                text: "「私がルールだ。私が切り捨てた者は弱かっただけ。文句があるなら力で示せ」と圧倒する。", 
+                scores: { socio: { Se: 2, Te: 2 }, mbti: { Se: 2, Te: 2 }, ennea: { 8: 2 } },
+                // ★ ENTJ(Te)とSLE(Se)の暴君の性質を分断！
+                followUp: {
+                    id: "w_fi_pressure_tyrant_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 弱者を切り捨てる『本当の理由』はどっち？",
+                    options:[
+                        { text: "全体のシステムを最短で前に進め、最大の結果（利益）を生み出すためには、使えないパーツ（弱者）を切り捨てるのが最も『合理的』だから。", scores: { socio: { Te: 5, Ni: 3, Fi: -4 }, mbti: { Te: 4, Ni: 3 }, ennea: { 3: 4, 8: 2 } } }, // ★ ENTJ/LIE等の「冷酷な効率（Te）」！！
+                        { text: "弱肉強食がこの世の真理であり、自分の力を証明して『物理的・社会的優位』に立つことが生物としての本能だから。", scores: { socio: { Se: 5, Ti: 2, Fi: -4 }, mbti: { Se: 4, Ti: 2 }, ennea: { 8: 5, 3: 1 } } } // ★ SLE/ESTP等の「力の証明（Se）」！！
+                    ]
+                }
+            }
+        ]
+    },
         ].sort(() => Math.random() - 0.5);
 
         options.forEach(opt => {
