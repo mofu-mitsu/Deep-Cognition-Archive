@@ -368,15 +368,19 @@ body.wonderland-mode {
     height: 100%; background: #f85149; width: 0%; transition: width 0.1s;
 }
 
-/* --- 目が合うギミック用 --- */
+/* --- 目が合うギミック用（まばたき追加版！） --- */
 @keyframes eyeLook {
-    0%, 100% { transform: scaleX(1) translateX(0); }
-    30% { transform: scaleX(0.8) translateX(-10px); }
-    70% { transform: scaleX(0.8) translateX(10px); }
-    85% { transform: scaleX(1) translateY(5px); } /* こっちを見た！ */
+    0%, 100% { transform: scaleX(1) translateX(0) scaleY(1); }
+    30% { transform: scaleX(0.8) translateX(-10px) scaleY(1); }
+    70% { transform: scaleX(0.8) translateX(10px) scaleY(1); }
+    80% { transform: scaleX(1) translateY(5px) scaleY(1); } /* こっちを見た！ */
+    88% { transform: scaleX(1) translateY(5px) scaleY(0.1); } /* パチッ！（目を閉じる） */
+    95% { transform: scaleX(1) translateY(5px) scaleY(1); } /* 目を開ける */
 }
 .eye-looking {
-    font-size: 5em; display: inline-block; animation: eyeLook 2s infinite;
+    font-size: 5em; 
+    display: inline-block; 
+    animation: eyeLook 2s infinite;
 }
 /* --- 鏡の部屋（Mirror Room）ギミック用 --- */
 .mirror-container {
