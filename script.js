@@ -388,7 +388,7 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
             if (count > 0 && count < 20) {
                 currentScores = { scores: { socio: { Se: 2, Si: 3 }, mbti: { Se: 3, Si: 2 }, ennea: { 6: 2 } }, loggedText: `👁️ 目が合った回数: ${count} (Se/Si的観察)` };
             } else if (count == 0) {
-                currentScores = { scores: { socio: { Ni: 3, Ti: 2 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 5: 3, 9: 1 } }, loggedText: `👁️ 目が合った回数: ${count} (Ni/Ti的無視)` };
+                currentScores = { scores: { socio: { Ni: 3, Ti: 1 }, mbti: { Ni: 3, Ti: 2 }, ennea: { 9: 1 } }, loggedText: `👁️ 目が合った回数: ${count} (Ni/Ti的無視)` };
             } else {
                 currentScores = { scores: { socio: { Ne: 3 }, mbti: { Ne: 3 }, ennea: { 7: 2 } }, loggedText: `👁️ 目が合った回数: ${count} (Ne的適当)` };
             }
@@ -476,7 +476,8 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
             { text: "「あはは！ スイカは絶対『割るな！』って言うでしょ！」とノリノリで乗っかる。", scores: { socio: { Ne: 4 }, mbti: { Ne: 4 }, ennea: { 7: 3 } }, msg: "🎩「君もこっち側の住人だね！ 最高にイカれてるよ！」" },
             { text: "「空がゼラチン質であると仮定した場合……」と、マジレスで構造の矛盾を解体しにいく。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, ennea: { 5: 3, 1: 1 } }, msg: "🎩「フフッ。カオスすら論理で包み込もうとするなんて、健気な学者さんだ！」" },
             { text: "「( ˙꒳˙ )ﾁｮﾄﾅﾆｲｯﾃﾙｶﾜｶﾝﾅｲ」と思考停止し、苦痛を感じて逃げ出す。", scores: { socio: { Ne: -3 }, mbti: { Ne: -3 }, ennea: { 7: -2 } }, msg: "🎩「おや、もうリタイアかい？ つまらないねぇ。」" },
-            { text: "「は？ 何言ってんだコイツ」と話を遮り、結論だけを求める。", scores: { socio: { Ne: -2, Te: 3, Ni: 1 }, mbti: { Ne: -2, Te: 3, Ni: 1 }, ennea: { 8: 3, 3: 1 } }, msg: "🎩「出たよ、冷酷な現実主義者！ 夢がないねぇ！」" }
+            { text: "「は？ 何言ってんだコイツ」と話を遮り、結論だけを求める。", scores: { socio: { Ne: -2, Te: 3, Ni: 1 }, mbti: { Ne: -2, Te: 3, Ni: 1 }, ennea: { 8: 3, 3: 1 } }, msg: "🎩「出たよ、冷酷な現実主義者！ 夢がないねぇ！」" },
+            { text: "「面白い人だな」と内心思いつつも、初対面で急に言われても反応に困るので、適当に相槌を打ちながら引いた目で見守る。", scores: { socio: { Ne: 2, Ni: 2 }, mbti: { Ne: 1, I: 2 }, ennea: { 5: 2, 9: 1 } },msg: "🎩「おやおや、シャイなお客さんだ！ 頭の中ではしっかり楽しんでるくせに！」" }
         ].sort(() => Math.random() - 0.5);
 
         options.forEach(opt => {
