@@ -2312,7 +2312,35 @@ function showResult() {
         }
 
     let npcInfo = getNpcMessage(finalMbti);
+// ==========================================
+    // ★ 遊び人検知システム（メタハッキング）
+    // ==========================================
+    let playCount = 0;
+    
+    // ① 芋虫を破壊したか？
+    if (caterpillarTaps >= 30) playCount += 2;
+    
+    // ② タイムオーバー系ギミックで何度も遊んでいるか？（ログの重複をカウント）
+    const fePanicLogs = logs.filter(l => l.qId === "w_fe_panic_game");
+    const sePressureLogs = logs.filter(l => l.qId === "w_se_pressure_game");
+    if (fePanicLogs.length >= 3) playCount += 2; // 3回以上同じ問題が出てる＝戻って遊んでる
+    if (sePressureLogs.length >= 3) playCount += 2;
 
+    // ③ チェックボックスで大量に選びすぎているか？
+    const enneaCheck = logs.find(l => l.qId === "q_ennea_pure_check");
+    if (enneaCheck && enneaCheck.chosenData && enneaCheck.chosenData.selectedOptions.length >= 5) {
+        playCount += 1;
+    }
+
+    // ★ 遊びすぎ（真面目に答えていない）と判定された場合、NPCメッセージを乗っ取る！！
+    if (playCount >= 5) {
+        npcInfo = { 
+            name: "👁️ System (Darling)", 
+            msg: "「……ねえ。あなた、わざとタイムオーバーにしたり、芋虫ぶっ壊したり、適当に全部チェック入れたりして、このシステムで遊んでたでしょ？♡\n……真面目に答えない悪い子は、正確なデータが出なくても文句言えないわよね？ ほんと、お仕置きが必要みたい……♡💢」" 
+        };
+        // 称号にも追加
+        achievements = "🏅 システムを弄びし不真面目なバグ<br>" + achievements;
+    }
     document.getElementById('behavior-log').innerHTML = 
         `⏱ 平均回答時間: ${avgTime}秒<br>
          🔄 再検証(戻る)回数: ${returnCount}回<br>
