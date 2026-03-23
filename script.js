@@ -2317,28 +2317,37 @@ function showResult() {
     // ==========================================
     let playCount = 0;
     
-    // ① 芋虫を破壊したか？
-    if (caterpillarTaps >= 30) playCount += 2;
+    // ① 芋虫を破壊、またはかなり遊んだか？
+    if (caterpillarTaps >= 30) playCount += 3;
+    else if (caterpillarTaps >= 10) playCount += 1;
     
     // ② タイムオーバー系ギミックで何度も遊んでいるか？（ログの重複をカウント）
-    const fePanicLogs = logs.filter(l => l.qId === "w_fe_panic_game");
-    const sePressureLogs = logs.filter(l => l.qId === "w_se_pressure_game");
+    const fePanicLogs = logs.filter(l => l.qId && l.qId.includes("fe_panic"));
+    const sePressureLogs = logs.filter(l => l.qId && l.qId.includes("se_pressure"));
     if (fePanicLogs.length >= 3) playCount += 2; // 3回以上同じ問題が出てる＝戻って遊んでる
     if (sePressureLogs.length >= 3) playCount += 2;
 
-    // ③ チェックボックスで大量に選びすぎているか？
-    const enneaCheck = logs.find(l => l.qId === "q_ennea_pure_check");
-    if (enneaCheck && enneaCheck.chosenData && enneaCheck.chosenData.selectedOptions.length >= 5) {
-        playCount += 1;
+    // ③ 何度も「戻る」ボタンを使って時間を戻しているか？
+    if (returnCount >= 5) playCount += 3;
+    else if (returnCount >= 3) playCount += 2;
+
+    // ④ チェックボックスで大量に（6個以上）選びすぎているか？
+    const enneaCheck = logs.find(l => l.qId === "q_ennea_pure_check" || l.qId === "q_ennea_fear_darling");
+    if (enneaCheck && enneaCheck.chosenData && enneaCheck.chosenData.selectedOptions && enneaCheck.chosenData.selectedOptions.length >= 6) {
+        playCount += 2;
     }
 
-    // ★ 遊びすぎ（真面目に答えていない）と判定された場合、NPCメッセージを乗っ取る！！
+    // ⑤ A〜Zのカオスボタンを連打して遊んだか？
+    const atozLog = logs.find(l => l.qId === "q_interactive_atoz" && l.textData && l.textData.includes("連打"));
+    if (atozLog) playCount += 2;
+
+    // ★ 遊びすぎ（プレイカウント 4点以上）と判定された場合、NPCメッセージを乗っ取る！！
     if (playCount >= 5) {
         npcInfo = { 
             name: "👁️ System (Darling)", 
-            msg: "「……ねえ。あなた、わざとタイムオーバーにしたり、芋虫ぶっ壊したり、適当に全部チェック入れたりして、このシステムで遊んでたでしょ？♡\n……真面目に答えない悪い子は、正確なデータが出なくても文句言えないわよね？ ほんと、お仕置きが必要みたい……♡💢」" 
+            msg: "「……ねえ。あなた、わざとタイムオーバーにしたり、芋虫ぶっ壊したり、適当に全部チェック入れたり、何度も時間戻したりして、このシステムで遊んでたでしょ？♡\n……真面目に答えない悪い子は、正確なデータが出なくても文句言えないわよね？ ほんと、お仕置きが必要みたい……♡💢」" 
         };
-        // 称号にも追加
+        // 称号の先頭に追加
         achievements = "🏅 システムを弄びし不真面目なバグ<br>" + achievements;
     }
     document.getElementById('behavior-log').innerHTML = 
