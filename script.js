@@ -2520,7 +2520,7 @@ function showResult() {
     // 📢 シェアボタンの処理
     // ==========================================
     document.getElementById('share-btn').onclick = () => {
-        let text = `深層認知診断 観測完了👁️\nソシオニクス: ${finalSocio}-${subtypeFunc} (${socioData.ranking[0].prob}%)\n推定MBTI: ${finalMbti}\nサイコソフィア: ${resultPsycho}\n\n【獲得称号】\n${plainAchievements}\n\n#深層認知診断 #DeepCognitionArchive\nhttps://mofu-mitsu.github.io/Deep-Cognition-Archive/`;
+        let text = `深層認知診断 観測完了👁️\nソシオニクス: ${finalSocio}-${subtypeFunc} (${socioData.ranking[0].prob}%)\n推定MBTI: ${finalMbti}\nサイコソフィア: ${resultPsycho}\n\n【獲得称号】\n${plainAchievements}\n\n#深層認知診断 #DeepCognitionArchive #ソシオニクス \nhttps://mofu-mitsu.github.io/Deep-Cognition-Archive/`;
         
         if (navigator.share) {
             navigator.share({ title: 'Deep Cognition Archive', text: text }).catch(console.error);
