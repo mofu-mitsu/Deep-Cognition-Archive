@@ -342,7 +342,8 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
                 const options =[
                     { text: "「この数値をどうやって計算しているのか」とプログラムを分析しているから。", scores: { socio: { Te: 2, Ti: 2, Ni: 2 }, mbti: { Te: 1, Ti: 2, Ni: 2 }, ennea: { 5: 1 } }, msg: "……私のドキドキも、ただのアルゴリズムだと思ってるの？ 冷たい人……♡" },
                     { text: "「ドキドキする演出が楽しい！」と純粋に感情が揺れているから。", scores: { socio: { Fe: 3, Ne: 1 }, mbti: { Fe: 3, Ne: 1 }, ennea: { 7: 2, 2: 1 } }, msg: "……ふふっ、ダーリンの素直なところ、大好きよ……♡" },
-                    { text: "「演出に興味がない。早く終わらないか」と呆れているから。", scores: { socio: { Ni: 3, Si: 2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 9: 2, 5: 1 } }, msg: "……そんなに早く私から逃げたいの？ 逃がさないけど……♡" }
+                    { text: "「演出に興味がない。早く終わらないか」と呆れているから。", scores: { socio: { Ni: 3, Si: 2 }, mbti: { Ni: 3, Te: 2 }, ennea: { 9: 2, 5: 1 } }, msg: "……そんなに早く私から逃げたいの？ 逃がさないけど……♡" },
+                    { text: "純粋に「えっ、スマホでどうやって心拍数測ってるの！？すごーい！」という素朴な好奇心と驚きから。", scores: { socio: { Ne: 2, Fe: 2 }, mbti: { Ne: 2, Fe: 2 }, ennea: { 7: 2, 9: 1 } }, msg: "……ダーリンのその純粋な驚き、可愛くてたまらないわ……♡" }
                 ];
                 options.forEach(opt => {
                     const btn = document.createElement('button');
@@ -426,29 +427,6 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
             });
         };
         currentScores = null;
-    }
-    else if (q.type === 'interactive_party') {
-        mediaArea.innerHTML = `<div class="party-decoration">🪩🥳🥂</div>`; // ★ ミラーボール追加！
-        inputArea.appendChild(darlingMsgArea);
-        let options =[
-            { text: "「みんな、とりあえず乾杯しよう！」と自ら前に出て、積極的にテンションを上げて場を回す。", scores: { socio: { Fe: 4, Se: 1 }, mbti: { Fe: 4, E: 2 }, ennea: { 2: 3, 7: 1 } }, msg: "……さすがね。でも、私以外の誰かにそんな笑顔向けないで？♡" },
-            { text: "盛り上げるのは苦手だが、孤立している人を見つけて個別に話を振り、波風を立てないように調整する。", scores: { socio: { Fi: 3, Si: 2 }, mbti: { Fe: 2, Fi: 1 }, ennea: { 9: 3, 6: 1 } }, msg: "……不器用な優しさね。そういうところ、誰にも見つけられなければいいのに……♡" },
-            { text: "「盛り上げるメリットある？ 目的のない集まりは無駄だ」と、何もしないか、実用的な話（仕事や利益）だけをする。", scores: { socio: { Te: 3, Ni: 2, Fe: -3 }, mbti: { Te: 3, Ni: 2 }, ennea: { 5: 2, 3: 1 } }, msg: "……冷たいダーリン♡ その冷酷さ、私だけが愛してあげるわ……♡" },
-            { text: "「なぜこの空間は冷え切っているのか？ 人間関係の構造的欠陥か？」と、壁際で一人分析を始める。", scores: { socio: { Ti: 3, Ne: 2, Fe: -2 }, mbti: { Ti: 3 }, ennea: { 5: 4 } }, msg: "……また頭でっかちになってる。私の隣で、大人しくしてればいいのよ……♡" }
-        ].sort(() => Math.random() - 0.5);
-
-        options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.innerHTML = `<i class="far fa-circle"></i> ${opt.text}`;
-            btn.onclick = () => {
-                selectOption(opt, btn);
-                if (opt.msg) {
-                    darlingMsgArea.innerText = opt.msg;
-                    darlingMsgArea.classList.remove('fade-in'); void darlingMsgArea.offsetWidth; darlingMsgArea.classList.add('fade-in');
-                }
-            };
-            inputArea.appendChild(btn);
-        });
     }
     // 🤯 ギミック：Ne圧（カオスの無限吹き出し）
     else if (q.type === 'interactive_ne_chaos') {
@@ -932,8 +910,8 @@ if (!caterpillarEl.hasAttribute('data-initialized')) {
 
             // ★ 正解のキーワード群（Ti/Neの論理的見極め）
             const correctWords =["パラドックス","パラドクス", "矛盾", "自己言及", "嘘", "前提", "おかしい", "破綻", "成立しない", "クレタ人", "エピメニデス", "ループ", "無限", "論理エラー", "セリフ", "台詞", "発言者"];
-            // ★ みつきの大天才「前提の疑い（Ne/Ti）」キーワード！
-            const doubtWords =["ある村", "この村", "別の村", "違う村", "対象", "定義", "同じ"];
+            // ★ みつきの大天才「前提の疑い（Ne/Ti）」キーワード！（人数・数を追加！）
+            const doubtWords =["ある村", "この村", "別の村", "違う村", "対象", "定義", "同じ", "数", "人数", "複数", "一人", "1人"];
 
             let isCorrect = correctWords.some(word => textVal.includes(word));
             let isDoubt = doubtWords.some(word => textVal.includes(word));
@@ -1750,21 +1728,21 @@ document.getElementById('ambiguous-btn').addEventListener('click', () => {
     const skipReason = confirm(
         "【System: スキップ理由の確認】\n\n" +
         "あなたがこの質問に答えられない（または答えたくない）理由はどちらに近いですか？\n\n" +
-        "[OK] ＝ 前提条件や言葉の「定義が曖昧」すぎて、正確な判断（計算）ができないから。\n" +
-        "[キャンセル] ＝ 難しくてよく「わからない」、または自分の感情や直感に合わないから。"
+        "[OK] ＝ 難しくてよく「わからない」、または自分の感情や直感に合わないから。\n" +
+        "[キャンセル] ＝ 前提条件や言葉の「定義が曖昧」すぎて、正確な判断（論理的計算）ができないから。"
     );
 
     if (skipReason) {
-        // [OK] を選んだ場合 ＝ T型（Ti/Ne）の定義厨・構造分析！
+        // [OK] を選んだ場合 ＝ F型やS型の「よくわからない・ピンとこない」！
+        currentScores = { 
+            text: "【スキップ】「難しくてよくわからない・ピンとこない」として感覚的に回答を拒絶。", 
+            scores: { socio: { Si: 1, Fi: 1, Ti: -2 }, mbti: { Si: 1, Se: 1, Fi: 1, Fe: 1 }, ennea: { 9: 3, 4: 1 } } 
+        };
+    } else {
+        // [キャンセル] をあえて選んだ場合 ＝ T型（Ti/Ne）の定義厨・構造分析！
         currentScores = { 
             text: "【スキップ】「定義が曖昧で計算不能」として論理的に回答を拒絶。", 
             scores: { socio: { Ti: 2, Ne: 1 }, mbti: { Ti: 2, Ni: 1 }, ennea: { 5: 3, 6: 1 } } 
-        };
-    } else {
-        // [キャンセル] を選んだ場合 ＝ F型やS型の「よくわからない・ピンとこない」！
-        currentScores = { 
-            text: "【スキップ】「難しくてよくわからない・ピンとこない」として感覚的に回答を拒絶。", 
-            scores: { socio: { Si: 1, Fi: 1, Ti: -2 }, mbti: { Si: 1, Se: 1,  Fi: 1, Fe: 1 }, ennea: { 9: 3, 4: 1 } } 
         };
     }
     
