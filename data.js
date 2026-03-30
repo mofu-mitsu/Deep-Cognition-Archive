@@ -5627,7 +5627,19 @@ const extraQuestions_INTX =[
         options:[
             { text: "「まずその計画が現実的かを確認する。労働力・資金・期間を見て非効率なら中止や別案を提案する」と冷静に判断する。", scores: { socio: { Te: 3, Ni: 1 }, mbti: { Ni: 2, Te: 2, J: 1 }, combo: { "INTJ+ILI": 1 } } },
             { text: "「そもそもなぜピラミッドなのか？形状に意味があるなら構造力学と象徴性を分離して考える」と代替案を探る。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
-            { text: "「めんどくさ。どうせ無理だし、適当な理由をつけてプロジェクト自体を自然消滅させるか逃げる」。", scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, P: 3 }, combo: { "INTP+ILI": 1 } } },
+            { 
+                text: "「めんどくさ。どうせ無理だし、適当な理由をつけてプロジェクト自体を自然消滅させるか逃げる」。", 
+                scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, P: 3 }, combo: { "INTP+ILI": 1 } },
+                followUp: {
+                    id: "q_extra_nt_pyramid_escape_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] プロジェクトから逃げる時の「脳内の状態」はどっち？",
+                    options:[
+                        { text: "「完成する未来が見えない（無意味だ）」と悟っており、自分のエネルギー（HP）を無駄なことに消費したくないから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTP+ILI": 1 } } }, // ガチILI
+                        { text: "「物理的な力仕事（Se）」や「大勢との非合理的な調整（Fe）」という要素がシステムとして自分に合わず、処理落ちするから。", scores: { socio: { Ti: 3, Se: -3, Fe: -3 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } } // ★ LIIの脆弱機能（Se/Fe）回避！！
+                    ]
+                }
+            },
             { text: "「ピラミッドの構造？面白そう！」と、作るという目的を忘れて建築の歴史や力学の分析（知識の深掘り）に没頭する。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
@@ -5638,17 +5650,41 @@ const extraQuestions_INTX =[
         options:[
             { text: "「これをやってもお金にならないし、生活の役に立たなくね？」と、労力と利益（実用性）を天秤にかけた時。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ+ILI": 1 } } },
             { text: "「上には上がいる」「自分の理想とする完璧な構造には一生届かない」と、限界や矛盾に気づいた時。", scores: { socio: { Ti: 3, Ni: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
-            { text: "ただ単に飽きた時。面白いと思えないなら、わざわざエネルギーを消費してまでやる意味がない。", scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
+            { 
+                text: "ただ単に飽きた時。面白いと思えないなら、わざわざエネルギーを消費してまでやる意味がない。", 
+                scores: { socio: { Ni: 3, Se: -2 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } },
+                followUp: {
+                    id: "q_extra_nt_hobby_bored_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「飽きた（面白くない）」と感じるトリガーは？",
+                    options:[
+                        { text: "その趣味の「システムや法則」が完全に解明できてしまい、これ以上新しい発見や可能性（バグ）が見つからなくなったから。", scores: { socio: { Ti: 4, Ne: 3 }, mbti: { Ti: 4, Ne: 3 }, combo: { "INTP+LII": 1 } } }, // ★ LII/INTPの「解明完了＝飽き」！
+                        { text: "続けていても未来の自分にとって何の利益も残らない（結末が見えた）と悟ったから。", scores: { socio: { Ni: 4, Te: 3 }, mbti: { Ni: 2, Ti: 2 }, combo: { "INTP+ILI": 1 } } } // ILI/INTJの「結末の悟り」
+                    ]
+                }
+            },
             { text: "仕組みを完全に理解してしまい、「もうこのシステムに新しいバグや発見はない」と答え合わせが終わった時。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
     },
     {
         id: "q_extra_nt_typing",
         type: "radio",
-        text: "【Extra: INTX分離】「タイピングが遅い」という課題に対してどう思う？",
+        text: "【Extra: INTX分離】「タイピングが遅い」という課題があったとしたらどう思う？",
         options:[
             { text: "「スマホで打ってPCに送った方が正確で速い」と、既存の練習をすっ飛ばして別の代替手段で目的を達成する。", scores: { socio: { Ni: 3, Ti: 2 }, mbti: { Ni: 3, Te: 1 }, combo: { "INTJ+LII": 1 } } },
-            { text: "「めんどくさい。遅くても別に生きていけるし、必要になったらその時適当にやればいい」。", scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } } },
+            { 
+                text: "「めんどくさい。遅くても別に生きていけるし、必要になったらその時適当にやればいい」。", 
+                scores: { socio: { Ni: 2, Te: -1 }, mbti: { Ti: 2, Ne: 2 }, combo: { "INTP+ILI": 1 } },
+                followUp: {
+                    id: "q_extra_nt_typing_lazy_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「めんどくさい」の本当の理由はどっち？",
+                    options:[
+                        { text: "物理的な運動や反復練習（Se/Si）自体が、自分の脳の思考回路にとってノイズにしかならず、極端に不快だから。", scores: { socio: { Ti: 3, Se: -3, Si: -2 }, mbti: { Ti: 3, Ni: 2 }, combo: { "INTJ+LII": 1 } } }, // ★ LIIの「物理的作業の拒絶」！！
+                        { text: "今の時点で困っていないのに、未来の不確定なリスクのためにわざわざ現在地でコストを払うのが非合理的だから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 3, P: 2 }, combo: { "INTP+ILI": 1 } } } // ILIの「コスト回避」
+                    ]
+                }
+            },
             { text: "「将来、仕事でタイピングができないと致命的なリスクになる」と考え、嫌々でも効率的な練習ツールを導入して備える。", scores: { socio: { Ni: 2, Te: 3 }, mbti: { Ni: 3, Te: 2, J: 1 }, combo: { "INTJ+ILI": 1 } } },
             { text: "「なぜタイピングという入力方式が現代でも最適解とされているのか？」と、キーボード配列の歴史やUIの構造分析を始める。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 2 }, combo: { "INTP+LII": 1 } } }
         ]
@@ -5659,7 +5695,19 @@ const extraQuestions_INTX =[
         text: "【Extra: INTX分離】クラスメイトが、他の友達は「名前＋ちゃん付け」なのに自分だけ「名字＋さん付け」で呼んできた。どう思う？",
         options:[
             { text: "「なぜ自分だけ違うのか？」という『一貫性のなさ（構造のバグ）』が気になり、理由を考えてしまう。", scores: { socio: { Ti: 3, Ni: 1 }, mbti: { Ni: 3, Ti: 1 }, combo: { "INTJ+LII": 1 } } },
-            { text: "「嫌われているのか？距離を置かれているのか？」と相手の意図が読めず、不安・または面倒に感じる。", scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ti: 2, Ne: 1 }, combo: { "INTP+ILI": 1 } } },
+            { 
+                text: "「嫌われているのか？距離を置かれているのか？」と相手の意図が読めず、不安・または面倒に感じる。", 
+                scores: { socio: { Fi: 2, Ni: 2 }, mbti: { Ti: 2, Ne: 1 }, combo: { "INTP+ILI": 1 } },
+                followUp: {
+                    id: "q_extra_nt_call_name_anxiety_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 相手の意図が読めない時、脳内はどうなる？",
+                    options:[
+                        { text: "「なぜ私だけ違うのか」という変数（バグ）の理由を、相手の過去のデータや論理から強迫的に特定しようとシミュレーションしてしまう。", scores: { socio: { Ti: 4, Fe: -2, Ne: 2 }, mbti: { Ti: 3, Ni: 2 }, combo: { "INTJ+LII": 1 } } }, // ★ LIIの「エラー特定（Ti）ループ」！！
+                        { text: "読めないなら考えても無駄。自分に実害がないなら完全にシャットアウトして考えない。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 3, Te: 2 }, combo: { "INTJ+ILI": 1 } } } // ILIの「実害なし＝スルー」
+                    ]
+                }
+            },
             { text: "「別にどう呼ばれようが実務に影響はない。馴れ合わなくて済むならむしろ好都合だ」と割り切る。", scores: { socio: { Te: 3, Ni: 2 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
             { text: "「この人は『さん付け』と『ちゃん付け』をどういう基準（アルゴリズム）で振り分けているのか？」と分析対象にする。", scores: { socio: { Ti: 3, Ne: 2 }, mbti: { Ti: 3, Ne: 1 }, combo: { "INTP+LII": 1 } } }
         ]
@@ -5738,7 +5786,19 @@ const extraQuestions_INTX =[
         text: "【Extra: INTX分離】人間関係を「切る」時の基準は？",
         options:[
             { text: "「会話が続かない＝相性が悪い」と論理的に判断し、デメリットとコストを計算して静かにシャットアウトする。", scores: { socio: { Ti: 2, Ni: 2 }, mbti: { Ni: 3, Ti: 2 }, combo: { "INTJ+LII": 1 } } },
-            { text: "関係を維持する連絡すらめんどくさいので、気づいたら自然消滅している。", scores: { socio: { Ni: 3, Fe: -2 }, mbti: { Ti: 2, Ne: 3 }, combo: { "INTP+ILI": 1 } } },
+            { 
+                text: "関係を維持する連絡すらめんどくさいので、気づいたら自然消滅している。", 
+                scores: { socio: { Ni: 3, Fe: -2 }, mbti: { Ti: 2, Ne: 3 }, combo: { "INTP+ILI": 1 } },
+                followUp: {
+                    id: "q_extra_nt_cut_off_lazy_followup",
+                    type: "radio",
+                    text: "👁️[System: 思考の深掘り] 「自然消滅」する時の感覚は？",
+                    options:[
+                        { text: "関係性を維持するための「定期的なやり取り（情動）」のアルゴリズムが自分の中に存在せず、タスクとして認識されないから。", scores: { socio: { Ti: 3, Fe: -4 }, mbti: { Ti: 3, Fe: -2 }, combo: { "INTP+LII": 1 } } }, // ★ LIIのFe脆弱！！
+                        { text: "人間関係の結末（どうせいつか離れる）が見えており、そこに時間やエネルギーを投資するのが非合理的だから。", scores: { socio: { Ni: 4, Te: 2 }, mbti: { Ni: 2, Ti: 2 }, combo: { "INTJ+ILI": 1 } } } // ILIのNi-Te
+                    ]
+                }
+            },
             { text: "自分に実害を及ぼしたり、非合理なことを強要してくるなら、社会ごと敵に回してでも容赦なく切り捨てる。", scores: { socio: { Te: 3, Se: 1 }, mbti: { Ni: 3, Te: 3 }, combo: { "INTJ+ILI": 1 } } },
             { text: "相手との「関係性のシステム」が論理的に破綻したと理解した瞬間、興味が完全に失せて切る。", scores: { socio: { Ti: 3, Ne: 1 }, mbti: { Ti: 3, Ne: 1 }, combo: { "INTP+LII": 1 } } }
         ]
