@@ -71,7 +71,7 @@ document.getElementById('close-menu-btn').onclick = () => {
     document.getElementById(previousScreen).classList.add('active'); // 記憶した画面に戻す！
 };
 const exitBtn = document.getElementById('exit-btn');
-if (exitBtn) exitBtn.href = "https://mofu-mitsu.github.io/"; 
+if (exitBtn) exitBtn.href = "https://mofu-mitsu.github.io/lab.html"; 
 
 document.getElementById('start-btn').addEventListener('click', () => {
     selfReportedType = document.getElementById('self-type').value.trim();
